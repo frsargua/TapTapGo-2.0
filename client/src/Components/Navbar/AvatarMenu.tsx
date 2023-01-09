@@ -10,24 +10,29 @@ import { Link } from "react-router-dom";
 import { FunctionComponent } from "react";
 
 interface AvatarMenuProps {
-  handleOpenUserMenu: (event: ChangeEvent<any>) => void;
-  handleCloseUserMenu: () => void;
-  anchorElUser: string | null;
+  openDropDownUserMenu: (event: ChangeEvent<any>) => void;
+  closeDropDownUserMenu: () => void;
+  anchorElementForUserMenu: Element | null;
   avatar: string;
 }
 
 export const AvatarMenu: FunctionComponent<AvatarMenuProps> = (props) => {
-  let { handleOpenUserMenu, handleCloseUserMenu, anchorElUser, avatar } = props;
+  let {
+    openDropDownUserMenu,
+    closeDropDownUserMenu,
+    anchorElementForUserMenu,
+    avatar,
+  } = props;
   return (
     <Box>
       <Tooltip title="avatar">
-        <IconButton onClick={handleOpenUserMenu} sx={{ padding: "0" }}>
+        <IconButton onClick={openDropDownUserMenu} sx={{ padding: "0" }}>
           <Avatar alt="avatar" src={avatar} sx={{ width: 50, height: 50 }} />
         </IconButton>
       </Tooltip>
       <Menu
         sx={{ mt: "45px" }}
-        anchorEl={anchorElUser || anchorElUser}
+        anchorEl={anchorElementForUserMenu}
         anchorOrigin={{
           vertical: "top",
           horizontal: "right",
@@ -37,8 +42,8 @@ export const AvatarMenu: FunctionComponent<AvatarMenuProps> = (props) => {
           vertical: "top",
           horizontal: "right",
         }}
-        open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
+        open={Boolean(anchorElementForUserMenu)}
+        onClose={closeDropDownUserMenu}
       >
         <MenuItem>
           <Link to={`/user/${1}`}>Dashboard</Link>

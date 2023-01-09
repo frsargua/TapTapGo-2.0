@@ -7,28 +7,16 @@ import { Link } from "react-router-dom";
 import React, { ChangeEvent, FunctionComponent } from "react";
 
 interface LoggedBarProps {
-  closeMenu: () => void;
-  closeUserMenu: () => void;
-  anchorElNav: string | null;
-  avatar: string;
-  openUserMenu: (event: ChangeEvent<any>) => void;
+  closeNavMenu: () => void;
   openBookmarkModal: () => void;
-  options: { title: string; directory: string }[];
+  pages: { title: string; directory: string }[];
 }
 
 export const LoggedBar: FunctionComponent<LoggedBarProps> = (props) => {
-  let {
-    closeMenu,
-    options,
-    anchorElNav,
-    avatar,
-    closeUserMenu,
-    openUserMenu,
-    openBookmarkModal,
-  } = props;
+  let { closeNavMenu, pages, openBookmarkModal } = props;
 
   return (
-    <Toolbar>
+    <>
       <Box
         sx={{
           flexGrow: 1,
@@ -36,9 +24,9 @@ export const LoggedBar: FunctionComponent<LoggedBarProps> = (props) => {
           marginRight: "1rem",
         }}
       >
-        {options.map((page) => (
+        {pages.map((page) => (
           <Button
-            onClick={closeMenu}
+            onClick={closeNavMenu}
             key={page.title}
             sx={{
               my: 2,
@@ -62,12 +50,6 @@ export const LoggedBar: FunctionComponent<LoggedBarProps> = (props) => {
           Bookmark
         </Button>
       </Box>
-      <AvatarMenu
-        handleCloseUserMenu={closeUserMenu}
-        handleOpenUserMenu={openUserMenu}
-        anchorElUser={anchorElNav}
-        avatar={avatar}
-      />
-    </Toolbar>
+    </>
   );
 };

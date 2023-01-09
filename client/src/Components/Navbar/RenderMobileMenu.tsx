@@ -6,28 +6,35 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import { FunctionComponent } from "react";
 
-export default function RenderMobileMenu({
-  handleOpenNavMenu,
-  handleCloseNavMenu,
-  anchorElNav,
+interface RenderMobileMenuProps {
+  openNavMenu: (event: ChangeEvent<any>) => void;
+  closeNavMenu: () => void;
+  anchorElementForNav: Element | null;
+  logged: Boolean;
+  pages: { title: string; directory: string }[];
+}
+
+export const RenderMobileMenu: FunctionComponent<RenderMobileMenuProps> = ({
+  openNavMenu,
+  closeNavMenu,
+  anchorElementForNav,
   pages,
   logged,
-}) {
+}) => {
   function loggedOptions() {
-    let propsOptions = pages.map((page) => (
-      <Button
-        onClick={handleCloseNavMenu}
-        key={page.title}
-        sx={{ my: 2, color: "inherit", display: "block" }}
-      >
-        <Link to={`/${page.directory}`}>{page.title}</Link>
-      </Button>
-    ));
-
     return (
       <div>
-        {propsOptions}
+        {pages.map((page) => (
+          <Button
+            onClick={closeNavMenu}
+            key={page.title}
+            sx={{ my: 2, color: "inherit", display: "block" }}
+          >
+            <Link to={`/${page.directory}`}>{page.title}</Link>
+          </Button>
+        ))}
         <Button sx={{ my: 2, color: "inherit", display: "block" }}>
           Bookmark
         </Button>
@@ -35,10 +42,10 @@ export default function RenderMobileMenu({
     );
   }
 
-  function unloggedOptions() {
+  function notLoggedOptions() {
     return (
       <Button
-        onClick={handleCloseNavMenu}
+        onClick={closeNavMenu}
         sx={{ my: 2, color: "inherit", display: "block" }}
       >
         How it works
@@ -50,13 +57,13 @@ export default function RenderMobileMenu({
     <>
       {/* For mobile */}
       <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-        <IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
+        <IconButton size="large" onClick={openNavMenu} color="inherit">
           <MenuIcon />
         </IconButton>
 
         <Menu
           id="menu-appbar"
-          anchorEl={anchorElNav}
+          anchorEl={anchorElementForNav}
           anchorOrigin={{
             vertical: "bottom",
             horizontal: "left",
@@ -66,13 +73,13 @@ export default function RenderMobileMenu({
             vertical: "top",
             horizontal: "left",
           }}
-          open={Boolean(anchorElNav)}
-          onClose={handleCloseNavMenu}
+          open={Boolean(anchorElementForNav)}
+          onClose={closeNavMenu}
           sx={{
             display: { xs: "block", md: "none" },
           }}
         >
-          {logged ? loggedOptions() : unloggedOptions()}
+          {logged ? loggedOptions() : notLoggedOptions()}
         </Menu>
       </Box>
       <Link style={{ textDecoration: "none", color: "black" }} to="/">
@@ -92,4 +99,4 @@ export default function RenderMobileMenu({
       </Link>
     </>
   );
-}
+};

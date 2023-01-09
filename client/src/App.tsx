@@ -4,6 +4,7 @@ import "./App.css";
 import { Navbar } from "./Components/Navbar/Index";
 import { ModalProvider } from "./contexts/ModalContext";
 import { Landing } from "./Pages/Landing/Index";
+import Search from "./Pages/Search/Index";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<Landing />} />
+              <Route path="/search/:city" element={<Search />} />
             </Routes>
           </Container>
         </Router>

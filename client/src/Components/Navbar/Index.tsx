@@ -1,16 +1,10 @@
-import React, { useContext, ChangeEvent, useState } from "react";
+import { useContext, ChangeEvent, useState, ReactNode } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import LoginIcon from "@mui/icons-material/Login";
-import Stack from "@mui/material/Stack";
-
 import { ModalContext } from "../../contexts/ModalContext";
-import RenderMobileMenu from "./RenderMobileMenu";
+import { RenderMobileMenu } from "./RenderMobileMenu";
 import { RenderLogo } from "./RenderLogo";
-import { Box } from "@mui/system";
-import { Link } from "react-router-dom";
 import { NotLoggedBar } from "./NotLoggedBar";
 import { LoggedBar } from "./LoggedBar";
 import { AvatarMenu } from "./AvatarMenu";
@@ -19,30 +13,31 @@ interface NavbarProps {}
 
 export const Navbar: FunctionComponent<NavbarProps> = () => {
   const { openSignModal, openBookmarkModal } = useContext(ModalContext);
-  const [anchorElNav, setAnchorElNav] = useState<string | null>(null);
+  const [anchorElementForNav, setAnchorElNav] = useState<Element | null>(null);
+  const [anchorElementForUserMenu, setAnchorElUser] = useState<Element | null>(
+    null
+  );
   const [logged, setLogged] = useState(true);
-  const [anchorElUser, setAnchorElUser] = useState(null);
-  const [avatar, setAvatar] = useState("");
+  const [avatarImg, setAvatarImg] = useState("");
 
-  const pages = logged
-    ? [
-        { title: "How it works?", directory: "How-it-works" },
-        { title: "Add event", directory: "new-event" },
-      ]
-    : [{ title: "How it works?", directory: "How-it-works" }];
+  const pagesNotLogged = [
+    { title: "How it works?", directory: "How-it-works" },
+    { title: "Add event", directory: "new-event" },
+  ];
+  const pagesLogged = [{ title: "How it works?", directory: "How-it-works" }];
 
-  const handleOpenNavMenu = (event: ChangeEvent<any>) => {
+  const openNavMenu = (event: ChangeEvent<any>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: ChangeEvent<any>) => {
+  const openDropDownUserMenu = (event: ChangeEvent<any>) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const closeNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const closeDropDownUserMenu = () => {
     setAnchorElUser(null);
   };
 
@@ -52,30 +47,35 @@ export const Navbar: FunctionComponent<NavbarProps> = () => {
         <Toolbar disableGutters>
           {/* For mobile */}
           <RenderMobileMenu
-            handleOpenNavMenu={handleOpenNavMenu}
-            handleCloseNavMenu={handleCloseNavMenu}
-            anchorElNav={anchorElNav}
-            pages={pages}
+            openNavMenu={openNavMenu}
+            closeNavMenu={closeNavMenu}
+            anchorElementForNav={anchorElementForNav}
+            pages={logged ? pagesLogged : pagesNotLogged}
             logged={logged}
           />
           {/* For Desktop */}
           <RenderLogo />
-          {logged ? (
-            <LoggedBar
-              closeUserMenu={handleCloseUserMenu}
-              openUserMenu={handleOpenUserMenu}
-              anchorElNav={anchorElUser}
-              avatar={avatar}
-              closeMenu={handleCloseNavMenu}
-              openBookmarkModal={openBookmarkModal}
-              options={pages}
+          <Toolbar>
+            {logged ? (
+              <LoggedBar
+                closeNavMenu={closeNavMenu}
+                openBookmarkModal={openBookmarkModal}
+                pages={logged ? pagesLogged : pagesNotLogged}
+              />
+            ) : (
+              <NotLoggedBar
+                closeNavMenu={closeNavMenu}
+                openSignModal={openSignModal}
+              />
+            )}
+
+            <AvatarMenu
+              closeDropDownUserMenu={closeDropDownUserMenu}
+              openDropDownUserMenu={openDropDownUserMenu}
+              anchorElementForUserMenu={anchorElementForUserMenu}
+              avatar={avatarImg}
             />
-          ) : (
-            <NotLoggedBar
-              closeMenu={handleCloseNavMenu}
-              OpenLogin={openSignModal}
-            />
-          )}
+          </Toolbar>
         </Toolbar>
       </Container>
     </AppBar>

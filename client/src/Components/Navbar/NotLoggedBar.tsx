@@ -7,14 +7,14 @@ import { Link } from "react-router-dom";
 import { FunctionComponent } from "react";
 
 interface NotLoggedBarProps {
-  closeMenu: () => void;
-  OpenLogin: () => void;
+  closeNavMenu: () => void;
+  openSignModal: () => void;
 }
 
 export const NotLoggedBar: FunctionComponent<NotLoggedBarProps> = (props) => {
-  let { closeMenu, OpenLogin } = props;
+  let { closeNavMenu, openSignModal } = props;
   return (
-    <Stack direction="row" spacing={2}>
+    <>
       <Box
         sx={{
           flexGrow: 1,
@@ -23,7 +23,7 @@ export const NotLoggedBar: FunctionComponent<NotLoggedBarProps> = (props) => {
         }}
       >
         <Button
-          onClick={closeMenu}
+          onClick={closeNavMenu}
           sx={{
             my: 2,
             color: "inherit",
@@ -34,9 +34,9 @@ export const NotLoggedBar: FunctionComponent<NotLoggedBarProps> = (props) => {
           <Link to={`/How-it-works`}> How it works</Link>
         </Button>
       </Box>
-      <Button onClick={OpenLogin} startIcon={<LoginIcon />}>
+      <Button onClick={openSignModal} startIcon={<LoginIcon />}>
         Sign In
       </Button>
-    </Stack>
+    </>
   );
 };
