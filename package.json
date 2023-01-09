@@ -1,0 +1,39 @@
+{
+  "name": "tap-tap-go",
+  "version": "1.0.0",
+  "description": "",
+  "engines": {
+    "node": "16.x"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "develop": "concurrently \"cd server && nodemon server.js\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seeds": "cd server && npm run seeds",
+    "build": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RamiElsayed/tap-tap-go.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RamiElsayed/tap-tap-go/issues"
+  },
+  "homepage": "https://github.com/RamiElsayed/tap-tap-go#readme",
+  "devDependencies": {
+    "concurrently": "^7.4.0",
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.7.3",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.3",
+    "react-google-autocomplete": "^2.7.0",
+    "react-router-dom": "^6.6.1"
+  }
+}
