@@ -2,6 +2,7 @@ import React from "react";
 import { Grid, TextField, Typography } from "@mui/material";
 import SearchByTagBar from "./SearchByTagBar";
 import { SearchLocation } from "./SeachLocationBar";
+import { SideBanner } from "./SideBanner";
 
 interface LandingProps {}
 
@@ -24,8 +25,8 @@ export const Landing: FunctionComponent<LandingProps> = () => {
 
   return (
     <>
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={7}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={5} lg={8}>
           <Typography variant="h1">Hobbies Everywhere</Typography>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6}>
@@ -40,7 +41,9 @@ export const Landing: FunctionComponent<LandingProps> = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={7}></Grid>
+        <Grid item xs={0} md={5} lg={4}>
+          <SideBanner />
+        </Grid>
       </Grid>
 
       {/* Hero */}
