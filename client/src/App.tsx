@@ -1,25 +1,23 @@
-import { Container } from "@mui/material";
+import Container from "@mui/material/Container";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
+import { Navbar } from "./Components/Navbar/Index";
+import { ModalProvider } from "./contexts/ModalContext";
 import { Landing } from "./Pages/Landing/Index";
 
 function App() {
   return (
     <>
-      <Router>
-        <Container
-          maxWidth="xl"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            minHeight: "100vh",
-          }}
-        >
-          <Routes>
-            <Route path="/" element={<Landing />} />
-          </Routes>
-        </Container>
-      </Router>
+      <ModalProvider>
+        <Router>
+          <Container maxWidth="xl">
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Landing />} />
+            </Routes>
+          </Container>
+        </Router>
+      </ModalProvider>
     </>
   );
 }
