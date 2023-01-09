@@ -5,7 +5,7 @@ import { itemData } from "../../_mock/Cities/index.js";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-function srcset(image, size, rows = 1, cols = 1) {
+function srcset(image: string, size: number, rows = 1, cols = 1) {
   return {
     src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
     srcSet: `${image}?w=${size * cols}&h=${
@@ -35,7 +35,6 @@ export const SideBanner: React.FunctionComponent = () => {
         >
           <Link to={`/search-by-city/${item.title}`}>
             <img
-              className="img--Column"
               {...srcset(item.img, 121, item.rows, item.cols)}
               alt={item.title}
               loading="lazy"
