@@ -16,6 +16,7 @@ import { FunctionComponent } from "react";
 interface SingleEventCardProps {
   eventName: string;
   price: number;
+  rating: number;
   reviews: { rating: number }[];
   images: { imageLink: string }[];
   _id: string;
@@ -25,7 +26,7 @@ interface SingleEventCardProps {
 export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
   props
 ) => {
-  let { eventName, price, reviews, images, _id, createdById } = props;
+  let { eventName, price, rating, reviews, images, _id, createdById } = props;
   const [isBookmarked, setIsBookmarked] = useState(false);
   //   let { tokenUserId, isOwner, logged } = Auth.isOwner();
   let isOwner = false;
@@ -71,7 +72,7 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
               <Rating
                 size="small"
                 name="read-only"
-                value={averageRatingFromDB(reviews)}
+                value={rating}
                 precision={0.5}
                 readOnly
               />
