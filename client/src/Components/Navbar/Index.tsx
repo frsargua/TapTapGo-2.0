@@ -42,42 +42,40 @@ export const Navbar: FunctionComponent<NavbarProps> = () => {
   };
 
   return (
-    <AppBar color="transparent" position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {/* For mobile */}
-          <RenderMobileMenu
-            openNavMenu={openNavMenu}
-            closeNavMenu={closeNavMenu}
-            anchorElementForNav={anchorElementForNav}
-            pages={logged ? pagesLogged : pagesNotLogged}
-            logged={logged}
-          />
-          {/* For Desktop */}
-          <RenderLogo />
-          <Toolbar>
-            {logged ? (
-              <LoggedBar
-                closeNavMenu={closeNavMenu}
-                openBookmarkModal={openBookmarkModal}
-                pages={logged ? pagesLogged : pagesNotLogged}
-              />
-            ) : (
-              <NotLoggedBar
-                closeNavMenu={closeNavMenu}
-                openSignModal={openSignModal}
-              />
-            )}
-
-            <AvatarMenu
-              closeDropDownUserMenu={closeDropDownUserMenu}
-              openDropDownUserMenu={openDropDownUserMenu}
-              anchorElementForUserMenu={anchorElementForUserMenu}
-              avatar={avatarImg}
+    <Container maxWidth="xl">
+      <Toolbar disableGutters>
+        {/* For mobile */}
+        <RenderMobileMenu
+          openNavMenu={openNavMenu}
+          closeNavMenu={closeNavMenu}
+          anchorElementForNav={anchorElementForNav}
+          pages={logged ? pagesLogged : pagesNotLogged}
+          logged={logged}
+        />
+        {/* For Desktop */}
+        <RenderLogo />
+        <Toolbar>
+          {logged ? (
+            <LoggedBar
+              closeNavMenu={closeNavMenu}
+              openBookmarkModal={openBookmarkModal}
+              pages={logged ? pagesLogged : pagesNotLogged}
             />
-          </Toolbar>
+          ) : (
+            <NotLoggedBar
+              closeNavMenu={closeNavMenu}
+              openSignModal={openSignModal}
+            />
+          )}
+
+          <AvatarMenu
+            closeDropDownUserMenu={closeDropDownUserMenu}
+            openDropDownUserMenu={openDropDownUserMenu}
+            anchorElementForUserMenu={anchorElementForUserMenu}
+            avatar={avatarImg}
+          />
         </Toolbar>
-      </Container>
-    </AppBar>
+      </Toolbar>
+    </Container>
   );
 };

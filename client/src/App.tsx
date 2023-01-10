@@ -4,6 +4,7 @@ import "./App.css";
 import { Navbar } from "./Components/Navbar/Index";
 import { ModalProvider } from "./contexts/ModalContext";
 import { Landing } from "./Pages/Landing/Index";
+import { ProfileDashBoard } from "./Pages/Profile/Index";
 import Search from "./Pages/Search/Index";
 
 function App() {
@@ -11,13 +12,13 @@ function App() {
     <>
       <ModalProvider>
         <Router>
-          <Container maxWidth="xl">
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/search/:city" element={<Search />} />
-            </Routes>
-          </Container>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/search/:city" element={<Search />} />
+
+            <Route path="/user/:userId" element={<ProfileDashBoard />} />
+          </Routes>
         </Router>
       </ModalProvider>
     </>
