@@ -1,4 +1,4 @@
-import { Grid, Stack, TextField, Typography } from "@mui/material";
+import { Container, Grid, Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { ChangeEvent, useEffect } from "react";
 import { FunctionComponent } from "react";
@@ -105,56 +105,58 @@ const Search: FunctionComponent<SearchProps> = () => {
   }, [selectedRating, selectedCategory, cuisines, searchInput, selectedPrice]);
   return (
     <>
-      <Box className="section__block-14">
-        <Typography variant="h2" textAlign="center" mt={4}>
-          Events in <span style={{ fontWeight: "500" }}> {city}</span>
-        </Typography>
-        <SearchBar
-          value={searchInput}
-          changeInput={(e) => setSearchInput(e.target.value)}
-        />
+      <Container maxWidth="xl">
+        <Box className="section__block-14">
+          <Typography variant="h2" textAlign="center" mt={4}>
+            Events in <span style={{ fontWeight: "500" }}> {city}</span>
+          </Typography>
+          <SearchBar
+            value={searchInput}
+            changeInput={(e) => setSearchInput(e.target.value)}
+          />
 
-        <Grid
-          container
-          mt="1rem"
-          columnSpacing={4}
-          justifyContent="space-between"
-          width="100%"
-          className="section__block-4"
-        >
-          <Grid item xs={8} md={2}>
-            <FilterPanel
-              selectedCategory={selectedCategory}
-              selectCategory={handleSelectCategory}
-              selectedRating={selectedRating}
-              selectedPrice={selectedPrice}
-              selectRating={handleSelectRating}
-              cuisines={cuisines}
-              changeChecked={handleChangeChecked}
-              changePrice={handleChangePrice}
-            />
-          </Grid>
-          <Grid item xs={4} md={10}>
-            <Grid container spacing={2}>
-              {list.length > 0 ? (
-                list.map((el, i) => {
-                  return (
-                    <Grid key={el._id} item xs={11} sm={10} md={4} lg={3}>
-                      <SingleEventCard {...el} />
-                    </Grid>
-                  );
-                })
-              ) : (
-                <Stack>
-                  <Typography textAlign="center" variant="h2">
-                    No events in this area
-                  </Typography>
-                </Stack>
-              )}
+          <Grid
+            container
+            mt="1rem"
+            columnSpacing={4}
+            justifyContent="space-between"
+            width="100%"
+            className="section__block-4"
+          >
+            <Grid item xs={8} md={2}>
+              <FilterPanel
+                selectedCategory={selectedCategory}
+                selectCategory={handleSelectCategory}
+                selectedRating={selectedRating}
+                selectedPrice={selectedPrice}
+                selectRating={handleSelectRating}
+                cuisines={cuisines}
+                changeChecked={handleChangeChecked}
+                changePrice={handleChangePrice}
+              />
+            </Grid>
+            <Grid item xs={4} md={10}>
+              <Grid container spacing={2}>
+                {list.length > 0 ? (
+                  list.map((el, i) => {
+                    return (
+                      <Grid key={el._id} item xs={11} sm={10} md={4} lg={3}>
+                        <SingleEventCard {...el} />
+                      </Grid>
+                    );
+                  })
+                ) : (
+                  <Stack>
+                    <Typography textAlign="center" variant="h2">
+                      No events in this area
+                    </Typography>
+                  </Stack>
+                )}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Box>
+        </Box>
+      </Container>
     </>
   );
 };

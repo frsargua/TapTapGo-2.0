@@ -16,6 +16,14 @@ export const categoryList = [
   },
 ];
 
+export const options = [
+  { id: 1, value: "bookmarks", label: "Bookmark" },
+  { id: 2, value: "yourEvents", label: "Your Events" },
+  { id: 3, value: "yourReviews", label: "Your Reviews" },
+  { id: 4, value: "admin", label: "Admin" },
+  { id: 5, value: "going", label: "Going" },
+];
+
 export const ratingList = [
   {
     id: "1",

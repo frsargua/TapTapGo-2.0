@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Banner } from "../../Components/Profile/Banner";
 import { AboutUser } from "../../Components/Profile/AboutUser";
 import { ReviewForm } from "../../Components/Common/ReviewForm/index";
@@ -7,69 +7,91 @@ import { ReviewCard } from "../../Components/Common/ReviewCard/index";
 import { SingleEventCard } from "../../Components/EventCard/index";
 import { FunctionComponent } from "react";
 import { Box, Container } from "@mui/system";
-
+import { options } from "../../Constants/Index";
+import { useEffect } from "react";
 interface ProfileDashBoardProps {}
 
 export const ProfileDashBoard: FunctionComponent<
   ProfileDashBoardProps
 > = () => {
-  let options = ["Bookmarks", "Your Events", "Your Reviews", "Going"];
-
   let userDetails = { bookmarks: [], myEvents: [], reviews: [], events: [] };
 
-  const [postBoardOption, setPostBoard] = useState("Activities");
+  const [postBoardOption, setPostBoard] = useState<string>("");
 
-  function changeBoardOptions(value) {
+  function changeBoardOptions(value: string) {
     setPostBoard(value);
   }
 
-  function renderPostBoard() {
-    if (postBoardOption === "Bookmarks") {
-      return (
-        <Grid container spacing={2}>
-          {userDetails.bookmarks.map((review, i) => {
-            return (
-              <Grid key={i} item xs={11} sm={10} md={4} lg={3}>
-                <SingleEventCard {...review} key={i} />
-              </Grid>
-            );
-          })}
-        </Grid>
-      );
-    } else if (postBoardOption === "Your Events") {
-      return (
-        <Grid container spacing={2}>
-          {userDetails.myEvents.map((myEvent, i) => {
-            return (
-              <Grid key={i} item xs={11} sm={10} md={4} lg={3}>
-                <SingleEventCard {...myEvent} key={i} />
-              </Grid>
-            );
-          })}
-        </Grid>
-      );
-    } else if (postBoardOption === "Your Reviews") {
-      return userDetails.reviews.map((review, i) => (
-        <ReviewCard {...review} key={i} />
-      ));
-    } else if (postBoardOption === "NewEvent") {
-      return <ReviewForm />;
-    } else if (postBoardOption === "Going") {
-      return (
-        <Grid container spacing={2}>
-          {userDetails.events.map((myEvent, i) => {
-            return (
-              <Grid key={i} item xs={11} sm={10} md={4} lg={3}>
-                <SingleEventCard {...myEvent} key={i} />
-              </Grid>
-            );
-          })}
-        </Grid>
-      );
-    } else {
-      return <h1>Hello</h1>;
+  useEffect(() => {
+    console.log(postBoardOption);
+  }, [postBoardOption]);
+
+  function renderBoardOption(): ReactNode {
+    switch (postBoardOption) {
+      case "bookmarks":
+        return (
+          <Grid container spacing={2}>
+            {userDetails.bookmarks.map((review, i) => {
+              return (
+                <Grid key={i} item xs={11} sm={10} md={4} lg={3}>
+                  <SingleEventCard {...review} key={i} />
+                </Grid>
+              );
+            })}
+          </Grid>
+        );
+
+      case "yourEvents":
+        return (
+          <Grid container spacing={2}>
+            {userDetails.myEvents.map((myEvent, i) => {
+              return (
+                <Grid key={i} item xs={11} sm={10} md={4} lg={3}>
+                  <SingleEventCard {...myEvent} key={i} />
+                </Grid>
+              );
+            })}
+          </Grid>
+        );
+
+      case "going":
+        return (
+          <Grid container spacing={2}>
+            {userDetails.events.map((myEvent, i) => {
+              return (
+                <Grid key={i} item xs={11} sm={10} md={4} lg={3}>
+                  <SingleEventCard {...myEvent} key={i} />
+                </Grid>
+              );
+            })}
+          </Grid>
+        );
+      case "admin":
+        return (
+          <Grid container spacing={2}>
+            {userDetails.events.map((myEvent, i) => {
+              return (
+                <Grid key={i} item xs={11} sm={10} md={4} lg={3}>
+                  <SingleEventCard {...myEvent} key={i} />
+                  <h1>Hello</h1>
+                </Grid>
+              );
+            })}
+          </Grid>
+        );
+      case "yourReviews":
+        return userDetails.reviews.map((review, i) => (
+          <ReviewCard {...review} key={i} />
+        ));
+      default:
+        return (
+          <Grid container spacing={2}>
+            <h1>Good to see you back</h1>
+          </Grid>
+        );
     }
   }
+
   return (
     <>
       <Box
@@ -99,7 +121,7 @@ export const ProfileDashBoard: FunctionComponent<
               <AboutUser userInfo={userDetails.userInfo} />
             </Grid>
             <Grid item xs={12} md={9}>
-              {renderPostBoard()}
+              {renderBoardOption()}
             </Grid>
           </Grid>
         </div>

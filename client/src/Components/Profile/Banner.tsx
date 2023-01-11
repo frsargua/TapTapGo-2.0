@@ -149,12 +149,12 @@ export const Banner: FunctionComponent<BannerProps> = (props) => {
           {bannerOptions.map((el) => {
             return (
               <Item
-                key={el}
+                key={el.id}
                 onClick={() => {
-                  changePostBoard(el);
+                  changePostBoard(el.value);
                 }}
               >
-                {el}
+                {el.label}
               </Item>
             );
           })}
