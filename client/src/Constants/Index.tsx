@@ -54,45 +54,147 @@ export const ratingList = [
 
 export const dataList = [
   {
-    eventName: "Salsa with Vinny",
-    price: 80,
-    reviews: [{ rating: 1 }, { rating: 2 }],
-    rating: 1,
+    eventName: "Salsa Night",
+    price: 15,
+    rating: 4.5,
+    _id: "123abc",
+    createdById: "456def",
+    reviews: [
+      { rating: 5 },
+      { rating: 4 },
+      { rating: 3 },
+      { rating: 2 },
+      { rating: 1 },
+    ],
     images: [
       {
         imageLink:
           "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
       },
-    ],
-    _id: "12k",
-    createdById: "12u",
-  },
-  {
-    eventName: "Salsa with Blessing",
-    price: 0,
-    reviews: [{ rating: 1 }, { rating: 2 }],
-    rating: 4,
-    images: [
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
       {
         imageLink:
           "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
       },
     ],
-    _id: "13k",
-    createdById: "12u",
   },
   {
-    eventName: "Bachata with Fabio",
+    eventName: "Tango Evening",
+    price: 20,
+    rating: 4.0,
+    _id: "789ghi",
+    createdById: "101112",
+    reviews: [
+      { rating: 4.5 },
+      { rating: 4.0 },
+      { rating: 3.5 },
+      { rating: 3.0 },
+      { rating: 2.5 },
+    ],
+    images: [
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+    ],
+  },
+  {
+    eventName: "Dancing under the Stars",
     price: 25,
-    reviews: [{ rating: 1 }, { rating: 2 }],
-    rating: 3,
+    rating: 4.5,
+    _id: "131415",
+    createdById: "161718",
+    reviews: [
+      { rating: 5.0 },
+      { rating: 4.5 },
+      { rating: 4.0 },
+      { rating: 3.5 },
+      { rating: 3.0 },
+    ],
     images: [
       {
         imageLink:
           "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
       },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
     ],
-    _id: "14k",
-    createdById: "12u",
+  },
+  {
+    eventName: "Latin Dance Party",
+    price: 30,
+    rating: 4.0,
+    _id: "19202122",
+    createdById: "232425",
+    reviews: [
+      { rating: 4.5 },
+      { rating: 4.0 },
+      { rating: 3.5 },
+      { rating: 3.0 },
+      { rating: 2.5 },
+    ],
+    images: [
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+    ],
   },
 ];
