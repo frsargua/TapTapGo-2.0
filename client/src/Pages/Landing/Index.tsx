@@ -4,6 +4,7 @@ import SearchByTagBar from "./SearchByTagBar";
 import { SearchLocation } from "./SeachLocationBar";
 import { SideBanner } from "./SideBanner";
 import { Link } from "react-router-dom";
+import { Container } from "@mui/system";
 
 interface LandingProps {}
 
@@ -35,38 +36,55 @@ export const Landing: FunctionComponent<LandingProps> = () => {
   }, [city, searchTag]);
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={5} lg={8}>
-        <Typography variant="h1">Hobbies Everywhere</Typography>
-        <Grid container spacing={1}>
-          <Grid item xs={12} md={6}>
-            <SearchLocation updateLocation={handleAddress} />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <SearchByTagBar
-              updateTag={handleTagChange}
-              category={tags}
-              inputLabel="Select a category"
-            />
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <Grid
-              item
-              xs={12}
-              sx={{ display: "center", justifyContent: "center" }}
-            >
-              <Link to={searchTag !== "" || city !== "" ? `${urlSearch}` : ""}>
-                <Button disabled size="large" variant="outlined">
-                  Search
-                </Button>
-              </Link>
+    <Container maxWidth="xl">
+      <Grid container spacing={2}>
+        <Grid
+          item
+          xs={12}
+          md={5}
+          lg={8}
+          height="80vh"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <Typography gutterBottom variant="h1">
+            Hobbies Everywhere
+          </Typography>
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={6}>
+              <SearchLocation updateLocation={handleAddress} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <SearchByTagBar
+                updateTag={handleTagChange}
+                category={tags}
+                inputLabel="Select a category"
+              />
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <Grid
+                item
+                xs={12}
+                sx={{ display: "center", justifyContent: "center" }}
+              >
+                <Link
+                  to={searchTag !== "" || city !== "" ? `${urlSearch}` : ""}
+                >
+                  <Button disabled size="large" variant="outlined">
+                    Search
+                  </Button>
+                </Link>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
+        <Grid item xs={0} md={5} lg={4}>
+          <SideBanner />
+        </Grid>
       </Grid>
-      <Grid item xs={0} md={5} lg={4}>
-        <SideBanner />
-      </Grid>
-    </Grid>
+    </Container>
   );
 };

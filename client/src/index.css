@@ -11,9 +11,9 @@ a {
 
 .container {
   display: flex;
-  height: -moz-calc(100vh - 68px);
-  height: -webkit-calc(100vh - 68px);
-  height: calc(100vh - 68px);
+  height: -moz-calc(100vh - 168px);
+  height: -webkit-calc(100vh -168px);
+  height: calc(100vh - 168px);
 }
 
 .controls {
@@ -29,16 +29,16 @@ a {
 
 .map-container {
   width: 100%;
-  height: -moz-calc(100vh - 68px);
-  height: -webkit-calc(100vh - 68px);
-  height: calc(100vh - 68px);
+  height: -moz-calc(100vh - 168px);
+  height: -webkit-calc(100vh - 168px);
+  height: calc(100vh - 168px);
 }
 
 .map {
   width: 100%;
-  height: -moz-calc(100vh - 68px);
-  height: -webkit-calc(100vh - 68px);
-  height: calc(100vh - 68px);
+  height: -moz-calc(100vh - 168px);
+  height: -webkit-calc(100vh - 168px);
+  height: calc(100vh - 168px);
 }
 
 .highlight {

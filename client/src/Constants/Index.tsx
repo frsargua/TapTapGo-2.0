@@ -203,4 +203,115 @@ export const dataList = [
       },
     ],
   },
+  {
+    eventName: "latin  Party",
+    price: 35,
+    rating: 4.0,
+    _id: "19202198",
+    createdById: "232425",
+    reviews: [
+      { rating: 4.5 },
+      { rating: 4.0 },
+      { rating: 3.5 },
+      { rating: 3.0 },
+      { rating: 2.5 },
+    ],
+    coordinates: { lat: 51.508129, lng: -0.128069 },
+    images: [
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+    ],
+  },
+  {
+    eventName: " Dance Party",
+    price: 30,
+    rating: 4.0,
+    _id: "19202152",
+    createdById: "232425",
+    reviews: [
+      { rating: 4.5 },
+      { rating: 4.0 },
+      { rating: 3.5 },
+      { rating: 3.0 },
+      { rating: 2.5 },
+    ],
+    coordinates: { lat: 51.508129, lng: -0.128069 },
+    images: [
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+    ],
+  },
+  {
+    eventName: "Bachata Party",
+    price: 30,
+    rating: 4.0,
+    _id: "19208922",
+    createdById: "232425",
+    reviews: [
+      { rating: 4.5 },
+      { rating: 4.0 },
+      { rating: 3.5 },
+      { rating: 3.0 },
+      { rating: 2.5 },
+    ],
+    coordinates: { lat: 51.504129, lng: -0.128069 },
+    images: [
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+      {
+        imageLink:
+          "https://loremflickr.com/cache/resized/65535_52577830222_746eec3195_b_640_480_nofilter.jpg",
+      },
+    ],
+  },
 ];

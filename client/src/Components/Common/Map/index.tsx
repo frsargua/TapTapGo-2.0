@@ -19,9 +19,11 @@ type MapOptions = google.maps.MapOptions;
 
 interface SearchProps {
   markerData: any[];
+  setSelected: (s: string) => void;
+  inputEl: any;
 }
 export default function Map(props: SearchProps) {
-  let { markerData } = props;
+  let { markerData, inputEl, setSelected } = props;
   const { cityName } = useParams<string>();
   const [localisation, setLocalisation] = useState<LatLngLiteral>({
     lat: 51.509865,
@@ -119,6 +121,8 @@ export default function Map(props: SearchProps) {
                       clusterer={clusterer}
                       onClick={() => {
                         fetchDirections(house);
+                        setSelected(house._id);
+                        inputEl.current.focus();
                       }}
                     />
                   ))

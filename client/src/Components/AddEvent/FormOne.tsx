@@ -148,12 +148,12 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          {/* <SideAnimation /> */}
-          <AddressSearch
+          <SideAnimation />
+          {/* <AddressSearch
             updateState={updateState}
             setAddress={setAddress}
             eventAddress={eventAddress}
-          />
+          /> */}
         </Grid>
       </Grid>
     </>
