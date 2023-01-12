@@ -5,6 +5,7 @@ import { Navbar } from "./Components/Navbar/Index";
 import { ModalProvider } from "./contexts/ModalContext";
 import EventForm from "./Pages/AddEvent/Index";
 import { Landing } from "./Pages/Landing/Index";
+import { Map } from "./Pages/MapPage/index";
 import { ProfileDashBoard } from "./Pages/Profile/Index";
 import Search from "./Pages/Search/Index";
 
@@ -17,7 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/search/:city" element={<Search />} />
-
+            <Route path="/map/:cityName" element={<Map />} />
             <Route path="/createEvent" element={<EventForm />} />
             <Route path="/user/:userId" element={<ProfileDashBoard />} />
           </Routes>

@@ -6,4 +6,42 @@ a {
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  height: -moz-calc(100vh - 68px);
+  height: -webkit-calc(100vh - 68px);
+  height: calc(100vh - 68px);
+}
+
+.controls {
+  width: 20%;
+  padding: 1rem;
+  background: #14161a;
+  color: #fff;
+}
+
+.controls input {
+  border: none;
+}
+
+.map-container {
+  width: 100%;
+  height: -moz-calc(100vh - 68px);
+  height: -webkit-calc(100vh - 68px);
+  height: calc(100vh - 68px);
+}
+
+.map {
+  width: 100%;
+  height: -moz-calc(100vh - 68px);
+  height: -webkit-calc(100vh - 68px);
+  height: calc(100vh - 68px);
+}
+
+.highlight {
+  font-size: 1.25rem;
+  font-weight: bold;
 }

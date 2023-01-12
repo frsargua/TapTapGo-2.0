@@ -59,6 +59,7 @@ export const dataList = [
     rating: 4.5,
     _id: "123abc",
     createdById: "456def",
+    coordinates: { lat: 51.509865, lng: -0.118092 },
     reviews: [
       { rating: 5 },
       { rating: 4 },
@@ -102,6 +103,8 @@ export const dataList = [
       { rating: 3.0 },
       { rating: 2.5 },
     ],
+    coordinates: { lat: 51.519475, lng: -0.10344 },
+
     images: [
       {
         imageLink:
@@ -138,6 +141,8 @@ export const dataList = [
       { rating: 3.5 },
       { rating: 3.0 },
     ],
+    coordinates: { lat: 51.499981, lng: -0.124755 },
+
     images: [
       {
         imageLink:
@@ -162,7 +167,7 @@ export const dataList = [
     ],
   },
   {
-    eventName: "Latin Dance Party",
+    eventName: "latin Dance Party",
     price: 30,
     rating: 4.0,
     _id: "19202122",
@@ -174,6 +179,7 @@ export const dataList = [
       { rating: 3.0 },
       { rating: 2.5 },
     ],
+    coordinates: { lat: 51.508129, lng: -0.128069 },
     images: [
       {
         imageLink:

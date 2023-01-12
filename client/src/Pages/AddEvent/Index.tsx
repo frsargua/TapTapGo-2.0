@@ -15,7 +15,7 @@ export default function EventForm() {
   const completeEventInformation = useRef();
 
   const [keywords, setKeywords] = useState([
-    { tagName: "1", tagName: "bachata" },
+    { tagName: "1", label: "bachata" },
   ]);
   const [newEvent, setNewEvent] = useState({
     eventName: "",
