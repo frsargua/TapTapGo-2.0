@@ -1,6 +1,6 @@
-import Container from "@mui/material/Container";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
+import { TextEditor } from "./Components/Common/TextEditor";
 import { Navbar } from "./Components/Navbar/Index";
 import { ModalProvider } from "./contexts/ModalContext";
 import EventForm from "./Pages/AddEvent/Index";
@@ -21,6 +21,7 @@ function App() {
             <Route path="/map/:cityName" element={<Map />} />
             <Route path="/createEvent" element={<EventForm />} />
             <Route path="/user/:userId" element={<ProfileDashBoard />} />
+            <Route path="/sample" element={<TextEditor />} />
           </Routes>
         </Router>
       </ModalProvider>

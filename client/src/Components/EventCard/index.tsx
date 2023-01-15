@@ -42,7 +42,7 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
   return (
     <>
       {" "}
-      <Card sx={{ maxWidth: "100%" }}>
+      <Card sx={{ maxWidth: "100%", minWidth: "250px" }}>
         <CardActionArea>
           <Link to={`/event/${_id}`}>
             <CardMedia

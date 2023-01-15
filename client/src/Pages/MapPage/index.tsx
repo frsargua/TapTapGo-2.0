@@ -2,6 +2,7 @@ import Select from "@mui/material/Select";
 import {
   Box,
   Button,
+  ButtonBase,
   Grid,
   IconButton,
   Menu,
@@ -46,7 +47,11 @@ export const Map: FunctionComponent<MapProps> = () => {
           xs={12}
           md={12}
           lg={12}
-          sx={{ mb: "1rem", display: "flex", justifyContent: "center" }}
+          sx={{
+            mb: "1rem",
+            display: { xs: "none", md: "flex" },
+            justifyContent: "center",
+          }}
         >
           <Box
             sx={{
@@ -126,7 +131,24 @@ export const Map: FunctionComponent<MapProps> = () => {
           </Box>
         </Grid>
         <Grid item xs={12} md={8} lg={9}>
-          <MapPage setSelected={setSelected} inputEl={inputEl} />
+          <Box sx={{ position: "relative" }}>
+            <MapPage setSelected={setSelected} inputEl={inputEl} />
+            <Button
+              variant="contained"
+              sx={{
+                position: "absolute",
+                width: "70%",
+                height: "80px",
+                bottom: "1%",
+                left: "50%",
+                transform: "translateX(-50%)",
+              }}
+            >
+              <Typography variant="h2" textAlign="center">
+                Filters
+              </Typography>
+            </Button>
+          </Box>
         </Grid>
         <Grid
           item
@@ -136,6 +158,7 @@ export const Map: FunctionComponent<MapProps> = () => {
           sx={{
             overflowY: "scroll",
             overflowX: "hidden",
+            display: { xs: "none", md: "block" },
             width: "100%",
             height: "100%",
           }}
@@ -159,6 +182,46 @@ export const Map: FunctionComponent<MapProps> = () => {
                     width: "99%",
                   }}
                   margin="10px"
+                >
+                  <SingleEventCard {...el} />
+                </Box>
+              </>
+            );
+          })}
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          md={4}
+          lg={3}
+          sx={{
+            overflowY: "hidden",
+            overflowX: { xs: "scroll", md: "hidden" },
+            display: "inline-flex",
+            width: "100%",
+            height: "auto",
+            my: "1rem",
+          }}
+        >
+          {dataList.map((el, i) => {
+            const itemProps =
+              selected == el._id
+                ? {
+                    ref: inputEl,
+                    tabIndex: 0,
+                    boxShadow: 10,
+                  }
+                : {};
+
+            return (
+              <>
+                <Box
+                  component="div"
+                  {...itemProps}
+                  sx={{
+                    width: "99%",
+                    margin: "20px",
+                  }}
                 >
                   <SingleEventCard {...el} />
                 </Box>
