@@ -29,7 +29,7 @@ export const FilterPanel: FunctionComponent<FilterPanelProps> = (props) => {
     changePrice,
   } = props;
   return (
-    <Box>
+    <Box sx={{ width: "100%" }}>
       <Box sx={{ marginBottom: "2rem" }}>
         <Typography variant="h6" gutterBottom>
           Frequency

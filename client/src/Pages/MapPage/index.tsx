@@ -140,6 +140,7 @@ export const Map: FunctionComponent<MapProps> = () => {
                 width: "70%",
                 height: "80px",
                 bottom: "1%",
+                display: { xs: "block", md: "none" },
                 left: "50%",
                 transform: "translateX(-50%)",
               }}

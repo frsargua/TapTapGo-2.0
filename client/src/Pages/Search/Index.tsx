@@ -1,4 +1,11 @@
-import { Container, Grid, Stack, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { ChangeEvent, useEffect } from "react";
 import { FunctionComponent } from "react";
@@ -123,7 +130,12 @@ const Search: FunctionComponent<SearchProps> = () => {
             width="100%"
             className="section__block-4"
           >
-            <Grid item xs={8} md={2}>
+            <Grid
+              item
+              xs={12}
+              md={2}
+              sx={{ display: { xs: "none", md: "block" } }}
+            >
               <FilterPanel
                 selectedCategory={selectedCategory}
                 selectCategory={handleSelectCategory}
@@ -135,7 +147,7 @@ const Search: FunctionComponent<SearchProps> = () => {
                 changePrice={handleChangePrice}
               />
             </Grid>
-            <Grid item xs={4} md={10}>
+            <Grid item xs={12} md={10}>
               <Grid container spacing={2}>
                 {list.length > 0 ? (
                   list.map((el, i) => {
@@ -153,6 +165,35 @@ const Search: FunctionComponent<SearchProps> = () => {
                   </Stack>
                 )}
               </Grid>
+              <Box
+                sx={{
+                  backgroundColor: "white",
+                  width: "100vw",
+                  height: "100vh",
+                  left: "0",
+                  top: "0",
+                  display: { xs: "flex", md: "none" },
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  position: "fixed",
+                  px: "2rem",
+                }}
+              >
+                <FilterPanel
+                  selectedCategory={selectedCategory}
+                  selectCategory={handleSelectCategory}
+                  selectedRating={selectedRating}
+                  selectedPrice={selectedPrice}
+                  selectRating={handleSelectRating}
+                  cuisines={cuisines}
+                  changeChecked={handleChangeChecked}
+                  changePrice={handleChangePrice}
+                />
+                <Button fullWidth size="large" variant="contained">
+                  Close
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         </Box>
