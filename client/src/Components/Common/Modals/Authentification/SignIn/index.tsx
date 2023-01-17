@@ -40,12 +40,9 @@ export const SignIn: FunctionComponent<SignInProps> = ({ switchToSignUp }) => {
   };
 
   return (
-    <div
+    <Box
       onClick={closeModal}
-      value="CloseBox"
-      id="modalBox"
-      component="div"
-      style={{
+      sx={{
         height: "100vh",
         width: "100vw",
         backgroundColor: "rgba(0,0,0,0.5)",
@@ -146,6 +143,6 @@ export const SignIn: FunctionComponent<SignInProps> = ({ switchToSignUp }) => {
         </CardContent>
         <Copyright sx={{ mt: 4, mb: 4 }} />
       </Card>
-    </div>
+    </Box>
   );
 };

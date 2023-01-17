@@ -81,9 +81,6 @@ export const SignUp: FunctionComponent<SignUpProps> = ({ switchToSignIn }) => {
   return (
     <div
       onClick={closeModal}
-      value="CloseBox"
-      className="modalBox"
-      aria-label="CloseBox"
       style={{
         height: "100vh",
         width: "100vw",
@@ -120,8 +117,8 @@ export const SignUp: FunctionComponent<SignUpProps> = ({ switchToSignIn }) => {
             Sign Up
           </Typography>
           <Box component="form" onSubmit={handleFormSubmit} sx={{ mt: 1 }}>
-            <Grid container>
-              <Grid xs={6} md={6}>
+            <Grid container spacing={2}>
+              <Grid item xs={6} md={6}>
                 <TextField
                   fullWidth
                   label="First Name"
@@ -133,7 +130,7 @@ export const SignUp: FunctionComponent<SignUpProps> = ({ switchToSignIn }) => {
                   value={formState.firstName}
                 />
               </Grid>
-              <Grid xs={6} md={6}>
+              <Grid item xs={6} md={6}>
                 <TextField
                   fullWidth
                   label="Last Name"

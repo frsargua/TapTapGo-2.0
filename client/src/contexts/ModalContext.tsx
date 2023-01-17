@@ -10,7 +10,7 @@ import React, {
 interface ModalContextProps {
   getModalState: () => Boolean;
   getBookmarksModalState: () => Boolean;
-  closeModal: (event: MouseEventHandler<HTMLDivElement>) => void;
+  closeModal: (event: ChangeEvent<any>) => void;
   closeBookmarkModal: (event: ChangeEvent<HTMLInputElement>) => void;
   openSignModal: () => void;
   openBookmarkModal: () => void;
@@ -34,16 +34,12 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     return bookmarksModalState;
   };
 
-  const closeModal = (e) => {
-    // const isCloseBox = event.target.value;
-    console.log(e);
-    e.stopPropagation();
-    // setModalState((prev) => {
-    //   return !prev;
-    // });
-    // setModalState((prev) => {
-    //   return isCloseBox === "CloseBox" ? !prev : prev;
-    // });
+  const closeModal = (event: ChangeEvent<any>) => {
+    if (event.currentTarget == event.target) {
+      setModalState((prev) => {
+        return !prev;
+      });
+    }
   };
 
   const openSignModal = () => {
