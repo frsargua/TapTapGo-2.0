@@ -1,41 +1,98 @@
 import TextField from "@mui/material/TextField";
-import { Button, Card, CardContent, Grid } from "@mui/material";
-import { FunctionComponent } from "react";
+import { Card, CardContent, Grid, Toolbar } from "@mui/material";
+import { ChangeEvent, FunctionComponent } from "react";
+import SecondSideAnimation from "./SecondSideAnimation";
 
 interface FormTwoProps {
-  ChangeNewEvent: (event: ChangeEvent<any>) => void;
-  handleFormSwitch: () => void;
-  newEvent: {
-    eventName: string;
-    date: null | Date;
-    price: string;
-    ageGroup: string;
-    description: string;
-    maxAttendees: string;
+  handleAddressChange: (event: ChangeEvent) => void;
+  eventAddress: {
+    country: string;
+    buildingNumber: string;
+    firstLine: string;
+    secondLine: string;
+    cityName: string;
+    postcode: string;
   };
 }
 
 export const FormTwo: FunctionComponent<FormTwoProps> = (props) => {
-  let { ChangeNewEvent, handleFormSwitch, newEvent } = props;
-
+  let { handleAddressChange, eventAddress } = props;
   return (
     <>
-      <Grid container rowSpacing={2} columnSpacing={2} component="form">
-        <Grid item xs={12}>
+      <Grid container rowSpacing={2} columnSpacing={2}>
+        <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
               <TextField
-                onChange={(value) => ChangeNewEvent(value)}
-                value={newEvent.description}
+                onChange={handleAddressChange}
+                value={eventAddress.postcode}
                 fullWidth
-                multiline
-                sx={{ border: "none" }}
-                rows={12}
-                name="description"
-                label="Description"
+                margin="dense"
+                type="number"
+                inputProps={{ min: 4, max: 10 }}
+                name="postcode"
+                label="Postcode"
+              />
+              <TextField
+                onChange={handleAddressChange}
+                value={eventAddress.buildingNumber}
+                fullWidth
+                margin="dense"
+                name="buildingNumber"
+                label="Building Number"
+              />
+              <TextField
+                onChange={handleAddressChange}
+                value={eventAddress.firstLine}
+                fullWidth
+                margin="dense"
+                type="number"
+                inputProps={{ min: 4, max: 10 }}
+                name="firstLine"
+                label="Street Name"
+              />
+              <TextField
+                onChange={handleAddressChange}
+                value={eventAddress.secondLine}
+                fullWidth
+                margin="dense"
+                type="number"
+                inputProps={{ min: 4, max: 10 }}
+                name="secondLine"
+                label="Max attendees"
+              />
+              <TextField
+                onChange={handleAddressChange}
+                value={eventAddress.cityName}
+                fullWidth
+                margin="dense"
+                type="text"
+                name="cityName"
+                label="City"
+              />
+              <TextField
+                onChange={handleAddressChange}
+                value={eventAddress.cityName}
+                fullWidth
+                margin="dense"
+                type="text"
+                name="county"
+                label="County"
+              />
+              <TextField
+                onChange={handleAddressChange}
+                value={eventAddress.country}
+                fullWidth
+                margin="dense"
+                name="eventName"
+                label="Country"
               />
             </CardContent>
           </Card>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <SecondSideAnimation />
         </Grid>
       </Grid>
     </>

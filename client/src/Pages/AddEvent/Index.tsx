@@ -4,10 +4,13 @@ import { Button, Card, CardContent, Container, Grid } from "@mui/material";
 import { storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
+import { EditorState } from "draft-js";
 import { FormOne } from "../../Components/AddEvent/FormOne";
-import { FormTwo } from "../../Components/AddEvent/FormTwo";
+import { FormThree } from "../../Components/AddEvent/FormThree";
 import { ChangeEvent, useRef, useState } from "react";
 import { Box } from "@mui/system";
+import { FormTwo } from "../../Components/AddEvent/FormTwo";
+import dayjs from "dayjs";
 
 export default function EventForm() {
   const navigate = useNavigate();
@@ -15,29 +18,31 @@ export default function EventForm() {
   const completeEventInformation = useRef();
 
   const [keywords, setKeywords] = useState([
-    { tagName: "1", label: "bachata" },
+    { tagName: "1", label: "Bachata" },
   ]);
   const [newEvent, setNewEvent] = useState({
     eventName: "",
-    date: null,
+    date: dayjs(),
     price: "",
     ageGroup: "",
-    description: "",
+    description: EditorState.createEmpty(),
     maxAttendees: "",
   });
-  const [tags, setTags] = useState({
+  const [tags, setTags] = useState<{ tags: string[]; keywords: string[] }>({
     tags: [],
     keywords: [],
   });
   const [eventAddress, setAddress] = useState({
+    country: "",
     buildingNumber: "",
-    streetName: "",
+    firstLine: "",
+    secondLine: "",
     cityName: "",
     postcode: "",
   });
 
   const [imageUpload, setImageUpload] = useState([]);
-  const [formNumber, setFormNumber] = useState(false);
+  const [formNumber, setFormNumber] = useState<number>(3);
 
   const updateState = (event, setter) => {
     const { value, name } = event.target;
@@ -50,10 +55,23 @@ export default function EventForm() {
     });
   };
 
-  const handleFormSwitch = () => {
-    setFormNumber((prev) => !prev);
+  const handleAddressChange = (event) => {
+    const { value, name } = event.target;
+
+    setAddress((prev) => {
+      return { ...prev, [name]: value };
+    });
   };
-  const ChangeNewEvent = (event: ChangeEvent<any>) => {
+
+  const handleNextForm = () => {
+    setFormNumber((prev) => prev + 1);
+  };
+
+  const handlePreviousForm = () => {
+    setFormNumber((prev) => prev - 1);
+  };
+
+  const changeNewEvent = (event: ChangeEvent<any>) => {
     const { value, name } = event.target;
     let valueX = value;
     if (name === "price" || name === "maxAttendees") {
@@ -64,7 +82,14 @@ export default function EventForm() {
     });
   };
 
-  const handleImagesUploaded = (arrayImgs) => {
+  const changeNewEventDescription = (value: EditorState) => {
+    console.log(value);
+    setNewEvent((prev) => {
+      return { ...prev, description: value };
+    });
+  };
+
+  const handleImagesUploaded = (arrayImgs: any[]) => {
     setImageUpload(arrayImgs);
   };
 
@@ -79,36 +104,44 @@ export default function EventForm() {
     });
   };
 
-  function handleEventDate(input, key) {
+  function handleEventDate(input: Date) {
     let date = new Date(input);
     setNewEvent((prev) => {
-      return { ...prev, [key]: date };
+      return { ...prev, date: date };
     });
   }
 
   function renderForm() {
-    return formNumber ? (
-      <FormTwo
-        ChangeNewEvent={ChangeNewEvent}
-        newEvent={newEvent}
-        handleFormSwitch={handleFormSwitch}
-      />
-    ) : (
-      <FormOne
-        updateState={updateState}
-        ChangeNewEvent={ChangeNewEvent}
-        newEvent={newEvent}
-        setFormNumber={setFormNumber}
-        eventAddress={eventAddress}
-        updateDate={handleEventDate}
-        imageUpload={imageUpload}
-        setAddress={setAddress}
-        tags={tags}
-        keywords={keywords}
-        handleKeywords={handleKeywordsSelected}
-        updateImage={handleImagesUploaded}
-      />
-    );
+    switch (formNumber) {
+      case 1:
+        return (
+          <FormOne
+            updateState={updateState}
+            changeNewEvent={changeNewEvent}
+            newEvent={newEvent}
+            updateDate={handleEventDate}
+            imageUpload={imageUpload}
+            tags={tags}
+            keywords={keywords}
+            handleKeywords={handleKeywordsSelected}
+            updateImage={handleImagesUploaded}
+          />
+        );
+      case 2:
+        return (
+          <FormTwo
+            eventAddress={eventAddress}
+            handleAddressChange={handleAddressChange}
+          />
+        );
+      default:
+        return (
+          <FormThree
+            changeNewEventDescription={changeNewEventDescription}
+            newEvent={newEvent}
+          />
+        );
+    }
   }
 
   return (
@@ -133,34 +166,41 @@ export default function EventForm() {
 
         {renderForm()}
 
-        {!formNumber || (
-          <Box sx={{ display: "flex", mt: "1rem" }}>
+        <Box sx={{ display: "flex", mt: "1rem" }}>
+          {formNumber == 1 || formNumber == 2 ? (
+            <Button
+              color="primary"
+              onClick={handleNextForm}
+              fullWidth
+              variant="contained"
+            >
+              Next
+            </Button>
+          ) : (
+            ""
+          )}
+
+          {formNumber == 2 || formNumber == 3 ? (
             <Button
               color="secondary"
               variant="contained"
               fullWidth
-              onClick={handleFormSwitch}
+              onClick={handlePreviousForm}
             >
               Previous
             </Button>
+          ) : (
+            ""
+          )}
 
+          {formNumber === 3 ? (
             <Button color="info" type="submit" fullWidth variant="contained">
               Submit
             </Button>
-          </Box>
-        )}
-
-        {formNumber || (
-          <Button
-            sx={{ my: "1rem" }}
-            color="primary"
-            onClick={handleFormSwitch}
-            fullWidth
-            variant="contained"
-          >
-            Next
-          </Button>
-        )}
+          ) : (
+            ""
+          )}
+        </Box>
       </div>
     </Container>
   );

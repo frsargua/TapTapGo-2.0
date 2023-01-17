@@ -10,7 +10,7 @@ import { Box } from "@mui/system";
 import { ChangeEvent, useEffect } from "react";
 import { FunctionComponent } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { SingleEventCard } from "../../Components/EventCard";
 import { FilterPanel } from "../../Components/Landing/FilterPanel/Index";
 import { SearchBar } from "../../Components/Landing/Search";
@@ -136,6 +136,17 @@ const Search: FunctionComponent<SearchProps> = () => {
               md={2}
               sx={{ display: { xs: "none", md: "block" } }}
             >
+              <Link to={`/map/${city}`}>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  color="success"
+                  sx={{ mb: "1rem" }}
+                >
+                  Map
+                </Button>
+              </Link>
+
               <FilterPanel
                 selectedCategory={selectedCategory}
                 selectCategory={handleSelectCategory}

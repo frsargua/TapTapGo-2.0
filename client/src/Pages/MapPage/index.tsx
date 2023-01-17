@@ -198,7 +198,7 @@ export const Map: FunctionComponent<MapProps> = () => {
           sx={{
             overflowY: "hidden",
             overflowX: { xs: "scroll", md: "hidden" },
-            display: "inline-flex",
+            display: { xs: "inline-flex", md: "none" },
             width: "100%",
             height: "auto",
             my: "1rem",

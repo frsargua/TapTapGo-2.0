@@ -19,9 +19,16 @@ import { AddressSearch } from "./AddressSearch";
 
 interface FormOneProps {
   updateState: (event: ChangeEvent, setter: () => void) => void;
+  changeNewEvent: (event: ChangeEvent) => void;
+  handleKeywords: (event: ChangeEvent) => void;
+  updateImage: (arrayImgs: any[]) => void;
+  updateDate: (input: Date) => void;
+  tags: { tags: string[]; keywords: string[] };
+  keywords: { tagName: string; label: string }[];
+  imageUpload: any[];
   newEvent: {
     eventName: string;
-    date: null | Date;
+    date: Date;
     price: string;
     ageGroup: string;
     description: string;
@@ -31,16 +38,13 @@ interface FormOneProps {
 
 export const FormOne: FunctionComponent<FormOneProps> = (props) => {
   let {
-    ChangeNewEvent,
-    updateState,
+    changeNewEvent,
     tags,
     keywords,
     handleKeywords,
     updateImage,
     updateDate,
-    eventAddress,
     imageUpload,
-    setAddress,
     newEvent,
   } = props;
   return (
@@ -50,7 +54,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
           <Card>
             <CardContent>
               <TextField
-                onChange={(value) => ChangeNewEvent(value)}
+                onChange={(value) => changeNewEvent(value)}
                 value={newEvent.eventName}
                 fullWidth
                 margin="dense"
@@ -58,7 +62,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                 label="Event Name"
               />
               <TextField
-                onChange={(value) => ChangeNewEvent(value)}
+                onChange={(value) => changeNewEvent(value)}
                 value={newEvent.maxAttendees}
                 fullWidth
                 margin="dense"
@@ -72,7 +76,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                   label="Start date"
                   disablePast
                   value={newEvent.date}
-                  onChange={(newValue) => updateDate(newValue, "date")}
+                  onChange={(newValue) => updateDate(newValue)}
                   renderInput={(params) => (
                     <TextField margin="dense" fullWidth {...params} />
                   )}
@@ -97,7 +101,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                     min: 0,
                   }}
                   autoFocus
-                  onChange={(value) => ChangeNewEvent(value)}
+                  onChange={(value) => changeNewEvent(value)}
                 />
                 <FormControl fullWidth>
                   <InputLabel id="ageGroup">Age</InputLabel>
@@ -106,7 +110,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                     value={newEvent.ageGroup}
                     label="Age"
                     name="ageGroup"
-                    onChange={(value) => ChangeNewEvent(value)}
+                    onChange={(value) => changeNewEvent(value)}
                   >
                     <MenuItem value={"Teenagers"}>Teenagers</MenuItem>
                     <MenuItem value={"Adult"}>Adult</MenuItem>
@@ -149,11 +153,6 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
 
         <Grid item xs={12} md={6}>
           <SideAnimation />
-          {/* <AddressSearch
-            updateState={updateState}
-            setAddress={setAddress}
-            eventAddress={eventAddress}
-          /> */}
         </Grid>
       </Grid>
     </>
