@@ -26,7 +26,7 @@
     "draftjs-to-html": "^0.9.1",
     "firebase": "^9.15.0",
     "getaddress-find": "^2.0.2",
-    "html-react-parser": "^3.0.7",
+    "html-react-parser": "^3.0.8",
     "html-to-draftjs": "^1.5.0",
     "mui-address-autocomplete": "^3.0.4",
     "prop-types": "^15.8.1",

@@ -1,9 +1,16 @@
-import React, { createContext, useState, useContext, ChangeEvent } from "react";
+import { ButtonBaseProps } from "@mui/material";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ChangeEvent,
+  MouseEventHandler,
+} from "react";
 
 interface ModalContextProps {
   getModalState: () => Boolean;
   getBookmarksModalState: () => Boolean;
-  closeModal: (event: ChangeEvent<HTMLInputElement>) => void;
+  closeModal: (event: MouseEventHandler<HTMLDivElement>) => void;
   closeBookmarkModal: (event: ChangeEvent<HTMLInputElement>) => void;
   openSignModal: () => void;
   openBookmarkModal: () => void;
@@ -27,11 +34,16 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     return bookmarksModalState;
   };
 
-  const closeModal = (event: ChangeEvent<HTMLInputElement>) => {
-    const isCloseBox = event.target.getAttribute("value");
-    setModalState((prev) => {
-      return isCloseBox === "CloseBox" ? !prev : prev;
-    });
+  const closeModal = (e) => {
+    // const isCloseBox = event.target.value;
+    console.log(e);
+    e.stopPropagation();
+    // setModalState((prev) => {
+    //   return !prev;
+    // });
+    // setModalState((prev) => {
+    //   return isCloseBox === "CloseBox" ? !prev : prev;
+    // });
   };
 
   const openSignModal = () => {

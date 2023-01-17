@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
+import { EditorState, convertToRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import TextField from "@mui/material/TextField";
+import parse from "html-react-parser";
 import { Card, CardContent, Grid } from "@mui/material";
 import { FunctionComponent } from "react";
+import draftToHtml from "draftjs-to-html";
 
 interface FormThreeProps {
   changeNewEventDescription: (value: any) => void;
@@ -13,19 +14,23 @@ interface FormThreeProps {
     date: Date;
     price: string;
     ageGroup: string;
-    description: EditorState;
+    description: string;
     maxAttendees: string;
   };
 }
 
 export const FormThree: FunctionComponent<FormThreeProps> = (props) => {
   let { changeNewEventDescription, newEvent } = props;
+
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createEmpty()
   );
 
-  function handleChange(value) {
+  function handleChange(value: EditorState) {
     setEditorState(value);
+    changeNewEventDescription(
+      draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    );
   }
   return (
     <>
@@ -35,14 +40,15 @@ export const FormThree: FunctionComponent<FormThreeProps> = (props) => {
             <CardContent>
               <Editor
                 editorStyle={{ height: "300px", width: "100%" }}
-                editorState={newEvent.description}
+                editorState={editorState}
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"
-                onEditorStateChange={changeNewEventDescription}
+                onEditorStateChange={handleChange}
               />
             </CardContent>
           </Card>
+          <div>{parse(newEvent.description)}</div>
         </Grid>
       </Grid>
     </>

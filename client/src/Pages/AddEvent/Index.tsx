@@ -25,7 +25,7 @@ export default function EventForm() {
     date: dayjs(),
     price: "",
     ageGroup: "",
-    description: EditorState.createEmpty(),
+    description: "",
     maxAttendees: "",
   });
   const [tags, setTags] = useState<{ tags: string[]; keywords: string[] }>({

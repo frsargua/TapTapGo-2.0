@@ -17,7 +17,7 @@ export const Navbar: FunctionComponent<NavbarProps> = () => {
   const [anchorElementForUserMenu, setAnchorElUser] = useState<Element | null>(
     null
   );
-  const [logged, setLogged] = useState(true);
+  const [logged, setLogged] = useState(false);
   const [avatarImg, setAvatarImg] = useState("");
 
   const pagesNotLogged = [
@@ -55,25 +55,27 @@ export const Navbar: FunctionComponent<NavbarProps> = () => {
         {/* For Desktop */}
         <RenderLogo />
         <Toolbar>
-          {logged ? (
-            <LoggedBar
-              closeNavMenu={closeNavMenu}
-              openBookmarkModal={openBookmarkModal}
-              pages={logged ? pagesLogged : pagesNotLogged}
-            />
-          ) : (
+          {logged && (
+            <>
+              <LoggedBar
+                closeNavMenu={closeNavMenu}
+                openBookmarkModal={openBookmarkModal}
+                pages={logged ? pagesLogged : pagesNotLogged}
+              />
+              <AvatarMenu
+                closeDropDownUserMenu={closeDropDownUserMenu}
+                openDropDownUserMenu={openDropDownUserMenu}
+                anchorElementForUserMenu={anchorElementForUserMenu}
+                avatar={avatarImg}
+              />
+            </>
+          )}
+          {!logged && (
             <NotLoggedBar
               closeNavMenu={closeNavMenu}
               openSignModal={openSignModal}
             />
           )}
-
-          <AvatarMenu
-            closeDropDownUserMenu={closeDropDownUserMenu}
-            openDropDownUserMenu={openDropDownUserMenu}
-            anchorElementForUserMenu={anchorElementForUserMenu}
-            avatar={avatarImg}
-          />
         </Toolbar>
       </Toolbar>
     </Container>

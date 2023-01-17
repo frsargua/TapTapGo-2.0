@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
+import { Modals } from "./Components/Common/Modals";
 import { TextEditor } from "./Components/Common/TextEditor";
 import { Navbar } from "./Components/Navbar/Index";
 import { ModalProvider } from "./contexts/ModalContext";
@@ -14,6 +15,7 @@ function App() {
     <>
       <ModalProvider>
         <Router>
+          <Modals />
           <Navbar />
           <Routes>
             <Route path="/" element={<Landing />} />

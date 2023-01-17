@@ -1,10 +1,7 @@
-import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
-
-import { AvatarMenu } from "./AvatarMenu";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
-import React, { ChangeEvent, FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 
 interface LoggedBarProps {
   closeNavMenu: () => void;
