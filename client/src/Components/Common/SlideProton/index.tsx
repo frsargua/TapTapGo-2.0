@@ -3,8 +3,8 @@ import { ChangeEvent } from "react";
 import { FunctionComponent } from "react";
 
 interface SliderProtonProps {
-  value: number;
-  changePrice: (e: ChangeEvent<any>) => void;
+  value: number[];
+  changePrice: (e: Event, newValue: number | number[]) => void;
 }
 
 const SliderProton: FunctionComponent<SliderProtonProps> = ({
@@ -15,7 +15,7 @@ const SliderProton: FunctionComponent<SliderProtonProps> = ({
     <div>
       <Slider
         value={value}
-        onChange={changePrice}
+        onChange={(event, number) => changePrice(event, number)}
         valueLabelDisplay="on"
         min={0}
         max={100}

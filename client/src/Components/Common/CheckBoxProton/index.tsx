@@ -1,15 +1,16 @@
 import { Checkbox, FormControlLabel } from "@mui/material";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { FunctionComponent } from "react";
 
 interface CheckboxProtonProps {
-  changeChecked: (id: ChangeEvent<any>) => void;
-  cuisine: { checked: boolean; label: string; id: string };
+  changeChecked: (id: number) => void;
+  cuisine: { id: number; checked: boolean; label: string };
 }
 
 const CheckboxProton: FunctionComponent<CheckboxProtonProps> = (props) => {
-  const { changeChecked, cuisine } = props;
-  const { checked, label, id } = cuisine;
+  let { changeChecked, cuisine } = props;
+  let { checked, label, id } = cuisine;
+
   return (
     <div>
       <FormControlLabel
@@ -28,7 +29,9 @@ const CheckboxProton: FunctionComponent<CheckboxProtonProps> = (props) => {
             sx={{
               color: "#000",
             }}
-            onChange={() => changeChecked(id)}
+            onChange={() => {
+              changeChecked(+id);
+            }}
             inputProps={{ "aria-label": "checkbox with small size" }}
           />
         }

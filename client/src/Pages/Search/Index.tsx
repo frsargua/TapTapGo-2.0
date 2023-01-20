@@ -14,46 +14,57 @@ import { Link, useParams } from "react-router-dom";
 import { SingleEventCard } from "../../Components/EventCard";
 import { FilterPanel } from "../../Components/Landing/FilterPanel/Index";
 import { SearchBar } from "../../Components/Landing/Search";
-import { dataList } from "../../Constants/Index";
+import { dataList, categories } from "../../Constants/Index";
 
 interface SearchProps {}
 
-const Search: FunctionComponent<SearchProps> = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>(null);
-  const [selectedRating, setSelectedRating] = useState<number>(null);
-  const [selectedPrice, setSelectedPrice] = useState<number[]>([0, 100]);
-  const [cuisines, setCuisines] = useState<
-    { id: number; checked: boolean; label: string }[]
-  >([
-    { id: 1, checked: false, label: "Bachata" },
-    { id: 2, checked: false, label: "Salsa" },
-    { id: 3, checked: false, label: "Kizomba" },
-  ]);
-  const [list, setList] = useState(dataList);
+interface CategoryProps {
+  id: number;
+  checked: boolean;
+  label: string;
+}
 
+const Search: FunctionComponent<SearchProps> = () => {
+  const [selectedFrequency, setSelectedFrequency] = useState<string | null>(
+    null
+  );
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoryProps[]>(categories);
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const [selectedPrice, setSelectedPrice] = useState<number[]>([0, 100]);
+  const [list, setList] = useState(dataList);
   const [resultsFound, setResultsFound] = useState(true);
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState<string>("");
 
   const { city } = useParams();
 
-  const handleSelectCategory = (event, value) =>
-    !value ? null : setSelectedCategory(value);
-
-  const handleSelectRating = (event, value) => {
-    console.log(value);
-    !value ? null : setSelectedRating(value);
+  const handleSelectCategory = (event: ChangeEvent<any>, value: string) => {
+    if (selectedFrequency == value) {
+      setSelectedFrequency(null);
+    } else {
+      !value ? null : setSelectedFrequency(value);
+    }
   };
 
-  const handleChangeChecked = (id) => {
-    const cusinesStateList = cuisines;
-    const changeCheckedCuisines = cusinesStateList.map((item) =>
-      item.id === id ? { ...item, checked: !item.checked } : item
+  const handleSelectRating = (event: ChangeEvent<any>, value: number) => {
+    if (selectedRating == value) {
+      setSelectedRating(null);
+    } else {
+      !value ? null : setSelectedRating(value);
+    }
+  };
+
+  const handleChangeChecked = (id: number) => {
+    const categoriesStateList = selectedCategory;
+    console.log(categoriesStateList);
+    const changeCheckedCategories = categoriesStateList.map((item) =>
+      item.id == id ? { ...item, checked: !item.checked } : item
     );
-    setCuisines(changeCheckedCuisines);
+    setSelectedCategory(changeCheckedCategories);
   };
 
-  const handleChangePrice = (event, value) => {
-    setSelectedPrice(value);
+  const handleChangePrice = (e: Event, newValue: number | number[]) => {
+    setSelectedPrice(newValue as number[]);
   };
 
   const applyFilters = () => {
@@ -61,26 +72,23 @@ const Search: FunctionComponent<SearchProps> = () => {
 
     // Rating Filter
     if (selectedRating) {
-      updatedList = updatedList.filter(
-        (item) => parseInt(item.rating) >= parseInt(selectedRating)
-      );
+      updatedList = updatedList.filter((item) => item.rating >= selectedRating);
     }
 
+    // Frequency Filter
+    if (selectedFrequency) {
+      updatedList = updatedList.filter(
+        (item) => item.frequency === selectedFrequency
+      );
+    }
     // Category Filter
-    if (selectedCategory) {
-      updatedList = updatedList.filter(
-        (item) => item.category === selectedCategory
-      );
-    }
-
-    // Cuisine Filter
-    const cuisinesChecked = cuisines
+    const categoryChecked = selectedCategory
       .filter((item) => item.checked)
       .map((item) => item.label.toLowerCase());
 
-    if (cuisinesChecked.length) {
+    if (categoryChecked.length) {
       updatedList = updatedList.filter((item) =>
-        cuisinesChecked.includes(item.cuisine)
+        categoryChecked.includes(item.category.toLowerCase())
       );
     }
 
@@ -102,6 +110,7 @@ const Search: FunctionComponent<SearchProps> = () => {
       (item) => item.price >= minPrice && item.price <= maxPrice
     );
 
+    // Updating state
     setList(updatedList);
 
     !updatedList.length ? setResultsFound(false) : setResultsFound(true);
@@ -109,7 +118,14 @@ const Search: FunctionComponent<SearchProps> = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [selectedRating, selectedCategory, cuisines, searchInput, selectedPrice]);
+  }, [
+    selectedRating,
+    selectedFrequency,
+    selectedCategory,
+    searchInput,
+    selectedPrice,
+  ]);
+
   return (
     <>
       <Container maxWidth="xl">
@@ -148,12 +164,12 @@ const Search: FunctionComponent<SearchProps> = () => {
               </Link>
 
               <FilterPanel
+                selectedFrequency={selectedFrequency}
                 selectedCategory={selectedCategory}
-                selectCategory={handleSelectCategory}
                 selectedRating={selectedRating}
                 selectedPrice={selectedPrice}
+                selectCategory={handleSelectCategory}
                 selectRating={handleSelectRating}
-                cuisines={cuisines}
                 changeChecked={handleChangeChecked}
                 changePrice={handleChangePrice}
               />
@@ -192,12 +208,12 @@ const Search: FunctionComponent<SearchProps> = () => {
                 }}
               >
                 <FilterPanel
+                  selectedFrequency={selectedFrequency}
                   selectedCategory={selectedCategory}
-                  selectCategory={handleSelectCategory}
                   selectedRating={selectedRating}
                   selectedPrice={selectedPrice}
+                  selectCategory={handleSelectCategory}
                   selectRating={handleSelectRating}
-                  cuisines={cuisines}
                   changeChecked={handleChangeChecked}
                   changePrice={handleChangePrice}
                 />

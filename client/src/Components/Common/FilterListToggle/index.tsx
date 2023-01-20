@@ -4,8 +4,8 @@ import { FunctionComponent } from "react";
 
 interface FilterListToggleProps {
   options: { label: string; id: string; value: string }[];
-  value: number;
-  selectToggle: (event: ChangeEvent<any>, value: number) => void;
+  value: string | number | null;
+  selectToggle: (event: ChangeEvent<any>, value: string) => void;
 }
 
 const FilterListToggle: FunctionComponent<FilterListToggleProps> = (props) => {
@@ -25,7 +25,9 @@ const FilterListToggle: FunctionComponent<FilterListToggleProps> = (props) => {
         <ToggleButton
           key={id}
           value={value}
-          onClick={selectToggle}
+          onClick={(event, value) => {
+            selectToggle(event, value);
+          }}
           sx={{
             fontSize: ".8rem",
             marginBottom: "0.5rem",

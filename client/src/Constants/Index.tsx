@@ -16,6 +16,12 @@ export const categoryList = [
   },
 ];
 
+export const categories = [
+  { id: 1, checked: false, label: "Bachata" },
+  { id: 2, checked: false, label: "Salsa" },
+  { id: 3, checked: false, label: "Kizomba" },
+];
+
 export const options = [
   { id: 1, value: "bookmarks", label: "Bookmark" },
   { id: 2, value: "yourEvents", label: "Your Events" },
@@ -119,6 +125,8 @@ export const dataList = [
   {
     eventName: "Salsa Night",
     price: 15,
+    frequency: "Monthly",
+    category: "Bachata",
     rating: 4.5,
     _id: "123abc",
     createdById: "456def",
@@ -157,6 +165,8 @@ export const dataList = [
     eventName: "Tango Evening",
     price: 20,
     rating: 4.0,
+    frequency: "Monthly",
+    category: "Salsa",
     _id: "789ghi",
     createdById: "101112",
     reviews: [
@@ -196,6 +206,8 @@ export const dataList = [
     price: 25,
     rating: 4.5,
     _id: "131415",
+    frequency: "Weekly",
+    category: "Kizomba",
     createdById: "161718",
     reviews: [
       { rating: 5.0 },
@@ -233,6 +245,8 @@ export const dataList = [
     eventName: "latin Dance Party",
     price: 30,
     rating: 4.0,
+    frequency: "Weekly",
+    category: "Salsa",
     _id: "19202122",
     createdById: "232425",
     reviews: [
@@ -271,6 +285,8 @@ export const dataList = [
     price: 35,
     rating: 4.0,
     _id: "19202198",
+    frequency: "Specials",
+    category: "Salsa",
     createdById: "232425",
     reviews: [
       { rating: 4.5 },
@@ -308,6 +324,8 @@ export const dataList = [
     price: 30,
     rating: 4.0,
     _id: "19202152",
+    frequency: "Weekly",
+    category: "Kizomba",
     createdById: "232425",
     reviews: [
       { rating: 4.5 },
@@ -344,6 +362,8 @@ export const dataList = [
     eventName: "Bachata Party",
     price: 30,
     rating: 4.0,
+    frequency: "Weekly",
+    category: "Bachata",
     _id: "19208922",
     createdById: "232425",
     reviews: [
