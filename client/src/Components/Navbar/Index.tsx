@@ -17,7 +17,7 @@ export const Navbar: FunctionComponent<NavbarProps> = () => {
   const [anchorElementForUserMenu, setAnchorElUser] = useState<Element | null>(
     null
   );
-  const [logged, setLogged] = useState(false);
+  const [logged, setLogged] = useState(true);
   const [avatarImg, setAvatarImg] = useState("");
 
   const pagesNotLogged = [

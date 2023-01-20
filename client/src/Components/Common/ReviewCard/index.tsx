@@ -14,7 +14,7 @@ interface ReviewCardProps {
   rating: number;
   username: string;
   reviewText: string;
-  postedBy: Date;
+  postedBy: string;
   _id: string;
 }
 

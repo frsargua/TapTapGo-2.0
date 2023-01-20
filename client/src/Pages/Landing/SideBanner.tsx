@@ -33,7 +33,7 @@ export const SideBanner: React.FunctionComponent = () => {
           cols={item.cols}
           rows={item.rows}
         >
-          <Link to={`/search-by-city/${item.title}`}>
+          <Link to={`/search/${item.title}`}>
             <img
               {...srcset(item.img, 121, item.rows, item.cols)}
               alt={item.title}

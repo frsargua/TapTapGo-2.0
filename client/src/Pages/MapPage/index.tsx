@@ -12,7 +12,14 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { FunctionComponent, useRef, useState, MouseEvent } from "react";
+import React, {
+  FunctionComponent,
+  useRef,
+  useState,
+  MouseEvent,
+  ReactNode,
+  MutableRefObject,
+} from "react";
 import { SingleEventCard } from "../../Components/EventCard";
 import { MapPage } from "./MapPage";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
@@ -23,7 +30,7 @@ interface MapProps {}
 
 export const Map: FunctionComponent<MapProps> = () => {
   let [selected, setSelected] = useState<string>("");
-  const inputEl = useRef(null);
+  const inputEl = useRef<MutableRefObject<ReactNode>>(null);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 

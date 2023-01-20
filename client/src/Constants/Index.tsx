@@ -52,6 +52,69 @@ export const ratingList = [
   },
 ];
 
+export const singleEvent = {
+  eventName: "error quo repudiandae",
+  location: {
+    streetName: "Clotilde Glen",
+    cityName: "London",
+    postcode: "IY1 8YT",
+    coordinates: { lat: 51.509865, lng: -0.118092 },
+    __typename: "LocationEvent",
+  },
+  description:
+    "Officiis deserunt rerum sunt ipsam assumenda. Magnam occaecati commodi autem amet. Natus dolorum voluptatem quisquam cupiditate odit maiores sunt vitae sint. Similique neque explicabo amet ullam eligendi et. Natus dolor laudantium sed vel a nesciunt. Non est laboriosam minus rerum est non reprehenderit asperiores.",
+  date: "21/10/2022",
+  price: 216,
+  ageGroup: "Teenagers",
+  createdById: {
+    username: "Julie0",
+    myEvents: [],
+    websiteUrl: "pushy-splendor.info",
+    profileAvatar:
+      "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/638.jpg",
+    __typename: "User",
+  },
+  images: [
+    {
+      imageLink: "https://loremflickr.com/640/480/city",
+      __typename: "Image",
+    },
+    {
+      imageLink: "https://loremflickr.com/640/480/city",
+      __typename: "Image",
+    },
+    {
+      imageLink: "https://loremflickr.com/640/480/city",
+      __typename: "Image",
+    },
+    {
+      imageLink: "https://loremflickr.com/640/480/city",
+      __typename: "Image",
+    },
+  ],
+  reviews: [
+    {
+      _id: "6327abc8736e513034bd314e",
+      postedBy: "6327abb8736e513034bd2e18",
+      username: "Ralph.Ratke",
+      title: "Quos rerum dolor debitis cumque quam eum modi quaerat.",
+      reviewText:
+        "Et id id voluptatum nam ipsum. Iste dolorem iusto quis. Reiciendis explicabo eos quo dicta distinctio consequatur aut. Deleniti quo sint officiis. Autem quod voluptates.",
+      rating: 2,
+      __typename: "Review",
+    },
+  ],
+  attendees: 80,
+  tags: [
+    {
+      tagName: "Folk Dance",
+      events: [],
+      __typename: "Tag",
+    },
+  ],
+  __typename: "Event",
+};
+
 export const dataList = [
   {
     eventName: "Salsa Night",

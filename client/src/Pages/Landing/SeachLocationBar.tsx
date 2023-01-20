@@ -13,8 +13,10 @@ export const SearchLocation: React.FunctionComponent<SearchLocationProps> = (
   const { ref: CityResult } = usePlacesWidget({
     apiKey: "AIzaSyDcRJmo8djXEFoiqOaEa83XWA-qo2AK9qE",
     onPlaceSelected: (place) => {
-      const city = place.formatted_address.split(",")[0];
-      updateLocation(city);
+      const city = place?.formatted_address?.split(",")[0];
+      if (city) {
+        updateLocation(city);
+      }
     },
     inputAutocompleteValue: "country",
     options: {

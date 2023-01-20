@@ -1,4 +1,13 @@
-import { useState, useMemo, useCallback, useRef, useEffect, FC } from "react";
+import {
+  useState,
+  useMemo,
+  useCallback,
+  useRef,
+  useEffect,
+  FC,
+  ReactNode,
+  MutableRefObject,
+} from "react";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -20,7 +29,7 @@ type MapOptions = google.maps.MapOptions;
 interface SearchProps {
   markerData: any[];
   setSelected: (s: string) => void;
-  inputEl: any;
+  inputEl: MutableRefObject<ReactNode>;
 }
 export default function Map(props: SearchProps) {
   let { markerData, inputEl, setSelected } = props;

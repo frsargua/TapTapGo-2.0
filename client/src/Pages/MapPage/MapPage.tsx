@@ -1,11 +1,11 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { useLoadScript } from "@react-google-maps/api";
-import { FunctionComponent } from "react";
+import { FunctionComponent, MutableRefObject, ReactNode } from "react";
 import Map from "../../Components/Common/Map/index";
 import { dataList } from "../../Constants/Index";
 
 interface MapPageProps {
-  // dataList: any[];
+  inputEl: MutableRefObject<ReactNode>;
   setSelected: (s: string) => void;
 }
 

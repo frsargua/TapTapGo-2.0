@@ -1,11 +1,9 @@
-import * as React from "react";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import { Card, CardContent, Grid, Toolbar } from "@mui/material";
-import Select from "@mui/material/Select";
+import Select, { SelectChangeEvent, SelectProps } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
@@ -15,20 +13,19 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { ChangeEvent, FunctionComponent } from "react";
 import SideAnimation from "./SideAnimation";
-import { AddressSearch } from "./AddressSearch";
+import { Dayjs } from "dayjs";
 
 interface FormOneProps {
-  updateState: (event: ChangeEvent, setter: () => void) => void;
-  changeNewEvent: (event: ChangeEvent) => void;
-  handleKeywords: (event: ChangeEvent) => void;
+  changeNewEvent: (event: ChangeEvent<any> | SelectChangeEvent<string>) => void;
+  handleKeywordsSelected: (event: SelectChangeEvent<string[]>) => void;
   updateImage: (arrayImgs: any[]) => void;
-  updateDate: (input: Date) => void;
-  tags: { tags: string[]; keywords: string[] };
+  updateDate: (input: Dayjs | null) => void;
+  tags: { tags: number[]; keywords: string[] };
   keywords: { tagName: string; label: string }[];
   imageUpload: any[];
   newEvent: {
     eventName: string;
-    date: Date;
+    date: Dayjs;
     price: string;
     ageGroup: string;
     description: string;
@@ -41,7 +38,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
     changeNewEvent,
     tags,
     keywords,
-    handleKeywords,
+    handleKeywordsSelected,
     updateImage,
     updateDate,
     imageUpload,
@@ -76,7 +73,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                   label="Start date"
                   disablePast
                   value={newEvent.date}
-                  onChange={(newValue) => updateDate(newValue)}
+                  onChange={updateDate}
                   renderInput={(params) => (
                     <TextField margin="dense" fullWidth {...params} />
                   )}
@@ -110,7 +107,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                     value={newEvent.ageGroup}
                     label="Age"
                     name="ageGroup"
-                    onChange={(value) => changeNewEvent(value)}
+                    onChange={changeNewEvent}
                   >
                     <MenuItem value={"Teenagers"}>Teenagers</MenuItem>
                     <MenuItem value={"Adult"}>Adult</MenuItem>
@@ -124,20 +121,15 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                   labelId="tags"
                   multiple
                   value={tags.keywords}
-                  onChange={handleKeywords}
+                  onChange={handleKeywordsSelected}
                   input={<OutlinedInput id="tags" label="tags" />}
-                  renderValue={(selected, index) => {
-                    return (
-                      <Box
-                        key={index}
-                        sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
-                      >
-                        {selected.map((value, i) => {
-                          return <Chip key={i} label={value} />;
-                        })}
-                      </Box>
-                    );
-                  }}
+                  renderValue={(selected: string[]) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value, i) => {
+                        return <Chip key={i} label={value} />;
+                      })}
+                    </Box>
+                  )}
                 >
                   {keywords.map((keyword, index) => (
                     <MenuItem key={index} value={keyword.tagName}>

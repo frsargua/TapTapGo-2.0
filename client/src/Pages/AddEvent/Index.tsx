@@ -1,6 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import { Button, Card, CardContent, Container, Grid } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Grid,
+  SelectChangeEvent,
+  SelectProps,
+} from "@mui/material";
 import { storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
@@ -10,17 +18,49 @@ import { FormThree } from "../../Components/AddEvent/FormThree";
 import { ChangeEvent, useRef, useState } from "react";
 import { Box } from "@mui/system";
 import { FormTwo } from "../../Components/AddEvent/FormTwo";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
-export default function EventForm() {
+type newEventProps = {
+  eventName: string;
+  date: dayjs;
+  price: string;
+  ageGroup: string;
+  description: string;
+  maxAttendees: string;
+};
+type EventAddressProps = {
+  country: string;
+  buildingNumber: string;
+  firstLine: string;
+  secondLine: string;
+  cityName: string;
+  postcode: string;
+};
+type ImageUploadProps = {
+  imageLink: string;
+};
+
+type keywordsProps = {
+  tagName: string;
+  label: string;
+  _id: number;
+};
+
+type tagsProps = {
+  tags: number[];
+  keywords: string[];
+};
+
+export function AddEvent() {
   const navigate = useNavigate();
 
   const completeEventInformation = useRef();
 
-  const [keywords, setKeywords] = useState([
-    { tagName: "1", label: "Bachata" },
+  const [keywords, setKeywords] = useState<keywordsProps[]>([
+    { tagName: "Bachata", label: "Bachata", _id: 1 },
+    { tagName: "Salsa", label: "Salsa", _id: 2 },
   ]);
-  const [newEvent, setNewEvent] = useState({
+  const [newEvent, setNewEvent] = useState<newEventProps>({
     eventName: "",
     date: dayjs(),
     price: "",
@@ -28,11 +68,11 @@ export default function EventForm() {
     description: "",
     maxAttendees: "",
   });
-  const [tags, setTags] = useState<{ tags: string[]; keywords: string[] }>({
+  const [tags, setTags] = useState<tagsProps>({
     tags: [],
     keywords: [],
   });
-  const [eventAddress, setAddress] = useState({
+  const [eventAddress, setAddress] = useState<EventAddressProps>({
     country: "",
     buildingNumber: "",
     firstLine: "",
@@ -41,21 +81,14 @@ export default function EventForm() {
     postcode: "",
   });
 
-  const [imageUpload, setImageUpload] = useState([]);
-  const [formNumber, setFormNumber] = useState<number>(3);
+  const [imageUpload, setImageUpload] = useState<ImageUploadProps[]>([]);
+  const [formNumber, setFormNumber] = useState<number>(1);
 
-  const updateState = (event, setter) => {
-    const { value, name } = event.target;
-    let valueX = value;
-    if (name === "price" || name === "maxAttendees") {
-      valueX = parseInt(value);
-    }
-    setter((prev) => {
-      return { ...prev, [name]: valueX };
-    });
+  const handleNextForm = () => {
+    setFormNumber((prev) => prev + 1);
   };
 
-  const handleAddressChange = (event) => {
+  const handleAddressChange = (event: ChangeEvent<any>) => {
     const { value, name } = event.target;
 
     setAddress((prev) => {
@@ -63,15 +96,13 @@ export default function EventForm() {
     });
   };
 
-  const handleNextForm = () => {
-    setFormNumber((prev) => prev + 1);
-  };
-
   const handlePreviousForm = () => {
     setFormNumber((prev) => prev - 1);
   };
 
-  const changeNewEvent = (event: ChangeEvent<any>) => {
+  const changeNewEvent = (
+    event: ChangeEvent<any> | SelectChangeEvent<string>
+  ) => {
     const { value, name } = event.target;
     let valueX = value;
     if (name === "price" || name === "maxAttendees") {
@@ -82,33 +113,32 @@ export default function EventForm() {
     });
   };
 
-  const changeNewEventDescription = (value: EditorState) => {
-    console.log(value);
+  const changeNewEventDescription = (value: string) => {
     setNewEvent((prev) => {
       return { ...prev, description: value };
     });
   };
 
-  const handleImagesUploaded = (arrayImgs: any[]) => {
+  const handleImagesUploaded = (arrayImgs: ImageUploadProps[]) => {
     setImageUpload(arrayImgs);
   };
 
-  const handleKeywordsSelected = (event) => {
-    const { value } = event.target;
-    let tagId = value.map((key) => {
+  const handleKeywordsSelected = (event: SelectChangeEvent<string[]>) => {
+    const tagNameArray = event.target.value as string[];
+    let tagId = tagNameArray.map((key) => {
       let answer = keywords.find((el) => el.tagName === key);
-      return answer._id;
-    });
-    setTags((prev) => {
-      return { ...prev, keywords: value, tags: tagId };
-    });
+      return answer?._id;
+    }) as number[];
+
+    setTags({ keywords: tagNameArray, tags: tagId });
   };
 
-  function handleEventDate(input: Date) {
-    let date = new Date(input);
-    setNewEvent((prev) => {
-      return { ...prev, date: date };
-    });
+  function handleEventDate(input: Dayjs | null) {
+    if (input !== null) {
+      setNewEvent((prev) => {
+        return { ...prev, date: input.format("YYYY-MM-DD") };
+      });
+    }
   }
 
   function renderForm() {
@@ -116,14 +146,13 @@ export default function EventForm() {
       case 1:
         return (
           <FormOne
-            updateState={updateState}
             changeNewEvent={changeNewEvent}
             newEvent={newEvent}
             updateDate={handleEventDate}
             imageUpload={imageUpload}
             tags={tags}
             keywords={keywords}
-            handleKeywords={handleKeywordsSelected}
+            handleKeywordsSelected={handleKeywordsSelected}
             updateImage={handleImagesUploaded}
           />
         );

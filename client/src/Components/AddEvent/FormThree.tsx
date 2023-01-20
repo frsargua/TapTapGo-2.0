@@ -6,12 +6,13 @@ import parse from "html-react-parser";
 import { Card, CardContent, Grid } from "@mui/material";
 import { FunctionComponent } from "react";
 import draftToHtml from "draftjs-to-html";
+import { Dayjs } from "dayjs";
 
 interface FormThreeProps {
   changeNewEventDescription: (value: any) => void;
   newEvent: {
     eventName: string;
-    date: Date;
+    date: Dayjs;
     price: string;
     ageGroup: string;
     description: string;
