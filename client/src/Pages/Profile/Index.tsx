@@ -1,14 +1,12 @@
-import { Grid } from "@mui/material";
-import { ReactNode, useState } from "react";
 import { Banner } from "../../Components/Profile/Banner";
 import { AboutUser } from "../../Components/Profile/AboutUser";
-import { ReviewForm } from "../../Components/Common/ReviewForm/index";
 import { ReviewCard } from "../../Components/Common/ReviewCard/index";
-import { SingleEventCard } from "../../Components/EventCard/index";
-import { FunctionComponent } from "react";
-import { Box, Container } from "@mui/system";
+import { SingleEventCard } from "../../Components/Common/EventCard/index";
 import { options } from "../../Constants/Index";
-import { useEffect } from "react";
+import { Grid } from "@mui/material";
+import { Box, Container } from "@mui/system";
+import { ReactNode, useState, FunctionComponent, useEffect } from "react";
+
 interface ProfileDashBoardProps {}
 
 export const ProfileDashBoard: FunctionComponent<

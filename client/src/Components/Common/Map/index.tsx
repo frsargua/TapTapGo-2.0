@@ -1,13 +1,4 @@
-import {
-  useState,
-  useMemo,
-  useCallback,
-  useRef,
-  useEffect,
-  FC,
-  ReactNode,
-  MutableRefObject,
-} from "react";
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -19,18 +10,18 @@ import {
   Circle,
   MarkerClusterer,
 } from "@react-google-maps/api";
-import Distance from "../Distance/index";
+
 import { useParams } from "react-router-dom";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
 type MapOptions = google.maps.MapOptions;
-
-interface SearchProps {
+type SearchProps = {
   markerData: any[];
   setSelected: (s: string) => void;
-  inputEl: MutableRefObject<ReactNode>;
-}
+  inputEl: any;
+};
+
 export default function Map(props: SearchProps) {
   let { markerData, inputEl, setSelected } = props;
   const { cityName } = useParams<string>();
@@ -45,14 +36,13 @@ export default function Map(props: SearchProps) {
     debounce: 300,
   });
 
-  const getLatLongFromString = async (
-    val: string
-  ): Promise<{ lat: string; lng: string }> => {
+  const getLatLongFromString = async (val: string): Promise<any> => {
     setValue(val, false);
     clearSuggestions();
+
     const results = await getGeocode({ address: val });
-    console.log(results);
     const { lat, lng } = await getLatLng(results[0]);
+
     setLocalisation({ lat, lng });
     setOffice({ lat, lng });
   };
@@ -71,7 +61,7 @@ export default function Map(props: SearchProps) {
     }),
     []
   );
-  const onLoad = useCallback((map) => (mapRef.current = map), []);
+  const onLoad = useCallback((map: any) => (mapRef.current = map), []);
 
   const fetchDirections = (house: LatLngLiteral) => {
     if (!office) return;
@@ -122,20 +112,22 @@ export default function Map(props: SearchProps) {
               />
 
               <MarkerClusterer>
-                {(clusterer) =>
-                  markerData.map((house) => (
-                    <Marker
-                      key={house._id}
-                      position={house.coordinates}
-                      clusterer={clusterer}
-                      onClick={() => {
-                        fetchDirections(house);
-                        setSelected(house._id);
-                        inputEl.current.focus();
-                      }}
-                    />
-                  ))
-                }
+                {(clusterer) => (
+                  <div>
+                    {markerData.map((house) => (
+                      <Marker
+                        key={house._id}
+                        position={house.coordinates}
+                        clusterer={clusterer}
+                        onClick={() => {
+                          fetchDirections(house);
+                          setSelected(house._id);
+                          inputEl?.current?.focus();
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
               </MarkerClusterer>
 
               <Circle center={office} radius={5000} options={closeOptions} />

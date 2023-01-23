@@ -1,6 +1,6 @@
 import { Stack } from "@mui/system";
 import { Grid, Typography } from "@mui/material";
-import { SingleEventCard } from "../EventCard/index";
+import { SingleEventCard } from "../Common/EventCard/index";
 import React, { FunctionComponent, useEffect } from "react";
 
 interface SuggestionsSectionProps {

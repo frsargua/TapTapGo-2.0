@@ -12,7 +12,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { ChangeEvent, FunctionComponent } from "react";
-import SideAnimation from "./SideAnimation";
+import SideAnimation from "./FirstSideAnimation";
 import { Dayjs } from "dayjs";
 
 interface FormOneProps {

@@ -19,8 +19,9 @@ import React, {
   MouseEvent,
   ReactNode,
   MutableRefObject,
+  Ref,
 } from "react";
-import { SingleEventCard } from "../../Components/EventCard";
+import { SingleEventCard } from "../../Components/Common/EventCard";
 import { MapPage } from "./MapPage";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { dataList } from "../../Constants/Index";
@@ -30,8 +31,7 @@ interface MapProps {}
 
 export const Map: FunctionComponent<MapProps> = () => {
   let [selected, setSelected] = useState<string>("");
-  const inputEl = useRef<MutableRefObject<ReactNode>>(null);
-
+  const inputEl = useRef<any>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenu = (event: MouseEvent<HTMLElement>) => {

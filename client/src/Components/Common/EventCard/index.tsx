@@ -10,7 +10,7 @@ import Rating from "@mui/material/Rating";
 import { CardActionArea } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { RenderBookmarkIcon } from "./ToggleHeart";
-import { averageRatingFromDB, selectRandomImage } from "../../utils";
+import { averageRatingFromDB, selectRandomImage } from "../../../utils";
 import { FunctionComponent } from "react";
 
 interface SingleEventCardProps {

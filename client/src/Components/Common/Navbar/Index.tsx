@@ -2,7 +2,7 @@ import { useContext, ChangeEvent, useState, ReactNode } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
-import { ModalContext } from "../../contexts/ModalContext";
+import { ModalContext } from "../../../contexts/ModalContext";
 import { RenderMobileMenu } from "./RenderMobileMenu";
 import { RenderLogo } from "./RenderLogo";
 import { NotLoggedBar } from "./NotLoggedBar";
@@ -24,7 +24,10 @@ export const Navbar: FunctionComponent<NavbarProps> = () => {
     { title: "How it works?", directory: "How-it-works" },
     { title: "Add event", directory: "new-event" },
   ];
-  const pagesLogged = [{ title: "How it works?", directory: "How-it-works" }];
+  const pagesLogged = [
+    { title: "How it works?", directory: "How-it-works" },
+    { title: "Create Event", directory: "createEvent" },
+  ];
 
   const openNavMenu = (event: ChangeEvent<any>) => {
     setAnchorElNav(event.currentTarget);
@@ -43,7 +46,7 @@ export const Navbar: FunctionComponent<NavbarProps> = () => {
 
   return (
     <Container maxWidth="xl">
-      <Toolbar disableGutters>
+      <Toolbar disableGutters sx={{ mb: "0.5rem" }}>
         {/* For mobile */}
         <RenderMobileMenu
           openNavMenu={openNavMenu}

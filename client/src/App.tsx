@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Modals } from "./Components/Common/Modals";
 import { TextEditor } from "./Components/Common/TextEditor";
-import { Navbar } from "./Components/Navbar/Index";
+import { Navbar } from "./Components/Common/Navbar/Index";
 import { ModalProvider } from "./contexts/ModalContext";
 import { AddEvent } from "./Pages/AddEvent/Index";
 import EventPage from "./Pages/EventPage";

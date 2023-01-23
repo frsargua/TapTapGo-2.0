@@ -32,7 +32,7 @@ export default function SideAnimation() {
     ref.current = [];
     set([]);
     ref.current.push(
-      setTimeout(() => set(["Bachata", "Salsa", "Kizomba"]), 3000)
+      setTimeout(() => set(["Bachata", "Salsa", "Kizomba"]), 1000)
     );
     ref.current.push(setTimeout(() => set(["Salsa", "Kizomba"]), 9000));
     ref.current.push(

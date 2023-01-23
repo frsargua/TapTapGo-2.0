@@ -1,19 +1,12 @@
-import {
-  Button,
-  Container,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { ChangeEvent, useEffect } from "react";
 import { FunctionComponent } from "react";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { SingleEventCard } from "../../Components/EventCard";
-import { FilterPanel } from "../../Components/Landing/FilterPanel/Index";
-import { SearchBar } from "../../Components/Landing/Search";
+import { SingleEventCard } from "../../Components/Common/EventCard";
+import { FilterPanel } from "../../Components/Search/FilterPanel/Index";
+import { SearchBar } from "../../Components/Search/SearchBar";
 import { dataList, categories } from "../../Constants/Index";
 
 interface SearchProps {}
