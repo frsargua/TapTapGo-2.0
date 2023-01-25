@@ -34,7 +34,13 @@ export const typeDefs = `
     password: String!
   }
 
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+  
   type Mutation {
     createUser(input: CreateUserInput!): Auth
+    login(input: LoginInput!): Auth
   }
 `;
