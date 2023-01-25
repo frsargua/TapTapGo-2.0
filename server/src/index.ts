@@ -28,7 +28,7 @@ const server = new ApolloServer<MyContext>({
 
 const init = async (): Promise<void> => {
   try {
-    await sequelize.sync();
+    await sequelize.sync({ force: true });
     await server.start();
 
     app.use(

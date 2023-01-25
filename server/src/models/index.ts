@@ -1,16 +1,15 @@
-import sequelize from "../config/db";
-import { DataTypes } from "sequelize";
+const User = require("./User");
+const Address = require("./Address");
+const UserAddress = require("./UserAddress");
+const Review = require("./Review");
 
-export const User = sequelize.define("user", {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  name: {
-    type: DataTypes.STRING,
-  },
-  age: {
-    type: DataTypes.INTEGER,
-  },
-});
+User.hasMany(Review);
+Review.belongsTo(User);
+
+User.belongsToMany(Address, { through: UserAddress, unique: false });
+Address.belongsToMany(User, { through: UserAddress, unique: false });
+
+module.exports = {
+  User,
+  Address,
+};
