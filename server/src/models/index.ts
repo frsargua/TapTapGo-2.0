@@ -5,6 +5,9 @@ const EventDetails = require("./EventDetails");
 const Category = require("./Category");
 const ImageUrl = require("./Image");
 const Purchase = require("./Purchase");
+const Payment = require("./Payment");
+const Receipt = require("./Receipt");
+const EventTicket = require("./EventTicket");
 
 // User can create many events
 // Events belong to a single user
@@ -15,6 +18,21 @@ EventDetails.belongsTo(User, { as: "user", foreignKey: "hostId" });
 // A review belongs to a single user
 User.hasMany(Review, { as: "review", foreignKey: "createdById" });
 Review.belongsTo(User, { as: "user", foreignKey: "createdById" });
+
+// User can have many payments
+// A payment belongs to a single User
+User.hasMany(Payment, { as: "payment", foreignKey: "userId" });
+Payment.belongsTo(User, { as: "user", foreignKey: "userId" });
+
+// A payment has only one receipt
+// A receipt belongs to a single payment
+Payment.hasOne(Receipt, { as: "receipt", foreignKey: "paymentId" });
+Receipt.belongsTo(Payment, { as: "payment", foreignKey: "paymentId" });
+
+// A receipt can have many eventTickets
+// A payment belongs to a single User
+Receipt.hasMany(EventTicket, { as: "receipt", foreignKey: "receiptId" });
+EventTicket.belongsTo(Receipt, { as: "eventTicket", foreignKey: "receiptId" });
 
 // Events can have many reviews
 // Reviews belong to a single event
