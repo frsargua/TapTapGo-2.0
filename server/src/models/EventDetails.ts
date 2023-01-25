@@ -1,5 +1,4 @@
 import sequelize from "../config/db";
-
 import {
   DataTypes,
   InferAttributes,
@@ -8,18 +7,21 @@ import {
   CreationOptional,
 } from "sequelize";
 
-class Review extends Model<
-  InferAttributes<Review>,
-  InferCreationAttributes<Review>
+class EventDetails extends Model<
+  InferAttributes<EventDetails>,
+  InferCreationAttributes<EventDetails>
 > {
   declare id: CreationOptional<number>;
-  declare username: string;
-  declare title: string;
-  declare reviewText: string;
-  declare rating: number;
+  declare eventName: string;
+  declare description: string;
+  declare date: Date;
+  declare price: number;
+  declare ageGroup: string;
+  declare attendees: number;
+  declare maxAttendees: number;
 }
 
-Review.init(
+EventDetails.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -28,23 +30,31 @@ Review.init(
       autoIncrement: true,
       unique: true,
     },
-
-    username: {
+    eventName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
-    title: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
-    reviewText: {
+    date: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
-    rating: {
+    price: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    ageGroup: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    attendees: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    maxAttendees: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -54,8 +64,8 @@ Review.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "review",
+    modelName: "event_details",
   }
 );
 
-module.exports = Review;
+module.exports = EventDetails;
