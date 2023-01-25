@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import express from "express";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
@@ -8,12 +9,12 @@ import { json } from "body-parser";
 import { typeDefs } from "./typeDefs/index";
 import { resolvers } from "./resolvers/index";
 import sequelize from "./config/db";
+const { authMiddleware } = require("./context/auth");
 
 interface MyContext {
   token?: String;
 }
-
-const PORT = process.env.PORT || 3044;
+const PORT = process.env.PORT || 3004;
 
 const app = express();
 app.use(express.json());
@@ -23,7 +24,8 @@ const httpServer = http.createServer(app);
 const server = new ApolloServer<MyContext>({
   typeDefs,
   resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  introspection: true,
+  // plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
 const init = async (): Promise<void> => {
@@ -36,12 +38,12 @@ const init = async (): Promise<void> => {
       cors<cors.CorsRequest>(),
       json(),
       expressMiddleware(server, {
-        context: async ({ req }) => ({ token: req.headers.token }),
+        context: authMiddleware,
       })
     );
 
     await new Promise<void>((resolve) =>
-      httpServer.listen({ port: 4000 }, resolve)
+      httpServer.listen({ port: PORT }, resolve)
     );
 
     console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);

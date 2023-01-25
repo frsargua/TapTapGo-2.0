@@ -1,7 +1,6 @@
 const { gql } = require("@apollo/server");
-import { startStandaloneServer } from "@apollo/server/standalone";
 
-export const typeDefs = `#graphql
+export const typeDefs = `
   type User {
     id: Int
     firstName: String
@@ -19,5 +18,23 @@ export const typeDefs = `#graphql
   }
   type Query {
     user: [User]
+  }
+
+  type Auth {
+    token: ID!
+    user: User
+  }
+
+  input CreateUserInput {
+    firstName: String
+    lastName: String
+    username: String
+    number: String!
+    email: String!
+    password: String!
+  }
+
+  type Mutation {
+    createUser(input: CreateUserInput!): Auth
   }
 `;

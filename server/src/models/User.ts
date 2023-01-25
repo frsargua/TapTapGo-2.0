@@ -10,12 +10,10 @@ import {
 import bcrypt from "bcrypt";
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-  declare id: CreationOptional<number>;
   declare firstName: string;
   declare lastName: string;
   declare username: string;
   declare age: number;
-  declare createdAt: string;
   declare profileAvatar: string;
   declare aboutMe: string;
   declare websiteUrl: string;
@@ -30,13 +28,6 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 
 User.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-      unique: true,
-    },
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -49,24 +40,6 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    age: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    createdAt: {
-      type: DataTypes.STRING,
-      defaultValue: DataTypes.NOW,
-      allowNull: false,
-    },
-    profileAvatar: {
-      type: DataTypes.STRING,
-    },
-    aboutMe: {
-      type: DataTypes.STRING,
-    },
-    websiteUrl: {
-      type: DataTypes.STRING,
-    },
     number: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -78,21 +51,30 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate: {
-        isEmail: true,
-      },
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [8, 15],
+        len: [5, 15],
       },
+    },
+    age: {
+      type: DataTypes.INTEGER,
+    },
+    profileAvatar: {
+      type: DataTypes.STRING,
+    },
+    aboutMe: {
+      type: DataTypes.STRING,
+    },
+    websiteUrl: {
+      type: DataTypes.STRING,
     },
   },
   {
     sequelize,
-    timestamps: false,
+    timestamps: true,
     freezeTableName: true,
     underscored: true,
     modelName: "user",
