@@ -13,4 +13,28 @@ export type UserType = {
     email: string;
     password: string;
   };
+  user: { username: string; email: string; id: number };
+};
+
+export type EventType = {
+  input: {
+    eventData: {
+      eventName: string;
+      description: string;
+      date: Date;
+      price: number;
+      ageGroup: string;
+      attendees?: number;
+      maxAttendees: number;
+    };
+    eventImages: [{ imageLink: string }];
+    eventAddress: {
+      firstLine: string;
+      secondLine?: string;
+      city: string;
+      latitude: number;
+      longitude: number;
+      postcode: string;
+    };
+  };
 };

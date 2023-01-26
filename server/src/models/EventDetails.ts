@@ -11,10 +11,9 @@ class EventDetails extends Model<
   InferAttributes<EventDetails>,
   InferCreationAttributes<EventDetails>
 > {
-  declare id: CreationOptional<number>;
   declare eventName: string;
   declare description: string;
-  declare date: Date;
+  declare date: string;
   declare price: number;
   declare ageGroup: string;
   declare attendees: number;
@@ -23,13 +22,6 @@ class EventDetails extends Model<
 
 EventDetails.init(
   {
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-      unique: true,
-    },
     eventName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -45,6 +37,7 @@ EventDetails.init(
     price: {
       type: DataTypes.FLOAT,
       allowNull: false,
+      defaultValue: 0,
     },
     ageGroup: {
       type: DataTypes.STRING,

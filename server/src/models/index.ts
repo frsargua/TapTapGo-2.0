@@ -41,13 +41,13 @@ Review.belongsTo(EventDetails, { as: "event", foreignKey: "postId" });
 
 // Events can have many images
 // Images belong to an single event
-EventDetails.hasMany(ImageUrl, { as: "images", foreignKey: "eventId" });
-ImageUrl.belongsTo(EventDetails, { as: "event", foreignKey: "eventId" });
+EventDetails.hasMany(ImageUrl, { foreignKey: "eventId" });
+ImageUrl.belongsTo(EventDetails, { foreignKey: "eventId" });
 
 // Events can have multiple address, as they can be changed
 // An address can be used by multiple events.
 EventDetails.belongsToMany(Address, {
-  through: "EventAddress",
+  through: "eventAddress",
   as: "address",
   unique: false,
   constraints: true,
