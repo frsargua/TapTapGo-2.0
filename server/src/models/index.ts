@@ -48,14 +48,10 @@ ImageUrl.belongsTo(EventDetails, { foreignKey: "eventId" });
 // An address can be used by multiple events.
 EventDetails.belongsToMany(Address, {
   through: "eventAddress",
-  as: "address",
-  unique: false,
   constraints: true,
 });
 Address.belongsToMany(EventDetails, {
   through: "EventAddress",
-  as: "event",
-  unique: false,
   constraints: true,
 });
 

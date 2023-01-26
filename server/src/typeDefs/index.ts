@@ -31,12 +31,12 @@ export const typeDefs = `
   type Event {
     id: ID!
     eventName: String
-    location: LocationEvent
+    addresses: [LocationEvent]
     description: String
     date: String
     price: Int
     ageGroup: String!
-    createdById: User
+    hostId: User
     image_urls: [Image]
     tags: [Tag]
     attendees: Int!
