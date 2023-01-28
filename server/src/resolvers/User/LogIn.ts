@@ -1,6 +1,5 @@
-const User = require("../../models/User");
+const { User } = require("../../models/index");
 import { GraphQLError } from "graphql";
-import Sequelize from "sequelize/types/sequelize";
 import { UserType } from "../types";
 const { signToken } = require("../../context/auth");
 

@@ -9,12 +9,8 @@ let sequelize = new Sequelize(
     host: "localhost",
     dialect: "mysql",
     port: 3306,
+    logging: false,
   }
 );
 
-console.log(
-  process.env.DB_NAME as string,
-  process.env.DB_USER as string,
-  process.env.DB_PASSWORD as string
-);
 export default sequelize;

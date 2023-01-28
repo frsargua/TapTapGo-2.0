@@ -7,20 +7,12 @@ import {
   CreationOptional,
 } from "sequelize";
 
-class EventDetails extends Model<
-  InferAttributes<EventDetails>,
-  InferCreationAttributes<EventDetails>
-> {
-  declare eventName: string;
-  declare description: string;
-  declare date: string;
-  declare price: number;
-  declare ageGroup: string;
-  declare attendees: number;
-  declare maxAttendees: number;
-}
+class Events extends Model<
+  InferAttributes<Events>,
+  InferCreationAttributes<Events>
+> {}
 
-EventDetails.init(
+Events.init(
   {
     eventName: {
       type: DataTypes.STRING,
@@ -57,8 +49,8 @@ EventDetails.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "event_details",
+    modelName: "events",
   }
 );
 
-module.exports = EventDetails;
+module.exports = Events;

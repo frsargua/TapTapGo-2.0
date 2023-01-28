@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql";
 import { EventType, UserType } from "../types";
-const { User, EventDetails, Address, ImageUrl } = require("../../models/index");
+const { Events, Address, ImageUrl } = require("../../models/index");
 
 export const createEvent = async (
   _: any,
@@ -10,29 +10,56 @@ export const createEvent = async (
   try {
     if (context.user) {
       const { eventData, eventAddress, eventImages } = input;
-      const { id: hostId } = context.user;
-      const newEventData = { ...eventData, hostId: hostId };
-      const createdEvent = await EventDetails.create(newEventData);
-      const { id: eventId } = createdEvent;
+
+      const createdEvent = await Events.create({
+        ...eventData,
+        host_id: context.user.id,
+      });
 
       await Promise.all(
         eventImages.map(async (image) => {
           return await ImageUrl.create({
             imageLink: image.imageLink,
-            eventId: eventId,
+            event_id: createdEvent.id,
           });
         })
       );
 
-      let address = await Address.create(eventAddress);
+      const { firstLine, city, postcode } = eventAddress;
 
-      createdEvent.addAddress(address);
-
-      const eventFromDB = await EventDetails.findByPk(eventId, {
-        include: { all: true },
+      let addressFromDB = await Address.findOne({
+        where: { firstLine, city, postcode },
       });
 
-      console.log(eventFromDB);
+      if (addressFromDB) {
+        await createdEvent.addAddress(addressFromDB);
+      } else {
+        let address = await Address.create(eventAddress);
+        await createdEvent.addAddress(address);
+      }
+
+      const eventFromDB = await Events.findOne({
+        where: { id: createdEvent.id },
+        include: [
+          ImageUrl,
+          {
+            model: Address,
+            as: "addresses",
+            attributes: [
+              "id",
+              "firstLine",
+              "secondLine",
+              "city",
+              "latitude",
+              "longitude",
+              "postcode",
+            ],
+            through: {
+              attributes: [],
+            },
+          },
+        ],
+      });
 
       return eventFromDB;
     } else {

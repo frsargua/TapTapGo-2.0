@@ -6,7 +6,7 @@ export const typeDefs = `
     firstName: String
     lastName: String
     username: String
-    address: String
+    addresses: [LocationEvent]
     age: Int
     createdAt: String
     profileAvatar: String

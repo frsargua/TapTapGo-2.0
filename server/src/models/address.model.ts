@@ -10,15 +10,7 @@ import {
 class Address extends Model<
   InferAttributes<Address>,
   InferCreationAttributes<Address>
-> {
-  declare id: CreationOptional<number>;
-  declare firstLine: string;
-  declare secondLine: string;
-  declare city: string;
-  declare latitude: string;
-  declare longitude: string;
-  declare postcode: string;
-}
+> {}
 
 Address.init(
   {
