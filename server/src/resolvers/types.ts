@@ -16,6 +16,10 @@ export type UserType = {
   user: { username: string; email: string; id: number };
 };
 
+export type CreateCategory = {
+  input: { category: string };
+};
+
 export type EventType = {
   input: {
     eventData: {
@@ -36,5 +40,6 @@ export type EventType = {
       longitude: number;
       postcode: string;
     };
+    eventCategories: [{ id: number; category: string }];
   };
 };

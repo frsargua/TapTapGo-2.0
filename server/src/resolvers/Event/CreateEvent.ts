@@ -1,6 +1,7 @@
+import e from "express";
 import { GraphQLError } from "graphql";
 import { EventType, UserType } from "../types";
-const { Events, Address, ImageUrl } = require("../../models/index");
+const { Events, Address, ImageUrl, Category } = require("../../models/index");
 
 export const createEvent = async (
   _: any,
@@ -9,7 +10,7 @@ export const createEvent = async (
 ): Promise<any> => {
   try {
     if (context.user) {
-      const { eventData, eventAddress, eventImages } = input;
+      const { eventData, eventAddress, eventImages, eventCategories } = input;
 
       const createdEvent = await Events.create({
         ...eventData,
@@ -23,6 +24,15 @@ export const createEvent = async (
             event_id: createdEvent.id,
           });
         })
+      );
+
+      await Promise.all(
+        eventCategories.map(
+          async (category: { id: number; category: string }) => {
+            let categoryFromDB = await Category.findByPk(category.id);
+            await createdEvent.addCategory(categoryFromDB);
+          }
+        )
       );
 
       const { firstLine, city, postcode } = eventAddress;
@@ -58,8 +68,18 @@ export const createEvent = async (
               attributes: [],
             },
           },
+          {
+            model: Category,
+            as: "categories",
+            attributes: ["id", "category"],
+            through: {
+              attributes: [],
+            },
+          },
         ],
       });
+
+      console.log(eventFromDB);
 
       return eventFromDB;
     } else {

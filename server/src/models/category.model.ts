@@ -27,9 +27,6 @@ Category.init(
     category: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        isUrl: true,
-      },
     },
   },
   {

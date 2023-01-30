@@ -21,10 +21,9 @@ export const typeDefs = `
     imageLink: String!
   }
 
-  type Tag {
-    _id: ID!
-    tagName: String!
-    events: [Event]
+  type Category {
+    id: ID!
+    category: String!
   }
   
 
@@ -38,7 +37,7 @@ export const typeDefs = `
     ageGroup: String!
     hostId: User
     image_urls: [Image]
-    tags: [Tag]
+    categories: [Category]
     attendees: Int!
     maxAttendees: Int!
   }
@@ -96,17 +95,24 @@ export const typeDefs = `
     ageGroup: String
     maxAttendees: Int!
   }
+  input CreateCategory {
+    id: ID!
+  }
+  input CreateNewCategory {
+    category: String!
+  }
 
   input newEventInput {
     eventData:CreateEventInput
     eventAddress:EventAddress
     eventImages:[InputImage]
-    eventTags:[ID]
+    eventCategories:[CreateCategory]
   }
   
   type Mutation {
     createUser(input: CreateUserInput!): Auth
     createEvent(input: newEventInput!): Event
     login(input: LoginInput!): Auth
+    createNewCategory(input:CreateNewCategory!):Category
   }
 `;
