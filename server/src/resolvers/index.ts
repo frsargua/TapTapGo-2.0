@@ -9,6 +9,7 @@ const { QueryEventById } = require("./Event/QueryEventById");
 const { bookmarkEvent } = require("./Bookmark/BookmarkEvent");
 const { unbookmarkEvent } = require("./Bookmark/UnbookmarkEvent");
 const { createReview } = require("./Review/CreateReview");
+const { removeReview } = require("./Review/DeleteReview");
 const { login } = require("./User/LogIn");
 
 export const resolvers = {
@@ -21,6 +22,7 @@ export const resolvers = {
   },
   Mutation: {
     createUser,
+    removeReview,
     createReview,
     login,
     createEvent,

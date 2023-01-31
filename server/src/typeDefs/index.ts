@@ -118,6 +118,10 @@ export const typeDefs = `
     post_id: ID!
   }
 
+  input removeReviewInput {
+    reviewId: ID!
+  }
+
   input CreateCategory {
     id: ID!
   }
@@ -144,5 +148,6 @@ export const typeDefs = `
     bookmarkEvent(input:BookmarkInput!):ResponseFromResolver
     unbookmarkEvent(input:BookmarkInput!):ResponseFromResolver
     createReview(input:ReviewInput!):Review
+    removeReview(input:removeReviewInput!):Review
   }
 `;
