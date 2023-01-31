@@ -56,6 +56,7 @@ export const typeDefs = `
     QueryAllCategories:[Category]
     QueryEventsByCity(cityParam:String!):[Event]
     QueryEventById(eventId:ID!):Event
+    QueryUserBookmark:[Event]
   }
 
   type ResponseFromResolver {

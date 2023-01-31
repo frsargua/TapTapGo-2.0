@@ -1,6 +1,7 @@
 const { user } = require("./User/User");
 const { createNewCategory } = require("./Category/CreateCategory");
 const { createUser } = require("./User/CreateUser");
+const { QueryUserBookmark } = require("./User/GetUserBookmark");
 const { createEvent } = require("./Event/CreateEvent");
 const { QueryAllCategories } = require("./Category/QueryCategory");
 const { QueryEventsByCity } = require("./Event/QueryEventsByCity");
@@ -15,6 +16,7 @@ export const resolvers = {
     QueryAllCategories,
     QueryEventsByCity,
     QueryEventById,
+    QueryUserBookmark,
   },
   Mutation: {
     createUser,
