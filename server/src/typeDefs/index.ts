@@ -55,6 +55,7 @@ export const typeDefs = `
     user: [User]
     QueryAllCategories:[Category]
     QueryEventsByCity(cityParam:String!):[Event]
+    QueryEventById(eventId:ID!):Event
   }
 
   type Auth {

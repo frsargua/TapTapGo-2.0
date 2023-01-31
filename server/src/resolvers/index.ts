@@ -4,6 +4,7 @@ const { createUser } = require("./User/CreateUser");
 const { createEvent } = require("./Event/CreateEvent");
 const { QueryAllCategories } = require("./Category/QueryCategory");
 const { QueryEventsByCity } = require("./Event/QueryEventsByCity");
+const { QueryEventById } = require("./Event/QueryEventById");
 const { login } = require("./User/LogIn");
 
 export const resolvers = {
@@ -11,6 +12,7 @@ export const resolvers = {
     user,
     QueryAllCategories,
     QueryEventsByCity,
+    QueryEventById,
   },
   Mutation: { createUser, login, createEvent, createNewCategory },
 };
