@@ -20,6 +20,13 @@ export const typeDefs = `
   type Image {
     imageLink: String!
   }
+ 
+  type Review {
+    username: String!
+    title: String!
+    reviewText: String!
+    rating: Int!
+  }
 
   type Category {
     id: ID!
@@ -103,6 +110,14 @@ export const typeDefs = `
     ageGroup: String
     maxAttendees: Int!
   }
+
+  input ReviewInput {
+    title: String!
+    reviewText: String!
+    rating: Int!
+    post_id: ID!
+  }
+
   input CreateCategory {
     id: ID!
   }
@@ -128,5 +143,6 @@ export const typeDefs = `
     createNewCategory(input:CreateNewCategory!):Category
     bookmarkEvent(input:BookmarkInput!):ResponseFromResolver
     unbookmarkEvent(input:BookmarkInput!):ResponseFromResolver
+    createReview(input:ReviewInput!):Review
   }
 `;
