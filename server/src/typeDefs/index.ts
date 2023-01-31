@@ -58,6 +58,10 @@ export const typeDefs = `
     QueryEventById(eventId:ID!):Event
   }
 
+  type ResponseFromResolver {
+    bookmarked: Boolean
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -105,6 +109,10 @@ export const typeDefs = `
     category: String!
   }
 
+  input BookmarkInput {
+    eventId: ID!
+  }
+
   input newEventInput {
     eventData:CreateEventInput
     eventAddress:EventAddress
@@ -117,5 +125,7 @@ export const typeDefs = `
     createEvent(input: newEventInput!): Event
     login(input: LoginInput!): Auth
     createNewCategory(input:CreateNewCategory!):Category
+    bookmarkEvent(input:BookmarkInput!):ResponseFromResolver
+    unbookmarkEvent(input:BookmarkInput!):ResponseFromResolver
   }
 `;

@@ -101,13 +101,13 @@ Events.belongsToMany(User, {
 // One event can be bookmarked by several users.
 User.belongsToMany(Events, {
   through: "bookmark",
-  as: "bought",
+  as: "bookmarked",
   foreignKey: "user_id",
 });
 
 Events.belongsToMany(User, {
   through: "bookmark",
-  as: "buyer",
+  as: "bookmarker",
   foreignKey: "event_id",
 });
 
