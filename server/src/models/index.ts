@@ -29,7 +29,7 @@ Events.belongsTo(User, { as: "host", foreignKey: "host_id" });
 
 // User can create many reviews
 // A review belongs to a single user
-User.hasMany(Review, { as: "review", foreignKey: "creator_id" });
+User.hasMany(Review, { as: "reviews", foreignKey: "creator_id" });
 Review.belongsTo(User, { as: "creator", foreignKey: "creator_id" });
 
 // User can have many payments

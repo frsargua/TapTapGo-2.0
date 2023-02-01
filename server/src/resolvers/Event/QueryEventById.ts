@@ -1,4 +1,10 @@
-const { Events, ImageUrl, Category, Address } = require("../../models/index");
+const {
+  Events,
+  ImageUrl,
+  Category,
+  Review,
+  Address,
+} = require("../../models/index");
 import { GraphQLError } from "graphql";
 import { CreateCategory } from "../types";
 
@@ -7,6 +13,10 @@ export const QueryEventById = async (_: any, { eventId }: any) => {
     const eventsFromDB = await Events.findByPk(eventId, {
       include: [
         ImageUrl,
+        {
+          model: Review,
+          as: "review",
+        },
         {
           model: Address,
           as: "addresses",
@@ -32,6 +42,8 @@ export const QueryEventById = async (_: any, { eventId }: any) => {
         },
       ],
     });
+
+    console.log(eventsFromDB);
 
     return eventsFromDB;
   } catch (err: any) {

@@ -1,8 +1,7 @@
-import { Request, Response } from "express";
 import express from "express";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
-import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+
 import http from "http";
 import cors from "cors";
 import { json } from "body-parser";
@@ -48,6 +47,7 @@ const init = async (): Promise<void> => {
 
     console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);
   } catch (err: unknown) {
+    console.log(err);
     console.log(`Failed to initiate API server || ${(err as Error).message}`);
   }
 };

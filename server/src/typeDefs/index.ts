@@ -45,6 +45,7 @@ export const typeDefs = `
     hostId: User
     image_urls: [Image]
     categories: [Category]
+    review:[Review]
     attendees: Int!
     maxAttendees: Int!
   }
