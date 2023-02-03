@@ -60,11 +60,12 @@ export const typeDefs = `
   }
 
   type Query {
-    user: [User]
+    users: [User]
     QueryAllCategories:[Category]
     QueryEventsByCity(cityParam:String!):[Event]
     QueryEventById(eventId:ID!):Event
     QueryUserBookmark:[Event]
+    QueryUserByID:User
   }
 
   type ResponseFromResolver {

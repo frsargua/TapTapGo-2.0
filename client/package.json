@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.6",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
@@ -26,8 +27,10 @@
     "draftjs-to-html": "^0.9.1",
     "firebase": "^9.15.0",
     "getaddress-find": "^2.0.2",
+    "graphql": "^16.6.0",
     "html-react-parser": "^3.0.8",
     "html-to-draftjs": "^1.5.0",
+    "jwt-decode": "^3.1.2",
     "mui-address-autocomplete": "^3.0.4",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

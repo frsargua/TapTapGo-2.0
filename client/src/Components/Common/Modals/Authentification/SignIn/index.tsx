@@ -11,6 +11,10 @@ import { Card, CardContent } from "@mui/material";
 import Copyright from "../CopyRight";
 import { ModalContext } from "../../../../../contexts/ModalContext";
 
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../../../../../graphQL/Mutations";
+import Auth from "../../../../../utils/auth";
+
 interface SignInProps {
   switchToSignUp: () => void;
 }
@@ -19,22 +23,24 @@ export const SignIn: FunctionComponent<SignInProps> = ({ switchToSignUp }) => {
   const { closeModal } = useContext(ModalContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<Boolean>(false);
+  // const [error, setError] = useState<Boolean>(false);
+
+  const [login, { error }] = useMutation(LOGIN_USER);
 
   const handleFormSubmit = async (event: ChangeEvent<any>) => {
     event.preventDefault();
-    // try {
-    //   const { data } = await login({
-    //     variables: { input: { email: email, password: password } },
-    //   });
+    try {
+      const { data } = await login({
+        variables: { input: { email: email, password: password } },
+      });
 
-    //   if (data) {
-    //     Auth.login(data.login.token);
-    //     // TODO: need to figure out how to setLoggedIn state to true. need to consider context/redux.
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    // }
+      if (data) {
+        console.log(data);
+        Auth.login(data.login.token);
+      }
+    } catch (e) {
+      console.log(e);
+    }
     setEmail("");
     setPassword("");
   };

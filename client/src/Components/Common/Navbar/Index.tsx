@@ -1,4 +1,4 @@
-import { useContext, ChangeEvent, useState, ReactNode } from "react";
+import { useContext, ChangeEvent, useState, ReactNode, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
@@ -8,6 +8,9 @@ import { RenderLogo } from "./RenderLogo";
 import { NotLoggedBar } from "./NotLoggedBar";
 import { LoggedBar } from "./LoggedBar";
 import { AvatarMenu } from "./AvatarMenu";
+import Auth from "../../../utils/auth";
+import { useQuery } from "@apollo/client";
+import { QUERY_USER_AVATAR } from "../../../graphQL/Queries";
 
 interface NavbarProps {}
 
@@ -17,8 +20,24 @@ export const Navbar: FunctionComponent<NavbarProps> = () => {
   const [anchorElementForUserMenu, setAnchorElUser] = useState<Element | null>(
     null
   );
-  const [logged, setLogged] = useState(true);
+  const [logged, setLogged] = useState(Auth.loggedIn());
   const [avatarImg, setAvatarImg] = useState("");
+
+  let tokenUserId = "";
+  if (logged) {
+    tokenUserId = Auth.getProfile()?.data.id;
+  }
+
+  const { data } = useQuery(QUERY_USER_AVATAR, {
+    variables: { userId: tokenUserId },
+    skip: !Auth.loggedIn(),
+  });
+
+  useEffect(() => {
+    if (data?.QueryUserByID?.profileAvatar) {
+      setAvatarImg(data.QueryUserByID.profileAvatar);
+    }
+  }, [data]);
 
   const pagesNotLogged = [
     { title: "How it works?", directory: "How-it-works" },

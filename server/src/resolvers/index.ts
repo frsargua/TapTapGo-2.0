@@ -1,4 +1,5 @@
-const { user } = require("./User/User");
+const { users } = require("./User/User");
+const { QueryUserByID } = require("./User/QueryUserByID");
 const { createNewCategory } = require("./Category/CreateCategory");
 const { createUser } = require("./User/CreateUser");
 const { QueryUserBookmark } = require("./User/GetUserBookmark");
@@ -14,7 +15,8 @@ const { login } = require("./User/LogIn");
 
 export const resolvers = {
   Query: {
-    user,
+    users,
+    QueryUserByID,
     QueryAllCategories,
     QueryEventsByCity,
     QueryEventById,

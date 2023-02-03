@@ -1,3 +1,11 @@
+import { setContext } from "@apollo/client/link/context";
+import "./App.css";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Modals } from "./Components/Common/Modals";
@@ -11,24 +19,59 @@ import { Map } from "./Pages/MapPage/index";
 import { ProfileDashBoard } from "./Pages/Profile/Index";
 import Search from "./Pages/Search/Index";
 
+const httpLink = createHttpLink({
+  // uri: `${window.location.origin}/graphql`,
+  uri: `http://localhost:3004/graphql`,
+});
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem("id_token");
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache({
+    typePolicies: {
+      event: {
+        fields: {
+          event: {
+            // Short for options.mergeObjects(existing, incoming).
+            merge: true,
+          },
+        },
+      },
+    },
+  }),
+});
+
 function App() {
   return (
     <>
-      <ModalProvider>
-        <Router>
-          <Modals />
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/search/:city" element={<Search />} />
-            <Route path="/map/:cityName" element={<Map />} />
-            <Route path="/createEvent" element={<AddEvent />} />
-            <Route path="/user/:userId" element={<ProfileDashBoard />} />
-            <Route path="/event/:eventId" element={<EventPage />} />
-            <Route path="/sample" element={<TextEditor />} />
-          </Routes>
-        </Router>
-      </ModalProvider>
+      <ApolloProvider client={client}>
+        <ModalProvider>
+          <Router>
+            <Modals />
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/search/:city" element={<Search />} />
+              <Route path="/map/:cityName" element={<Map />} />
+              <Route path="/createEvent" element={<AddEvent />} />
+              <Route path="/user/:userId" element={<ProfileDashBoard />} />
+              <Route path="/event/:eventId" element={<EventPage />} />
+              <Route path="/sample" element={<TextEditor />} />
+            </Routes>
+          </Router>
+        </ModalProvider>
+      </ApolloProvider>
     </>
   );
 }
