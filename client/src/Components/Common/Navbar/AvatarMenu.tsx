@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -8,6 +7,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import { FunctionComponent } from "react";
+import Auth from "../../../utils/auth";
 
 interface AvatarMenuProps {
   openDropDownUserMenu: (event: ChangeEvent<any>) => void;
@@ -49,7 +49,7 @@ export const AvatarMenu: FunctionComponent<AvatarMenuProps> = (props) => {
           <Link to={`/user/${1}`}>Dashboard</Link>
         </MenuItem>
         <MenuItem>
-          <Typography>Logout</Typography>
+          <Typography onClick={() => Auth.logout()}>Logout</Typography>
         </MenuItem>
       </Menu>
     </Box>
