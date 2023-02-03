@@ -13,9 +13,12 @@ import { storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { EditorState } from "draft-js";
+import { useQuery, useMutation } from "@apollo/client";
+import { ADD_EVENT } from "../../graphQL/Mutations";
+import { QUERY_TAGS } from "../../graphQL/Queries";
 import { FormOne } from "../../Components/AddEvent/FormOne";
 import { FormThree } from "../../Components/AddEvent/FormThree";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Box } from "@mui/system";
 import { FormTwo } from "../../Components/AddEvent/FormTwo";
 import dayjs, { Dayjs } from "dayjs";
@@ -29,11 +32,11 @@ type newEventProps = {
   maxAttendees: string;
 };
 type EventAddressProps = {
-  country: string;
-  buildingNumber: string;
+  latitude: string;
+  longitude: string;
   firstLine: string;
   secondLine: string;
-  cityName: string;
+  city: string;
   postcode: string;
 };
 type ImageUploadProps = {
@@ -41,9 +44,9 @@ type ImageUploadProps = {
 };
 
 type keywordsProps = {
-  tagName: string;
+  category: string;
   label: string;
-  _id: number;
+  id: string;
 };
 
 type tagsProps = {
@@ -54,31 +57,37 @@ type tagsProps = {
 export function AddEvent() {
   const navigate = useNavigate();
 
-  const completeEventInformation = useRef();
+  const completeEventInformation: any = useRef();
 
-  const [keywords, setKeywords] = useState<keywordsProps[]>([
-    { tagName: "Bachata", label: "Bachata", _id: 1 },
-    { tagName: "Salsa", label: "Salsa", _id: 2 },
-  ]);
+  const [keywords, setKeywords] = useState<keywordsProps[]>([]);
+
+  const { loading, data } = useQuery(QUERY_TAGS);
+
+  useEffect(() => {
+    if (data?.QueryAllCategories?.length) {
+      console.log(data.QueryAllCategories);
+      setKeywords(data.QueryAllCategories);
+    }
+  }, [data]);
   const [newEvent, setNewEvent] = useState<newEventProps>({
-    eventName: "",
-    date: dayjs(),
-    price: "",
     ageGroup: "",
+    date: dayjs(),
     description: "",
+    eventName: "",
     maxAttendees: "",
+    price: "",
   });
   const [tags, setTags] = useState<tagsProps>({
     tags: [],
     keywords: [],
   });
   const [eventAddress, setAddress] = useState<EventAddressProps>({
-    country: "",
-    buildingNumber: "",
+    postcode: "",
     firstLine: "",
     secondLine: "",
-    cityName: "",
-    postcode: "",
+    city: "",
+    latitude: "",
+    longitude: "",
   });
 
   const [imageUpload, setImageUpload] = useState<ImageUploadProps[]>([]);
@@ -126,9 +135,10 @@ export function AddEvent() {
   const handleKeywordsSelected = (event: SelectChangeEvent<string[]>) => {
     const tagNameArray = event.target.value as string[];
     let tagId = tagNameArray.map((key) => {
-      let answer = keywords.find((el) => el.tagName === key);
-      return answer?._id;
-    }) as number[];
+      let answer = keywords.find((el) => el.category === key);
+      return { id: +answer?.id };
+    }) as { id: number }[];
+    console.log(tagId);
 
     setTags({ keywords: tagNameArray, tags: tagId });
   };
@@ -140,6 +150,50 @@ export function AddEvent() {
       });
     }
   }
+  const uploadImage = async (image) => {
+    if (image == null) return;
+    const imageRef = ref(storage, `events/images/${image.name + v4()}`);
+    let snapshot = await uploadBytes(imageRef, image);
+    let URL = await getDownloadURL(snapshot.ref);
+    console.log(URL);
+    return await URL;
+  };
+
+  const [createEvent] = useMutation(ADD_EVENT);
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      Promise.all(
+        imageUpload.map(async (item) => {
+          let imageURL = await uploadImage(item.imageLink);
+          return { imageLink: imageURL };
+        })
+      )
+        .then((images) => {
+          completeEventInformation.current = {
+            eventData: newEvent,
+            eventCategories: tags.tags,
+            eventImages: images,
+            eventAddress: eventAddress,
+          };
+        })
+        .then(async () => {
+          console.log(completeEventInformation.current);
+          // const { data: eventData } = await createEvent({
+          //   variables: { input: { ...completeEventInformation.current } },
+          // });
+          // console.log(eventData);
+          // if (eventData?.createEvent?._id) {
+          //   const eventID = eventData.createEvent.id;
+          //   navigate(`/event/${eventID}`, { replace: true });
+          // }
+        });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   function renderForm() {
     switch (formNumber) {
@@ -195,7 +249,11 @@ export function AddEvent() {
 
         {renderForm()}
 
-        <Box sx={{ display: "flex", mt: "1rem" }}>
+        <Box
+          sx={{ display: "flex", mt: "1rem" }}
+          component="form"
+          onSubmit={handleFormSubmit}
+        >
           {formNumber == 1 || formNumber == 2 ? (
             <Button
               color="primary"

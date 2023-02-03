@@ -11,3 +11,21 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const ADD_EVENT = gql`
+  mutation Mutation($input: newEventInput!) {
+    createEvent(input: $input) {
+      addresses {
+        city
+      }
+      image_urls {
+        imageLink
+      }
+
+      categories {
+        category
+        id
+      }
+    }
+  }
+`;

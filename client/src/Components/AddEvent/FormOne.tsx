@@ -21,7 +21,7 @@ interface FormOneProps {
   updateImage: (arrayImgs: any[]) => void;
   updateDate: (input: Dayjs | null) => void;
   tags: { tags: number[]; keywords: string[] };
-  keywords: { tagName: string; label: string }[];
+  keywords: { category: string; id: string }[];
   imageUpload: any[];
   newEvent: {
     eventName: string;
@@ -132,8 +132,8 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                   )}
                 >
                   {keywords.map((keyword, index) => (
-                    <MenuItem key={index} value={keyword.tagName}>
-                      {keyword.tagName}
+                    <MenuItem key={index} value={keyword.category}>
+                      {keyword.category}
                     </MenuItem>
                   ))}
                 </Select>

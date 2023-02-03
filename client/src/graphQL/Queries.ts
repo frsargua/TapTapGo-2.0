@@ -7,3 +7,12 @@ export const QUERY_USER_AVATAR = gql`
     }
   }
 `;
+
+export const QUERY_TAGS = gql`
+  query QueryAllCategories {
+    QueryAllCategories {
+      id
+      category
+    }
+  }
+`;
