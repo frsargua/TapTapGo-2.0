@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+import {
+  EditorState,
+  ContentState,
+  convertFromHTML,
+  convertToRaw,
+} from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import parse from "html-react-parser";
 import { Card, CardContent, Grid } from "@mui/material";
@@ -24,16 +29,23 @@ interface FormThreeProps {
 export const FormThree: FunctionComponent<FormThreeProps> = (props) => {
   let { changeNewEventDescription, newEvent } = props;
 
-  const [editorState, setEditorState] = useState<EditorState>(
-    EditorState.createEmpty()
+  const blocksFromHTML = convertFromHTML(newEvent.description);
+  const contentState = ContentState.createFromBlockArray(
+    blocksFromHTML.contentBlocks,
+    blocksFromHTML.entityMap
+  );
+
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(contentState)
   );
 
   function handleChange(value: EditorState) {
     setEditorState(value);
     changeNewEventDescription(
-      draftToHtml(convertToRaw(editorState.getCurrentContent()))
+      draftToHtml(convertToRaw(value.getCurrentContent()))
     );
   }
+
   return (
     <>
       <Grid container rowSpacing={2} columnSpacing={2} component="form">

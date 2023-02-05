@@ -15,6 +15,7 @@ export const LOGIN_USER = gql`
 export const ADD_EVENT = gql`
   mutation Mutation($input: newEventInput!) {
     createEvent(input: $input) {
+      id
       addresses {
         city
       }

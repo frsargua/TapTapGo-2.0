@@ -71,7 +71,7 @@ export function AddEvent() {
   }, [data]);
   const [newEvent, setNewEvent] = useState<newEventProps>({
     ageGroup: "",
-    date: dayjs(),
+    date: dayjs().format("YYYY-MM-DD"),
     description: "",
     eventName: "",
     maxAttendees: "",
@@ -181,14 +181,13 @@ export function AddEvent() {
         })
         .then(async () => {
           console.log(completeEventInformation.current);
-          // const { data: eventData } = await createEvent({
-          //   variables: { input: { ...completeEventInformation.current } },
-          // });
-          // console.log(eventData);
-          // if (eventData?.createEvent?._id) {
-          //   const eventID = eventData.createEvent.id;
-          //   navigate(`/event/${eventID}`, { replace: true });
-          // }
+          const { data: eventData } = await createEvent({
+            variables: { input: { ...completeEventInformation.current } },
+          });
+          if (eventData?.createEvent?.id) {
+            const eventID = eventData.createEvent.id;
+            navigate(`/event/${eventID}`, { replace: true });
+          }
         });
     } catch (e) {
       console.error(e);
