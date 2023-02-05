@@ -4,6 +4,7 @@ const {
   Category,
   Review,
   Address,
+  User,
 } = require("../../models/index");
 import { GraphQLError } from "graphql";
 import { CreateCategory } from "../types";
@@ -16,6 +17,11 @@ export const QueryEventById = async (_: any, { eventId }: any) => {
         {
           model: Review,
           as: "review",
+        },
+        {
+          model: User,
+          as: "host",
+          include: [{ model: Events, as: "parties" }],
         },
         {
           model: Address,

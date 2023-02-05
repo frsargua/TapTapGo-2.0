@@ -26,6 +26,9 @@ export const LocationCard: FunctionComponent<LocationCardProps> = (props) => {
   // let logged = Auth.loggedIn();
   let { eventData, handlePurchase, isAttending, openModal, updateAttendance } =
     props;
+
+  console.log(eventData);
+
   let logged = true;
 
   function renderActionButton() {
@@ -103,13 +106,16 @@ export const LocationCard: FunctionComponent<LocationCardProps> = (props) => {
           sx={{ width: "100%", height: "1px", my: "1rem" }}
         />
         <Typography variant="h6" component="h2">
-          {eventData.location.streetName}
+          {eventData.addresses[0].firstLine}
         </Typography>
         <Typography variant="h6" component="h2">
-          {eventData.location.cityName}
+          {eventData.addresses[0].secondLine}
         </Typography>
         <Typography variant="h6" component="h2">
-          {eventData.location.postcode}
+          {eventData.addresses[0].city}
+        </Typography>
+        <Typography variant="h6" component="h2">
+          {eventData.addresses[0].postcode}
         </Typography>
         {renderActionButton()}
       </CardContent>

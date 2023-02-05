@@ -14,6 +14,7 @@ export const typeDefs = `
     websiteUrl: String
     number: String
     email: String
+    parties:[Event]
     password: String
   }
 
@@ -42,7 +43,7 @@ export const typeDefs = `
     date: String
     price: Int
     ageGroup: String!
-    hostId: User
+    host: User
     image_urls: [Image]
     categories: [Category]
     review:[Review]

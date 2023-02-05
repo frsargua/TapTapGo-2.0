@@ -18,14 +18,21 @@ import { singleEvent } from "../../Constants/Index";
 import { URLParamsTypes } from "../../utils/types";
 import { EventMapComponent } from "../../Components/EventPage/EventMapComponent";
 
+import { useQuery } from "@apollo/client";
+import { QUERY_EVENTBYID } from "../../graphQL/Queries";
+
 export default function EventPage() {
   const { openSignModal } = useContext(ModalContext);
   const { eventId: eventParam } = useParams<URLParamsTypes>();
 
+  const { loading, data } = useQuery(QUERY_EVENTBYID, {
+    variables: { eventId: eventParam },
+  });
+
   const [isAttendingState, setIsAttendingState] = useState(false);
   const [eventData, setEventData] = useState(singleEvent);
   const [eventSection, setEventSection] = useState("Description");
-  const [isLoading, setIsLoading] = useState([]);
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
 
   const handlePurchase = async () => {
     setIsAttendingState(true);
@@ -34,6 +41,15 @@ export default function EventPage() {
   const updateAttendance = async () => {
     setIsAttendingState(false);
   };
+
+  useEffect(() => {
+    if (data?.QueryEventById) {
+      // console.log(data.QueryEventById);
+      setEventData(data.QueryEventById);
+      setIsLoading((prev) => !prev);
+      return;
+    }
+  }, [data]);
 
   function renderSection() {
     if (eventSection === "Description") {
@@ -67,8 +83,8 @@ export default function EventPage() {
               openModal={openSignModal}
               updateAttendance={updateAttendance}
             />
-            <EventMapComponent location={eventData.location.coordinates} />
-            <HostInfoCard hostData={eventData.createdById} />
+            <EventMapComponent location={eventData.addresses[0]} />
+            <HostInfoCard hostData={eventData.host} />
           </Stack>
         </Grid>
         <Grid item xs={12} sm={7} lg={9} sx={{ order: { xs: "1", md: "2" } }}>
@@ -80,7 +96,7 @@ export default function EventPage() {
               alignItems: "center",
             }}
           >
-            <ImageCarousel images={eventData.images} />
+            <ImageCarousel images={eventData.image_urls} />
             <Button
               onClick={handlePurchase}
               sx={{

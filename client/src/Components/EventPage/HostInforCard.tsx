@@ -12,8 +12,10 @@ interface HostInfoCardProps {
 
 export const HostInfoCard: FunctionComponent<HostInfoCardProps> = (props) => {
   let {
-    hostData: { profileAvatar, username, myEvents },
+    hostData: { profileAvatar, username, parties },
   } = props;
+
+  console.log(props);
   return (
     <Card>
       <CardContent>
@@ -50,7 +52,7 @@ export const HostInfoCard: FunctionComponent<HostInfoCardProps> = (props) => {
             <Typography variant="h6">Events Hosted:</Typography>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="h6">{myEvents.length}</Typography>
+            <Typography variant="h6">{parties.length}</Typography>
           </Grid>
         </Grid>
       </CardContent>
