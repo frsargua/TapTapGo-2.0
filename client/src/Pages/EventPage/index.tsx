@@ -58,11 +58,11 @@ export default function EventPage() {
       return (
         <ReviewSection
           eventId={eventParam as string}
-          reviewsArray={eventData.reviews}
+          reviewsArray={eventData.review}
         />
       );
     } else if (eventSection === "Suggestions") {
-      return <SuggestionsSection suggestedEvents={eventData.tags} />;
+      return <SuggestionsSection suggestedEvents={eventData.categories} />;
     } else {
       return <DescriptionSection eventData={eventData} />;
     }

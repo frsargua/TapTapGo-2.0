@@ -4,4 +4,5 @@ export type URLParamsTypes = {
   topic?: string;
   phoneId?: string;
   model?: string;
+  city?: string;
 };

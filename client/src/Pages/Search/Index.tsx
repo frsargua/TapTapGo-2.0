@@ -8,6 +8,9 @@ import { SingleEventCard } from "../../Components/Common/EventCard";
 import { FilterPanel } from "../../Components/Search/FilterPanel/Index";
 import { SearchBar } from "../../Components/Search/SearchBar";
 import { dataList, categories } from "../../Constants/Index";
+import { useQuery } from "@apollo/client";
+import { SEARCH_EVENTS_CITY } from "../../graphQL/Queries";
+import { URLParamsTypes } from "../../utils/types";
 
 interface SearchProps {}
 
@@ -18,6 +21,12 @@ interface CategoryProps {
 }
 
 const Search: FunctionComponent<SearchProps> = () => {
+  const { city } = useParams<URLParamsTypes>();
+
+  const { loading, data } = useQuery(SEARCH_EVENTS_CITY, {
+    variables: { cityParam: city },
+  });
+
   const [selectedFrequency, setSelectedFrequency] = useState<string | null>(
     null
   );
@@ -25,11 +34,17 @@ const Search: FunctionComponent<SearchProps> = () => {
     useState<CategoryProps[]>(categories);
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [selectedPrice, setSelectedPrice] = useState<number[]>([0, 100]);
-  const [list, setList] = useState(dataList);
+  const [list, setList] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (data?.QueryEventsByCity) {
+      console.log(data.QueryEventsByCity);
+      setList(data.QueryEventsByCity);
+      return;
+    }
+  }, [data]);
   const [resultsFound, setResultsFound] = useState(true);
   const [searchInput, setSearchInput] = useState<string>("");
-
-  const { city } = useParams();
 
   const handleSelectCategory = (event: ChangeEvent<any>, value: string) => {
     if (selectedFrequency == value) {
@@ -61,7 +76,7 @@ const Search: FunctionComponent<SearchProps> = () => {
   };
 
   const applyFilters = () => {
-    let updatedList = dataList;
+    let updatedList = list;
 
     // Rating Filter
     if (selectedRating) {

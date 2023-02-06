@@ -45,6 +45,15 @@ export const QueryEventById = async (_: any, { eventId }: any) => {
           through: {
             attributes: [],
           },
+          include: [
+            {
+              model: Events,
+              as: "eventsPerCategory",
+              through: {
+                attributes: [],
+              },
+            },
+          ],
         },
       ],
     });

@@ -8,6 +8,7 @@ import { json } from "body-parser";
 import { typeDefs } from "./typeDefs/index";
 import { resolvers } from "./resolvers/index";
 import sequelize from "./config/db";
+import initialise from "./seeds/index";
 const { authMiddleware } = require("./context/auth");
 
 interface MyContext {
@@ -44,6 +45,7 @@ const init = async (): Promise<void> => {
     await new Promise<void>((resolve) =>
       httpServer.listen({ port: PORT }, resolve)
     );
+    // initialise();
 
     console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);
   } catch (err: unknown) {

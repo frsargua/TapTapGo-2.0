@@ -13,12 +13,15 @@ export const SuggestionsSection: FunctionComponent<SuggestionsSectionProps> = (
   const [randomEventSuggestion, setRandomEventSuggestion] = React.useState<
     any[]
   >([]);
+
   let { suggestedEvents } = props;
   useEffect(() => {
     if (suggestedEvents.length !== 0) {
+      console.log(suggestedEvents.length);
       const randomTagData =
         suggestedEvents[Math.floor(Math.random() * suggestedEvents.length)]
-          .events;
+          .eventsPerCategory;
+
       if (randomTagData.length !== 0) {
         setRandomEventSuggestion(randomTagData);
       }

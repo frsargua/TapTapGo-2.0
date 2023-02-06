@@ -1,47 +1,32 @@
-const { Events, ImageUrl, Category, Address } = require("../../models/index");
+const { Events, ImageUrl, Review, Address } = require("../../models/index");
 import { GraphQLError } from "graphql";
 import { CreateCategory } from "../types";
 
 export const QueryEventsByCity = async (_: any, { cityParam }: any) => {
   try {
-    // console.log(cityParam);
-
-    const categories = await Address.findAll({
-      where: { city: cityParam },
+    const eventsByCity = await Events.findAll({
       include: [
+        ImageUrl,
+
         {
-          model: Events,
-          as: "events",
+          model: Review,
+          as: "review",
+        },
+        {
+          model: Address,
+          as: "addresses",
           through: {
             attributes: [],
           },
-
-          include: [
-            ImageUrl,
-            {
-              model: Category,
-              as: "categories",
-              attributes: ["id", "category"],
-              through: {
-                attributes: [],
-              },
-            },
-            {
-              model: Address,
-              as: "addresses",
-              through: {
-                attributes: [],
-              },
-            },
-          ],
+          where: { city: cityParam },
         },
       ],
     });
 
-    return categories[0].events;
+    return eventsByCity;
   } catch (err: any) {
     console.log(err);
-    console.log(`[ERROR]: Failed to get categories | ${err.original}`);
-    throw new GraphQLError(`Failed to get categories | ${err.original}`);
+    console.log(`[ERROR]: Failed to get events | ${err.original}`);
+    throw new GraphQLError(`Failed to get events | ${err.original}`);
   }
 };

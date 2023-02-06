@@ -18,15 +18,16 @@ interface SingleEventCardProps {
   price: number;
   rating: number;
   reviews: { rating: number }[];
-  images: { imageLink: string }[];
-  _id: string;
+  image_urls: { imageLink: string }[];
+  id: string;
   createdById: string;
 }
 
 export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
   props
 ) => {
-  let { eventName, price, rating, reviews, images, _id, createdById } = props;
+  let { eventName, price, rating, review, image_urls, id } = props;
+
   const [isBookmarked, setIsBookmarked] = useState(false);
   //   let { tokenUserId, isOwner, logged } = Auth.isOwner();
   let isOwner = false;
@@ -41,14 +42,13 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
 
   return (
     <>
-      {" "}
       <Card sx={{ maxWidth: "100%", minWidth: "250px" }}>
         <CardActionArea>
-          <Link to={`/event/${_id}`}>
+          <Link to={`/event/${id}`}>
             <CardMedia
               component="img"
               height="170"
-              image={selectRandomImage(images)}
+              image={selectRandomImage(image_urls)}
               alt={eventName}
             />
           </Link>
@@ -76,7 +76,7 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
                 precision={0.5}
                 readOnly
               />
-              <Typography variant="caption">{reviews.length}</Typography>
+              <Typography variant="caption">{review.length}</Typography>
             </Box>
             <Box
               sx={{

@@ -25,6 +25,13 @@ export const QUERY_EVENTBYID = gql`
       date
       categories {
         category
+        eventsPerCategory {
+          eventName
+          image_urls {
+            imageLink
+          }
+          price
+        }
       }
       ageGroup
       attendees
@@ -48,7 +55,29 @@ export const QUERY_EVENTBYID = gql`
           eventName
         }
       }
+      review {
+        rating
+        reviewText
+        title
+        username
+      }
       id
+    }
+  }
+`;
+
+export const SEARCH_EVENTS_CITY = gql`
+  query QueryEventsByCity($cityParam: String!) {
+    QueryEventsByCity(cityParam: $cityParam) {
+      eventName
+      price
+      id
+      image_urls {
+        imageLink
+      }
+      review {
+        rating
+      }
     }
   }
 `;

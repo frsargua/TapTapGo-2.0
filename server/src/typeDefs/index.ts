@@ -32,6 +32,7 @@ export const typeDefs = `
   type Category {
     id: ID!
     category: String!
+    eventsPerCategory:[Event]
   }
   
 
@@ -58,6 +59,7 @@ export const typeDefs = `
     latitude: String!
     longitude: String!
     postcode: String!
+
   }
 
   type Query {
