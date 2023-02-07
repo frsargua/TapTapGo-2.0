@@ -42,6 +42,8 @@ const Search: FunctionComponent<SearchProps> = () => {
     if (selectedFrequency == value) {
       setSelectedFrequency(null);
     } else {
+      console.log(value);
+
       !value ? null : setSelectedFrequency(value);
     }
   };
@@ -56,7 +58,7 @@ const Search: FunctionComponent<SearchProps> = () => {
 
   const handleChangeChecked = (id: number) => {
     const categoriesStateList = selectedCategory;
-    console.log(categoriesStateList);
+
     const changeCheckedCategories = categoriesStateList.map((item) =>
       item.id == id ? { ...item, checked: !item.checked } : item
     );
@@ -67,7 +69,7 @@ const Search: FunctionComponent<SearchProps> = () => {
     setSelectedPrice(newValue as number[]);
   };
 
-  const applyFilters = () => {
+  const applyFilters = async () => {
     let updatedList =
       data?.QueryEventsByCity?.length > 0 ? data?.QueryEventsByCity : [];
 
@@ -78,9 +80,10 @@ const Search: FunctionComponent<SearchProps> = () => {
 
     // Frequency Filter
     if (selectedFrequency) {
-      updatedList = updatedList.filter(
-        (item) => item.frequency === selectedFrequency
+      updatedList = await updatedList.filter(
+        (item) => item.frequency.frequency === selectedFrequency
       );
+      console.log(updatedList);
     }
     // Category Filter
     const categoryChecked = selectedCategory
@@ -134,6 +137,7 @@ const Search: FunctionComponent<SearchProps> = () => {
   useEffect(() => {
     if (data) {
       if (data?.QueryEventsByCity?.length) {
+        console.log(data.QueryEventsByCity);
         setList(data?.QueryEventsByCity);
       }
     }

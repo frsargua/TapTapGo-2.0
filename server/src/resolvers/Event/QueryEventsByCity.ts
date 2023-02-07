@@ -4,6 +4,7 @@ const {
   Review,
   Category,
   Address,
+  Frequency,
 } = require("../../models/index");
 import { GraphQLError } from "graphql";
 import { CreateCategory } from "../types";
@@ -13,6 +14,7 @@ export const QueryEventsByCity = async (_: any, { cityParam }: any) => {
     const eventsByCity = await Events.findAll({
       include: [
         ImageUrl,
+        Frequency,
         {
           model: Review,
           as: "review",
@@ -32,6 +34,7 @@ export const QueryEventsByCity = async (_: any, { cityParam }: any) => {
       ],
     });
 
+    console.log(eventsByCity);
     return eventsByCity;
   } catch (err: any) {
     console.log(err);

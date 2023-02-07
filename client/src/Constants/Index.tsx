@@ -1,17 +1,17 @@
 export const categoryList = [
   {
     id: "1",
-    value: "Weekly",
+    value: "weekly",
     label: "🔂 Weekly",
   },
   {
     id: "2",
-    value: "Monthly",
+    value: "monthly",
     label: "🔁 Monthly",
   },
   {
     id: "3",
-    value: "Specials",
+    value: "specials",
     label: "🤩 Specials",
   },
 ];

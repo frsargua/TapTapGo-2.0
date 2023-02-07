@@ -29,6 +29,11 @@ export const typeDefs = `
     rating: Int!
   }
 
+  type frequency {
+    id: ID!
+    frequency: String!
+  }
+
   type Category {
     id: ID!
     category: String!
@@ -49,6 +54,7 @@ export const typeDefs = `
     categories: [Category]
     review:[Review]
     attendees: Int!
+    frequency: frequency
     maxAttendees: Int!
   }
 

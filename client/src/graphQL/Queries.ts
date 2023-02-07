@@ -82,6 +82,9 @@ export const SEARCH_EVENTS_CITY = gql`
         category
         id
       }
+      frequency {
+        frequency
+      }
     }
   }
 `;

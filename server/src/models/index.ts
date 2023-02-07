@@ -125,4 +125,5 @@ module.exports = {
   Category,
   ImageUrl,
   Purchase,
+  Frequency,
 };
