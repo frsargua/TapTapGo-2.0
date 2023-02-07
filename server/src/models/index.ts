@@ -8,6 +8,7 @@ const Purchase = require("./purchase.model");
 const Payment = require("./payment.model");
 const Receipt = require("./receipt.model");
 const EventTicket = require("./eventTicket.model");
+const Frequency = require("./frequency.mode");
 
 // Events can have multiple address, as they can be changed
 // An address can be used by multiple events.
@@ -56,6 +57,11 @@ Review.belongsTo(Events, { as: "event", foreignKey: "post_id" });
 // Images belong to an single event
 Events.hasMany(ImageUrl, { foreignKey: "event_id" });
 ImageUrl.belongsTo(Events, { foreignKey: "event_id" });
+
+// Events can have many images
+// Images belong to an single event
+Frequency.hasMany(Events, { foreignKey: "frequency_id" });
+Events.belongsTo(Frequency, { foreignKey: "frequency_id" });
 
 // Users can have multiple address, as they can be changed
 // An address can be used by multiple users.

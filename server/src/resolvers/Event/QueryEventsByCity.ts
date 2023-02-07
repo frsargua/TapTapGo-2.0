@@ -1,4 +1,10 @@
-const { Events, ImageUrl, Review, Address } = require("../../models/index");
+const {
+  Events,
+  ImageUrl,
+  Review,
+  Category,
+  Address,
+} = require("../../models/index");
 import { GraphQLError } from "graphql";
 import { CreateCategory } from "../types";
 
@@ -7,10 +13,13 @@ export const QueryEventsByCity = async (_: any, { cityParam }: any) => {
     const eventsByCity = await Events.findAll({
       include: [
         ImageUrl,
-
         {
           model: Review,
           as: "review",
+        },
+        {
+          model: Category,
+          as: "categories",
         },
         {
           model: Address,

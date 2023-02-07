@@ -78,6 +78,10 @@ export const SEARCH_EVENTS_CITY = gql`
       review {
         rating
       }
+      categories {
+        category
+        id
+      }
     }
   }
 `;

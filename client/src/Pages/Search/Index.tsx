@@ -35,14 +35,6 @@ const Search: FunctionComponent<SearchProps> = () => {
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [selectedPrice, setSelectedPrice] = useState<number[]>([0, 100]);
   const [list, setList] = useState<any[]>([]);
-
-  useEffect(() => {
-    if (data?.QueryEventsByCity) {
-      console.log(data.QueryEventsByCity);
-      setList(data.QueryEventsByCity);
-      return;
-    }
-  }, [data]);
   const [resultsFound, setResultsFound] = useState(true);
   const [searchInput, setSearchInput] = useState<string>("");
 
@@ -76,7 +68,8 @@ const Search: FunctionComponent<SearchProps> = () => {
   };
 
   const applyFilters = () => {
-    let updatedList = list;
+    let updatedList =
+      data?.QueryEventsByCity?.length > 0 ? data?.QueryEventsByCity : [];
 
     // Rating Filter
     if (selectedRating) {
@@ -95,9 +88,14 @@ const Search: FunctionComponent<SearchProps> = () => {
       .map((item) => item.label.toLowerCase());
 
     if (categoryChecked.length) {
-      updatedList = updatedList.filter((item) =>
-        categoryChecked.includes(item.category.toLowerCase())
-      );
+      updatedList = updatedList.filter((item) => {
+        let found = false;
+        item.categories.forEach((category) => {
+          found = categoryChecked.includes(category.category.toLowerCase());
+        });
+
+        return found;
+      });
     }
 
     // Search Filter
@@ -133,7 +131,13 @@ const Search: FunctionComponent<SearchProps> = () => {
     searchInput,
     selectedPrice,
   ]);
-
+  useEffect(() => {
+    if (data) {
+      if (data?.QueryEventsByCity?.length) {
+        setList(data?.QueryEventsByCity);
+      }
+    }
+  }, [data]);
   return (
     <>
       <Container maxWidth="xl">

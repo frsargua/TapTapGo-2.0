@@ -1,9 +1,11 @@
 const seedEvents = require("./event");
+const seedUsers = require("./user");
 
 const initialise = async () => {
   try {
     console.log("[INFO]: Database connection successful");
 
+    await seedUsers();
     await seedEvents();
 
     console.log(

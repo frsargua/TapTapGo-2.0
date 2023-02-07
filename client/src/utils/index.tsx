@@ -7,6 +7,5 @@ export const averageRatingFromDB = (reviews: { rating: number }[]): number => {
 };
 
 export function selectRandomImage(arrImages: { imageLink: string }[]): string {
-  console.log(arrImages);
   return arrImages[Math.floor(Math.random() * arrImages.length)].imageLink;
 }
