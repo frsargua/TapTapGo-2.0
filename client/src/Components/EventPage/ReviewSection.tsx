@@ -3,7 +3,7 @@ import { ReviewCard } from "../Common/ReviewCard";
 import { ReviewForm } from "../Common/ReviewForm";
 import Box from "@mui/material/Box";
 import { FunctionComponent } from "react";
-// import Auth from "../../utils/auth";
+import Auth from "../../utils/auth";
 
 interface ReviewSectionProps {
   eventId: string;
@@ -22,8 +22,7 @@ export const ReviewSection: FunctionComponent<ReviewSectionProps> = ({
   eventId,
   reviewsArray,
 }) => {
-  // let logged = Auth.loggedIn();
-  let logged = true;
+  let logged = Auth.loggedIn();
 
   return (
     <Box mt="4rem" width="90%">

@@ -3,16 +3,18 @@ import TextField from "@mui/material/TextField";
 import { Button, CardContent, Typography } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import { useState } from "react";
+import { CREATE_REVIEW } from "../../../graphQL/Mutations";
+import { useMutation } from "@apollo/client";
 
 export function ReviewForm({ eventIdParam }) {
   const [newReview, setReview] = useState({
-    eventId: eventIdParam,
-    postedBy: "",
-    username: "",
+    post_id: eventIdParam,
     rating: 0,
     title: "",
     reviewText: "",
   });
+
+  const [createReview, { error, reviewData }] = useMutation(CREATE_REVIEW);
 
   const updateReview = (event) => {
     let { name, value } = event.target;
@@ -30,11 +32,12 @@ export function ReviewForm({ eventIdParam }) {
   const handleCreateReview = async (event) => {
     event.preventDefault();
     console.log("inside");
+    console.log(newReview);
     try {
-      const { purchaseData } = await createReview({
+      const { data } = await createReview({
         variables: { input: newReview },
       });
-      console.log(purchaseData);
+      console.log(data);
     } catch (e) {
       console.error(e);
     }

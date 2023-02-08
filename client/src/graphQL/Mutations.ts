@@ -30,3 +30,11 @@ export const ADD_EVENT = gql`
     }
   }
 `;
+
+export const CREATE_REVIEW = gql`
+  mutation Mutation($input: ReviewInput!) {
+    createReview(input: $input) {
+      title
+    }
+  }
+`;
