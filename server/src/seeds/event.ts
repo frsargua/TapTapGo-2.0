@@ -42,7 +42,7 @@ const generateEvents = async () => {
       const description = faker.lorem.paragraph(1);
       const frequency_id = 1;
       const date = formatDate(faker.date.future());
-      const price = faker.commerce.price();
+      const price = faker.commerce.price(0, 100);
       const ageGroup = randomAgeGroup;
       const attendees = faker.datatype.number(100);
       const maxAttendees = faker.datatype.number(100);

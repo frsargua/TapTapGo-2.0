@@ -42,8 +42,6 @@ const Search: FunctionComponent<SearchProps> = () => {
     if (selectedFrequency == value) {
       setSelectedFrequency(null);
     } else {
-      console.log(value);
-
       !value ? null : setSelectedFrequency(value);
     }
   };
@@ -83,7 +81,6 @@ const Search: FunctionComponent<SearchProps> = () => {
       updatedList = await updatedList.filter(
         (item) => item.frequency.frequency === selectedFrequency
       );
-      console.log(updatedList);
     }
     // Category Filter
     const categoryChecked = selectedCategory
@@ -95,10 +92,12 @@ const Search: FunctionComponent<SearchProps> = () => {
         let found = false;
         item.categories.forEach((category) => {
           found = categoryChecked.includes(category.category.toLowerCase());
+          console.log(found);
         });
 
         return found;
       });
+      console.log(updatedList);
     }
 
     // Search Filter
@@ -115,9 +114,13 @@ const Search: FunctionComponent<SearchProps> = () => {
     const minPrice = selectedPrice[0];
     const maxPrice = selectedPrice[1];
 
+    console.log(minPrice, maxPrice);
+
     updatedList = updatedList.filter(
       (item) => item.price >= minPrice && item.price <= maxPrice
     );
+
+    console.log(updatedList);
 
     // Updating state
     setList(updatedList);
@@ -137,7 +140,6 @@ const Search: FunctionComponent<SearchProps> = () => {
   useEffect(() => {
     if (data) {
       if (data?.QueryEventsByCity?.length) {
-        console.log(data.QueryEventsByCity);
         setList(data?.QueryEventsByCity);
       }
     }
