@@ -22,6 +22,7 @@ export const SuggestionsSection: FunctionComponent<SuggestionsSectionProps> = (
         suggestedEvents[Math.floor(Math.random() * suggestedEvents.length)]
           .eventsPerCategory;
 
+      console.log(randomTagData);
       if (randomTagData.length !== 0) {
         setRandomEventSuggestion(randomTagData);
       }
@@ -46,7 +47,7 @@ export const SuggestionsSection: FunctionComponent<SuggestionsSectionProps> = (
           justifyContent="center"
           className="section__block-4"
         >
-          {randomEventSuggestion.map((el, i) => {
+          {randomEventSuggestion.slice(0, 4).map((el, i) => {
             return (
               <Grid key={i} item xs={11} sm={10} md={4} lg={3}>
                 <SingleEventCard {...el} />

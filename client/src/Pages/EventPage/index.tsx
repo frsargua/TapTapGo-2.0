@@ -44,7 +44,7 @@ export default function EventPage() {
 
   useEffect(() => {
     if (data?.QueryEventById) {
-      // console.log(data.QueryEventById);
+      console.log(data.QueryEventById);
       setEventData(data.QueryEventById);
       setIsLoading((prev) => !prev);
       return;

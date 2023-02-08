@@ -31,6 +31,9 @@ export const QUERY_EVENTBYID = gql`
             imageLink
           }
           price
+          review {
+            rating
+          }
         }
       }
       ageGroup

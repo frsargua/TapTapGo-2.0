@@ -26,15 +26,6 @@ export const QueryEventById = async (_: any, { eventId }: any) => {
         {
           model: Address,
           as: "addresses",
-          attributes: [
-            "id",
-            "firstLine",
-            "secondLine",
-            "city",
-            "latitude",
-            "longitude",
-            "postcode",
-          ],
           through: {
             attributes: [],
           },
@@ -52,6 +43,13 @@ export const QueryEventById = async (_: any, { eventId }: any) => {
               through: {
                 attributes: [],
               },
+              include: [
+                ImageUrl,
+                {
+                  model: Review,
+                  as: "review",
+                },
+              ],
             },
           ],
         },
