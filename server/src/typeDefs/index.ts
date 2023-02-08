@@ -16,6 +16,7 @@ export const typeDefs = `
     email: String
     parties:[Event]
     password: String
+    reviews:[Review]
   }
 
   type Image {

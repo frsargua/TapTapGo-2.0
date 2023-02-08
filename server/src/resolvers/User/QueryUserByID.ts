@@ -1,11 +1,24 @@
-const { User, ImageUrl } = require("../../models/index");
+const { User, Events, ImageUrl, Review } = require("../../models/index");
 import { GraphQLError } from "graphql";
 import { EventType, UserType } from "../types";
 
 export const QueryUserByID = async (_: any, __: any, context: UserType) => {
   try {
     const userFromDatabase = await User.findByPk(context.user.id, {
-      include: { all: true },
+      include: [
+        { model: Review, as: "reviews" },
+        {
+          model: Events,
+          as: "parties",
+          include: [
+            ImageUrl,
+            {
+              model: Review,
+              as: "review",
+            },
+          ],
+        },
+      ],
     });
     console.log(userFromDatabase);
     return userFromDatabase;

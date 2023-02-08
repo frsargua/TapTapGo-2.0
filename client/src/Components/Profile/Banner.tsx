@@ -101,7 +101,7 @@ export const Banner: FunctionComponent<BannerProps> = (props) => {
               marginRight: "3rem",
             }}
             alt="Remy Sharp"
-            src={userInfo.profileAvatar}
+            src={userInfo?.profileAvatar}
           />
           <Stack height="100" m="2rem" justifyContent="space-between">
             <Typography

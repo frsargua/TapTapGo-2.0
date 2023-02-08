@@ -6,13 +6,22 @@ import { options } from "../../Constants/Index";
 import { Grid } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import { ReactNode, useState, FunctionComponent, useEffect } from "react";
+import { useQuery } from "@apollo/client";
+import { GET_PROFILEDATA } from "../../graphQL/Queries";
+import Auth from "../../utils/auth";
 
 interface ProfileDashBoardProps {}
 
 export const ProfileDashBoard: FunctionComponent<
   ProfileDashBoardProps
 > = () => {
-  let userDetails = { bookmarks: [], myEvents: [], reviews: [], events: [] };
+  // let userDetails = { bookmarks: [], myEvents: [], reviews: [], events: [] };
+  const userParam = Auth.getProfile().data.id;
+  const [userDetails, SetUserDetails] = useState<any>({});
+
+  const { loading, data } = useQuery(GET_PROFILEDATA, {
+    variables: { userId: userParam },
+  });
 
   const [postBoardOption, setPostBoard] = useState<string>("");
 
@@ -23,6 +32,13 @@ export const ProfileDashBoard: FunctionComponent<
   useEffect(() => {
     console.log(postBoardOption);
   }, [postBoardOption]);
+
+  useEffect(() => {
+    if (data?.QueryUserByID) {
+      console.log(data.QueryUserByID);
+      SetUserDetails(data.QueryUserByID);
+    }
+  }, [data]);
 
   function renderBoardOption(): ReactNode {
     switch (postBoardOption) {
@@ -42,7 +58,7 @@ export const ProfileDashBoard: FunctionComponent<
       case "yourEvents":
         return (
           <Grid container spacing={2}>
-            {userDetails.myEvents.map((myEvent, i) => {
+            {userDetails.parties.map((myEvent, i) => {
               return (
                 <Grid key={i} item xs={11} sm={10} md={4} lg={3}>
                   <SingleEventCard {...myEvent} key={i} />
@@ -115,8 +131,8 @@ export const ProfileDashBoard: FunctionComponent<
               />
             </Grid>
             <Grid item xs={12} md={3}>
-              <AboutUser userInfo={userDetails.userInfo} />
-              <AboutUser userInfo={userDetails.userInfo} />
+              <AboutUser userInfo={userDetails} />
+              <AboutUser userInfo={userDetails} />
             </Grid>
             <Grid item xs={12} md={9}>
               {renderBoardOption()}

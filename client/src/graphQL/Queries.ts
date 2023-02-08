@@ -8,6 +8,45 @@ export const QUERY_USER_AVATAR = gql`
   }
 `;
 
+export const GET_PROFILEDATA = gql`
+  query QueryUserByID {
+    QueryUserByID {
+      firstName
+      lastName
+      id
+      profileAvatar
+      parties {
+        eventName
+        review {
+          title
+        }
+        image_urls {
+          imageLink
+        }
+        attendees
+      }
+      username
+      email
+      number
+      aboutMe
+      age
+      addresses {
+        firstLine
+        latitude
+        postcode
+      }
+      createdAt
+      websiteUrl
+      reviews {
+        title
+        reviewText
+        rating
+        username
+      }
+    }
+  }
+`;
+
 export const QUERY_TAGS = gql`
   query QueryAllCategories {
     QueryAllCategories {
