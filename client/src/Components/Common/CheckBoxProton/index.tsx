@@ -4,12 +4,12 @@ import { FunctionComponent } from "react";
 
 interface CheckboxProtonProps {
   changeChecked: (id: number) => void;
-  cuisine: { id: number; checked: boolean; label: string };
+  category: { id: number; checked: boolean; label: string };
 }
 
 const CheckboxProton: FunctionComponent<CheckboxProtonProps> = (props) => {
-  let { changeChecked, cuisine } = props;
-  let { checked, label, id } = cuisine;
+  let { changeChecked, category } = props;
+  let { checked, label, id } = category;
 
   return (
     <div>

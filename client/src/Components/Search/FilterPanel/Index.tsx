@@ -6,20 +6,20 @@ import CheckboxProton from "../../Common/CheckBoxProton/index";
 import FilterListToggle from "../../Common/FilterListToggle/index";
 import SliderProton from "../../Common/SlideProton/index";
 
-interface CuisinesProps {
+interface CategoryProps {
   id: number;
   checked: boolean;
   label: string;
 }
 interface FilterPanelProps {
-  selectedFrequency: string | null;
-  selectedCategory: CuisinesProps[];
-  selectCategory: (e: ChangeEvent<any>, value: string) => void;
-  selectedRating: number | null;
   selectedPrice: number[];
-  selectRating: (e: ChangeEvent<any>, value: any) => void;
+  selectedFrequency: string | null;
+  selectedRating: number | null;
+  selectedCategory: CategoryProps[];
   changeChecked: (id: number) => void;
   changePrice: (e: Event, newValue: number | number[]) => void;
+  selectCategory: (e: ChangeEvent<any>, value: string) => void;
+  selectRating: (e: ChangeEvent<any>, value: any) => void;
 }
 
 export const FilterPanel: FunctionComponent<FilterPanelProps> = (props) => {
@@ -53,7 +53,7 @@ export const FilterPanel: FunctionComponent<FilterPanelProps> = (props) => {
         {selectedCategory?.map((category) => (
           <CheckboxProton
             key={category.id}
-            cuisine={category}
+            category={category}
             changeChecked={changeChecked}
           />
         ))}

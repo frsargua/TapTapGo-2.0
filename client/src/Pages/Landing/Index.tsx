@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import SearchByTagBar from "./SearchByTagBar";
 import { SearchLocation } from "./SeachLocationBar";

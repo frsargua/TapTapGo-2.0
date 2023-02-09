@@ -16,6 +16,7 @@ export const GET_PROFILEDATA = gql`
       id
       profileAvatar
       parties {
+        id
         eventName
         review {
           title

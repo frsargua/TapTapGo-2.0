@@ -1,5 +1,6 @@
 import { setContext } from "@apollo/client/link/context";
 import "./App.css";
+import "./index.css";
 import {
   ApolloClient,
   InMemoryCache,

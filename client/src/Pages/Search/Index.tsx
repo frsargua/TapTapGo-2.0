@@ -23,10 +23,6 @@ interface CategoryProps {
 const Search: FunctionComponent<SearchProps> = () => {
   const { city } = useParams<URLParamsTypes>();
 
-  const { loading, data } = useQuery(SEARCH_EVENTS_CITY, {
-    variables: { cityParam: city },
-  });
-
   const [selectedFrequency, setSelectedFrequency] = useState<string | null>(
     null
   );
@@ -73,13 +69,15 @@ const Search: FunctionComponent<SearchProps> = () => {
 
     // Rating Filter
     if (selectedRating) {
-      updatedList = updatedList.filter((item) => item.rating >= selectedRating);
+      updatedList = updatedList.filter(
+        (item: any) => item.rating >= selectedRating
+      );
     }
 
     // Frequency Filter
     if (selectedFrequency) {
       updatedList = await updatedList.filter(
-        (item) => item.frequency.frequency === selectedFrequency
+        (item: any) => item.frequency.frequency === selectedFrequency
       );
     }
     // Category Filter
@@ -88,22 +86,20 @@ const Search: FunctionComponent<SearchProps> = () => {
       .map((item) => item.label.toLowerCase());
 
     if (categoryChecked.length) {
-      updatedList = updatedList.filter((item) => {
+      updatedList = updatedList.filter((item: any) => {
         let found = false;
-        item.categories.forEach((category) => {
+        item.categories.forEach((category: any) => {
           found = categoryChecked.includes(category.category.toLowerCase());
-          console.log(found);
         });
 
         return found;
       });
-      console.log(updatedList);
     }
 
     // Search Filter
     if (searchInput) {
       updatedList = updatedList.filter(
-        (item) =>
+        (item: any) =>
           item.eventName
             .toLowerCase()
             .search(searchInput.toLowerCase().trim()) !== -1
@@ -114,19 +110,19 @@ const Search: FunctionComponent<SearchProps> = () => {
     const minPrice = selectedPrice[0];
     const maxPrice = selectedPrice[1];
 
-    console.log(minPrice, maxPrice);
-
     updatedList = updatedList.filter(
-      (item) => item.price >= minPrice && item.price <= maxPrice
+      (item: any) => item.price >= minPrice && item.price <= maxPrice
     );
-
-    console.log(updatedList);
 
     // Updating state
     setList(updatedList);
 
     !updatedList.length ? setResultsFound(false) : setResultsFound(true);
   };
+
+  const { loading, data } = useQuery(SEARCH_EVENTS_CITY, {
+    variables: { cityParam: city },
+  });
 
   useEffect(() => {
     applyFilters();
@@ -137,6 +133,7 @@ const Search: FunctionComponent<SearchProps> = () => {
     searchInput,
     selectedPrice,
   ]);
+
   useEffect(() => {
     if (data) {
       if (data?.QueryEventsByCity?.length) {
@@ -144,6 +141,7 @@ const Search: FunctionComponent<SearchProps> = () => {
       }
     }
   }, [data]);
+
   return (
     <>
       <Container maxWidth="xl">
@@ -194,7 +192,7 @@ const Search: FunctionComponent<SearchProps> = () => {
             </Grid>
             <Grid item xs={12} md={10}>
               <Grid container spacing={2}>
-                {list.length > 0 ? (
+                {!loading && resultsFound ? (
                   list.map((el, i) => {
                     return (
                       <Grid key={el._id} item xs={11} sm={10} md={4} lg={3}>

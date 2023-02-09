@@ -1,6 +1,6 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 
 interface RenderBookmarkIconProps {
   isBookmarked: Boolean;
@@ -14,25 +14,27 @@ export const RenderBookmarkIcon: FunctionComponent<RenderBookmarkIconProps> = (
 
   return isBookmarked ? (
     <FavoriteIcon
-      sx={{
+      style={{
         position: "absolute",
         bottom: 0,
         right: 0,
         padding: "1rem",
+        backgroundColor: "black",
+        color: "red",
       }}
       onClick={toggleHeart}
-      className="heart"
     />
   ) : (
     <FavoriteBorderIcon
-      sx={{
+      style={{
         position: "absolute",
         bottom: 0,
         right: 0,
         padding: "1rem",
+        backgroundColor: "black",
+        color: "white",
       }}
       onClick={toggleHeart}
-      className="heart"
     />
   );
 };

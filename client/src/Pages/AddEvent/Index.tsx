@@ -1,27 +1,22 @@
-import { useNavigate } from "react-router-dom";
-import Typography from "@mui/material/Typography";
 import {
-  Button,
-  Card,
-  CardContent,
-  Container,
-  Grid,
-  SelectChangeEvent,
-  SelectProps,
-} from "@mui/material";
-import { storage } from "../../firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { v4 } from "uuid";
-import { EditorState } from "draft-js";
+  ChangeEvent,
+  FunctionComponent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useNavigate } from "react-router-dom";
+import { Box } from "@mui/system";
+import { Container, SelectChangeEvent, Typography } from "@mui/material";
+import { FormOne } from "../../Components/AddEvent/FormOne";
+import { FormTwo } from "../../Components/AddEvent/FormTwo";
+import { FormThree } from "../../Components/AddEvent/FormThree";
 import { useQuery, useMutation } from "@apollo/client";
 import { ADD_EVENT } from "../../graphQL/Mutations";
 import { QUERY_TAGS } from "../../graphQL/Queries";
-import { FormOne } from "../../Components/AddEvent/FormOne";
-import { FormThree } from "../../Components/AddEvent/FormThree";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { Box } from "@mui/system";
-import { FormTwo } from "../../Components/AddEvent/FormTwo";
+import { uploadImage } from "../../utils/index";
 import dayjs, { Dayjs } from "dayjs";
+import { NavigationButtons } from "../../Components/AddEvent/NavigationButtons";
 
 type newEventProps = {
   eventName: string;
@@ -54,21 +49,18 @@ type tagsProps = {
   keywords: string[];
 };
 
-export function AddEvent() {
+type AddEventProps = {
+  tags: number[];
+  keywords: string[];
+};
+
+export const AddEvent: FunctionComponent<AddEventProps> = () => {
   const navigate = useNavigate();
 
   const completeEventInformation: any = useRef();
 
   const [keywords, setKeywords] = useState<keywordsProps[]>([]);
 
-  const { loading, data } = useQuery(QUERY_TAGS);
-
-  useEffect(() => {
-    if (data?.QueryAllCategories?.length) {
-      console.log(data.QueryAllCategories);
-      setKeywords(data.QueryAllCategories);
-    }
-  }, [data]);
   const [newEvent, setNewEvent] = useState<newEventProps>({
     ageGroup: "",
     date: dayjs().format("YYYY-MM-DD"),
@@ -134,11 +126,11 @@ export function AddEvent() {
 
   const handleKeywordsSelected = (event: SelectChangeEvent<string[]>) => {
     const tagNameArray = event.target.value as string[];
+
     let tagId = tagNameArray.map((key) => {
       let answer = keywords.find((el) => el.category === key);
       return { id: +answer?.id };
     }) as { id: number }[];
-    console.log(tagId);
 
     setTags({ keywords: tagNameArray, tags: tagId });
   };
@@ -150,18 +142,11 @@ export function AddEvent() {
       });
     }
   }
-  const uploadImage = async (image) => {
-    if (image == null) return;
-    const imageRef = ref(storage, `events/images/${image.name + v4()}`);
-    let snapshot = await uploadBytes(imageRef, image);
-    let URL = await getDownloadURL(snapshot.ref);
-    console.log(URL);
-    return await URL;
-  };
 
   const [createEvent] = useMutation(ADD_EVENT);
+  const { data } = useQuery(QUERY_TAGS);
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async (event: any) => {
     event.preventDefault();
 
     try {
@@ -180,7 +165,6 @@ export function AddEvent() {
           };
         })
         .then(async () => {
-          console.log(completeEventInformation.current);
           const { data: eventData } = await createEvent({
             variables: { input: { ...completeEventInformation.current } },
           });
@@ -194,37 +178,11 @@ export function AddEvent() {
     }
   };
 
-  function renderForm() {
-    switch (formNumber) {
-      case 1:
-        return (
-          <FormOne
-            changeNewEvent={changeNewEvent}
-            newEvent={newEvent}
-            updateDate={handleEventDate}
-            imageUpload={imageUpload}
-            tags={tags}
-            keywords={keywords}
-            handleKeywordsSelected={handleKeywordsSelected}
-            updateImage={handleImagesUploaded}
-          />
-        );
-      case 2:
-        return (
-          <FormTwo
-            eventAddress={eventAddress}
-            handleAddressChange={handleAddressChange}
-          />
-        );
-      default:
-        return (
-          <FormThree
-            changeNewEventDescription={changeNewEventDescription}
-            newEvent={newEvent}
-          />
-        );
+  useEffect(() => {
+    if (data?.QueryAllCategories?.length) {
+      setKeywords(data.QueryAllCategories);
     }
-  }
+  }, [data]);
 
   return (
     <Container
@@ -246,48 +204,43 @@ export function AddEvent() {
           Starting a new event
         </Typography>
 
-        {renderForm()}
+        {formNumber == 1 && (
+          <FormOne
+            changeNewEvent={changeNewEvent}
+            newEvent={newEvent}
+            updateDate={handleEventDate}
+            imageUpload={imageUpload}
+            tags={tags}
+            keywords={keywords}
+            handleKeywordsSelected={handleKeywordsSelected}
+            updateImage={handleImagesUploaded}
+          />
+        )}
+        {formNumber == 2 && (
+          <FormTwo
+            eventAddress={eventAddress}
+            handleAddressChange={handleAddressChange}
+          />
+        )}
+        {formNumber >= 3 && (
+          <FormThree
+            changeNewEventDescription={changeNewEventDescription}
+            newEvent={newEvent}
+          />
+        )}
 
         <Box
           sx={{ display: "flex", mt: "1rem" }}
           component="form"
           onSubmit={handleFormSubmit}
         >
-          {formNumber == 1 || formNumber == 2 ? (
-            <Button
-              color="primary"
-              onClick={handleNextForm}
-              fullWidth
-              variant="contained"
-            >
-              Next
-            </Button>
-          ) : (
-            ""
-          )}
-
-          {formNumber == 2 || formNumber == 3 ? (
-            <Button
-              color="secondary"
-              variant="contained"
-              fullWidth
-              onClick={handlePreviousForm}
-            >
-              Previous
-            </Button>
-          ) : (
-            ""
-          )}
-
-          {formNumber === 3 ? (
-            <Button color="info" type="submit" fullWidth variant="contained">
-              Submit
-            </Button>
-          ) : (
-            ""
-          )}
+          <NavigationButtons
+            formNumber={formNumber}
+            handlePreviousForm={handlePreviousForm}
+            handleNextForm={handleNextForm}
+          />
         </Box>
       </div>
     </Container>
   );
-}
+};

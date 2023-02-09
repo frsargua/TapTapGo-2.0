@@ -18,7 +18,7 @@ const SliderProton: FunctionComponent<SliderProtonProps> = ({
         onChange={(event, number) => changePrice(event, number)}
         valueLabelDisplay="on"
         min={0}
-        max={100}
+        max={200}
         sx={{
           color: "#000",
         }}

@@ -11,13 +11,14 @@ import { CardActionArea } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { RenderBookmarkIcon } from "./ToggleHeart";
 import { averageRatingFromDB, selectRandomImage } from "../../../utils";
+import Auth from "../../../utils/auth";
 import { FunctionComponent } from "react";
 
 interface SingleEventCardProps {
   eventName: string;
   price: number;
   rating: number;
-  reviews: { rating: number }[];
+  review: { rating: number }[];
   image_urls: { imageLink: string }[];
   id: string;
   createdById: string;
@@ -29,12 +30,13 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
   let { eventName, price, rating, review, image_urls, id } = props;
 
   const [isBookmarked, setIsBookmarked] = useState(false);
-  //   let { tokenUserId, isOwner, logged } = Auth.isOwner();
-  let isOwner = false;
+  // let { tokenUserId, isOwner } = Auth.isOwner(props);
+  let isOwner = true;
 
   const toggleHeart = async () => {
     try {
       setIsBookmarked((prev) => !prev);
+      console.log(isBookmarked);
     } catch (e) {
       console.error(e);
     }
@@ -95,8 +97,11 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
                 £ {price} /
                 <PersonIcon sx={{ fontSize: "1.2rem" }} />
               </Typography>
-
-              {isOwner || (
+              <RenderBookmarkIcon
+                isBookmarked={isBookmarked}
+                toggleHeart={toggleHeart}
+              />
+              {!isOwner || (
                 <RenderBookmarkIcon
                   isBookmarked={isBookmarked}
                   toggleHeart={toggleHeart}
