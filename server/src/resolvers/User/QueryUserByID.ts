@@ -20,7 +20,7 @@ export const QueryUserByID = async (_: any, __: any, context: UserType) => {
         },
       ],
     });
-    console.log(userFromDatabase);
+
     return userFromDatabase;
   } catch (err) {
     console.log(`[ERROR]: Failed to get user | ${(err as Error).message}`);

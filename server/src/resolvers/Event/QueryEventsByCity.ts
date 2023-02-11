@@ -34,7 +34,6 @@ export const QueryEventsByCity = async (_: any, { cityParam }: any) => {
       ],
     });
 
-    console.log(eventsByCity);
     return eventsByCity;
   } catch (err: any) {
     console.log(err);

@@ -135,10 +135,8 @@ const Search: FunctionComponent<SearchProps> = () => {
   ]);
 
   useEffect(() => {
-    if (data) {
-      if (data?.QueryEventsByCity?.length) {
-        setList(data?.QueryEventsByCity);
-      }
+    if (data?.QueryEventsByCity?.length) {
+      setList(data?.QueryEventsByCity);
     }
   }, [data]);
 
@@ -192,7 +190,7 @@ const Search: FunctionComponent<SearchProps> = () => {
             </Grid>
             <Grid item xs={12} md={10}>
               <Grid container spacing={2}>
-                {!loading && resultsFound ? (
+                {!loading && !resultsFound ? (
                   list.map((el, i) => {
                     return (
                       <Grid key={el._id} item xs={11} sm={10} md={4} lg={3}>

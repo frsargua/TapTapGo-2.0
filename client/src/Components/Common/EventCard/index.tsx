@@ -1,3 +1,4 @@
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -10,7 +11,10 @@ import Rating from "@mui/material/Rating";
 import { CardActionArea } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { RenderBookmarkIcon } from "./ToggleHeart";
-import { averageRatingFromDB, selectRandomImage } from "../../../utils";
+import { selectRandomImage } from "../../../utils";
+import { BOOKMARK_EVENT, UNBOOKMARK_EVENT } from "../../../graphQL/Mutations";
+import { ISBOOKMARK_EVENT } from "../../../graphQL/Queries";
+import { useMutation, useQuery } from "@apollo/client";
 import Auth from "../../../utils/auth";
 import { FunctionComponent } from "react";
 
@@ -30,17 +34,37 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
   let { eventName, price, rating, review, image_urls, id } = props;
 
   const [isBookmarked, setIsBookmarked] = useState(false);
-  // let { tokenUserId, isOwner } = Auth.isOwner(props);
-  let isOwner = true;
+  let { tokenUserId, isOwner } = Auth.isOwner(props);
+
+  const { data } = useQuery(ISBOOKMARK_EVENT, {
+    variables: { input: { eventId: id } },
+  });
+  const [bookmarkEvent] = useMutation(BOOKMARK_EVENT, {});
+  const [unBookmarkEvent] = useMutation(UNBOOKMARK_EVENT, {});
 
   const toggleHeart = async () => {
     try {
+      if (!isBookmarked) {
+        await bookmarkEvent({
+          variables: { input: { eventId: id } },
+        });
+      } else {
+        await unBookmarkEvent({
+          variables: { input: { eventId: id } },
+        });
+      }
       setIsBookmarked((prev) => !prev);
-      console.log(isBookmarked);
     } catch (e) {
       console.error(e);
     }
   };
+
+  useEffect(() => {
+    if (data) {
+      console.log(data.isBookmarked.bookmarked);
+      setIsBookmarked(data.isBookmarked.bookmarked);
+    }
+  }, [data]);
 
   return (
     <>
@@ -68,7 +92,6 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "left",
-                position: "relative",
               }}
             >
               <Rating
@@ -85,6 +108,7 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "left",
+                position: "relative",
               }}
             >
               <Typography
@@ -97,10 +121,7 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
                 £ {price} /
                 <PersonIcon sx={{ fontSize: "1.2rem" }} />
               </Typography>
-              <RenderBookmarkIcon
-                isBookmarked={isBookmarked}
-                toggleHeart={toggleHeart}
-              />
+
               {!isOwner || (
                 <RenderBookmarkIcon
                   isBookmarked={isBookmarked}

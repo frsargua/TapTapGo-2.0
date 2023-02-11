@@ -45,11 +45,6 @@ class AuthService {
     if (this.loggedIn()) {
       let tokenUserId = (this as any).getProfile().data.id;
       let isOwner = userObject.id === tokenUserId;
-      console.log({
-        tokenUserId: tokenUserId,
-        isOwner: !isOwner,
-        logged: true,
-      });
       return { tokenUserId: tokenUserId, isOwner: !isOwner, logged: true };
     }
 

@@ -71,6 +71,7 @@ export const typeDefs = `
 
   type Query {
     users: [User]
+    isBookmarked(input:BookmarkInput!):ResponseFromResolver
     QueryAllCategories:[Category]
     QueryEventsByCity(cityParam:String!):[Event]
     QueryEventById(eventId:ID!):Event

@@ -38,3 +38,19 @@ export const CREATE_REVIEW = gql`
     }
   }
 `;
+
+export const BOOKMARK_EVENT = gql`
+  mutation Mutation($input: BookmarkInput!) {
+    bookmarkEvent(input: $input) {
+      bookmarked
+    }
+  }
+`;
+
+export const UNBOOKMARK_EVENT = gql`
+  mutation UnbookmarkEvent($input: BookmarkInput!) {
+    unbookmarkEvent(input: $input) {
+      bookmarked
+    }
+  }
+`;

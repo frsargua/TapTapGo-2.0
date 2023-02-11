@@ -14,25 +14,21 @@ export const RenderBookmarkIcon: FunctionComponent<RenderBookmarkIconProps> = (
 
   return isBookmarked ? (
     <FavoriteIcon
-      style={{
+      sx={{
         position: "absolute",
         bottom: 0,
         right: 0,
-        padding: "1rem",
-        backgroundColor: "black",
         color: "red",
       }}
       onClick={toggleHeart}
     />
   ) : (
     <FavoriteBorderIcon
-      style={{
+      sx={{
         position: "absolute",
         bottom: 0,
         right: 0,
-        padding: "1rem",
-        backgroundColor: "black",
-        color: "white",
+        color: "red",
       }}
       onClick={toggleHeart}
     />

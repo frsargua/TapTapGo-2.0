@@ -9,12 +9,14 @@ const { QueryEventsByCity } = require("./Event/QueryEventsByCity");
 const { QueryEventById } = require("./Event/QueryEventById");
 const { bookmarkEvent } = require("./Bookmark/BookmarkEvent");
 const { unbookmarkEvent } = require("./Bookmark/UnbookmarkEvent");
+const { isBookmarked } = require("./Bookmark/IsBookmarked");
 const { createReview } = require("./Review/CreateReview");
 const { removeReview } = require("./Review/DeleteReview");
 const { login } = require("./User/LogIn");
 
 export const resolvers = {
   Query: {
+    isBookmarked,
     users,
     QueryUserByID,
     QueryAllCategories,

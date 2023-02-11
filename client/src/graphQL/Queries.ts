@@ -131,3 +131,11 @@ export const SEARCH_EVENTS_CITY = gql`
     }
   }
 `;
+
+export const ISBOOKMARK_EVENT = gql`
+  query Query($input: BookmarkInput!) {
+    isBookmarked(input: $input) {
+      bookmarked
+    }
+  }
+`;
