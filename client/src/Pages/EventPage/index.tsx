@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, FunctionComponent } from "react";
 
 import { LocationCard } from "../../Components/EventPage/LocationCard";
 import { HostInfoCard } from "../../Components/EventPage/HostInforCard";
@@ -21,18 +21,20 @@ import { EventMapComponent } from "../../Components/EventPage/EventMapComponent"
 import { useQuery } from "@apollo/client";
 import { QUERY_EVENTBYID } from "../../graphQL/Queries";
 
-export default function EventPage() {
+interface EventPageProps {
+  id: number;
+  checked: boolean;
+  label: string;
+}
+
+export const EventPage: FunctionComponent<EventPageProps> = () => {
   const { openSignModal } = useContext(ModalContext);
   const { eventId: eventParam } = useParams<URLParamsTypes>();
 
-  const { loading, data } = useQuery(QUERY_EVENTBYID, {
-    variables: { eventId: eventParam },
-  });
-
-  const [isAttendingState, setIsAttendingState] = useState(false);
-  const [eventData, setEventData] = useState(singleEvent);
+  const [isAttendingState, setIsAttendingState] = useState<boolean>(false);
+  const [eventData, setEventData] = useState<any>(singleEvent);
   const [eventSection, setEventSection] = useState("Description");
-  const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handlePurchase = async () => {
     setIsAttendingState(true);
@@ -42,32 +44,43 @@ export default function EventPage() {
     setIsAttendingState(false);
   };
 
-  useEffect(() => {
-    if (data?.QueryEventById) {
-      console.log(data.QueryEventById);
-      setEventData(data.QueryEventById);
-      setIsLoading((prev) => !prev);
-      return;
-    }
-  }, [data]);
-
   function renderSection() {
     if (eventSection === "Description") {
       return <DescriptionSection eventData={eventData} />;
-    } else if (eventSection === "Reviews") {
+    }
+
+    if (eventSection === "Reviews") {
       return (
         <ReviewSection
           eventId={eventParam as string}
           reviewsArray={eventData.review}
         />
       );
-    } else if (eventSection === "Suggestions") {
-      return <SuggestionsSection suggestedEvents={eventData.categories} />;
-    } else {
-      return <DescriptionSection eventData={eventData} />;
     }
+
+    if (eventSection === "Suggestions") {
+      return <SuggestionsSection suggestedEvents={eventData.categories} />;
+    }
+
+    return <DescriptionSection eventData={eventData} />;
   }
-  return !isLoading ? (
+
+  async function updateState(info: any) {
+    await setEventData(info);
+    await setLoading((prev) => !prev);
+  }
+
+  const { data } = useQuery(QUERY_EVENTBYID, {
+    variables: { eventId: eventParam },
+  });
+
+  useEffect(() => {
+    if (data?.QueryEventById) {
+      updateState(data.QueryEventById);
+    }
+  }, [data]);
+
+  return !loading ? (
     <Typography variant="h3" marginTop="6rem">
       loading
     </Typography>
@@ -146,4 +159,4 @@ export default function EventPage() {
       </Grid>
     </Container>
   );
-}
+};

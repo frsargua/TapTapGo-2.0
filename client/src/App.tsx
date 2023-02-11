@@ -14,7 +14,7 @@ import { TextEditor } from "./Components/Common/TextEditor";
 import { Navbar } from "./Components/Common/Navbar/Index";
 import { ModalProvider } from "./contexts/ModalContext";
 import { AddEvent } from "./Pages/AddEvent/Index";
-import EventPage from "./Pages/EventPage";
+import { EventPage } from "./Pages/EventPage";
 import { Landing } from "./Pages/Landing/Index";
 import { Map } from "./Pages/MapPage/index";
 import { ProfileDashBoard } from "./Pages/Profile/Index";

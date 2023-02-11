@@ -1,13 +1,13 @@
 import { Card, CardContent, Grid, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
 
-const style = {
-  width: "100%",
-
-  bgcolor: "background.paper",
-};
 interface HostInfoCardProps {
-  hostData: { profileAvatar: string; username: string; myEvents: any[] };
+  hostData: {
+    profileAvatar: string;
+    username: string;
+    myEvents: any[];
+    parties: any[];
+  };
 }
 
 export const HostInfoCard: FunctionComponent<HostInfoCardProps> = (props) => {
@@ -15,7 +15,6 @@ export const HostInfoCard: FunctionComponent<HostInfoCardProps> = (props) => {
     hostData: { profileAvatar, username, parties },
   } = props;
 
-  console.log(props);
   return (
     <Card>
       <CardContent>

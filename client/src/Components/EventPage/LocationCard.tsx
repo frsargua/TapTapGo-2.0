@@ -7,14 +7,19 @@ import {
   Typography,
 } from "@mui/material";
 import { FunctionComponent } from "react";
-// import Auth from "../../utils/auth";
+import Auth from "../../utils/auth";
 
 interface LocationCardProps {
   eventData: {
     eventName: string;
     date: string;
     price: number;
-    location: { streetName: string; cityName: string; postcode: string };
+    addresses: {
+      firstLine: string;
+      secondLine: string;
+      city: string;
+      postcode: string;
+    }[];
   };
   handlePurchase: () => void;
   isAttending: boolean;
@@ -23,17 +28,12 @@ interface LocationCardProps {
 }
 
 export const LocationCard: FunctionComponent<LocationCardProps> = (props) => {
-  // let logged = Auth.loggedIn();
+  let logged = Auth.loggedIn();
   let { eventData, handlePurchase, isAttending, openModal, updateAttendance } =
     props;
 
-  console.log(eventData);
-
-  let logged = true;
-
   function renderActionButton() {
-    console.log(isAttending);
-    const isAttendingRender = props.isAttending ? (
+    const isAttendingRender = isAttending ? (
       <Button
         onClick={updateAttendance}
         sx={{
