@@ -58,6 +58,21 @@ export const typeDefs = `
     frequency: frequency
     maxAttendees: Int!
   }
+  type EventForBookmark {
+    id: ID!
+    eventName: String
+    description: String
+    date: String
+    price: Int
+    ageGroup: String!
+    host: User
+    categories: [Category]
+    averageRating:Int
+    numberOfReviews:Int
+    attendees: Int!
+    frequency: frequency
+    maxAttendees: Int!
+  }
 
   type LocationEvent {
     firstLine: String!
@@ -75,7 +90,7 @@ export const typeDefs = `
     QueryAllCategories:[Category]
     QueryEventsByCity(cityParam:String!):[Event]
     QueryEventById(eventId:ID!):Event
-    QueryUserBookmark:[Event]
+    queryUserBookmarks:[EventForBookmark]
     QueryUserByID:User
   }
 

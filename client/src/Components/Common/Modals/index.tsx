@@ -1,5 +1,5 @@
 import { UserForms } from "./Authentification/index";
-// import BookMark from "../bookmark";
+import { BookMark } from "./Bookmark/index";
 import { ModalContext } from "../../../contexts/ModalContext";
 import { useContext } from "react";
 
@@ -9,7 +9,7 @@ export function Modals() {
   return (
     <>
       {getModalState() && <UserForms />}
-      {/* {BookmarksModalState && <BookMark />} */}
+      {getBookmarksModalState() && <BookMark />}
     </>
   );
 }

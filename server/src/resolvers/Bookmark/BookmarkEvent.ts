@@ -9,11 +9,11 @@ export const bookmarkEvent = async (
 ) => {
   try {
     if (context.user) {
+      console.log(input.eventId);
+
       const eventFromDB = await Events.findByPk(input.eventId);
 
       const userFromDB = await User.findByPk(context.user.id);
-
-      console.log(Object.getOwnPropertyNames(User.prototype));
 
       await userFromDB.addBookmarked(eventFromDB);
       return { bookmarked: true };

@@ -10,19 +10,20 @@ const { QueryEventById } = require("./Event/QueryEventById");
 const { bookmarkEvent } = require("./Bookmark/BookmarkEvent");
 const { unbookmarkEvent } = require("./Bookmark/UnbookmarkEvent");
 const { isBookmarked } = require("./Bookmark/IsBookmarked");
+const { queryUserBookmarks } = require("./Bookmark/QueryUserBookmarks");
 const { createReview } = require("./Review/CreateReview");
 const { removeReview } = require("./Review/DeleteReview");
 const { login } = require("./User/LogIn");
 
 export const resolvers = {
   Query: {
-    isBookmarked,
     users,
-    QueryUserByID,
+    isBookmarked,
     QueryAllCategories,
     QueryEventsByCity,
+    QueryUserByID,
+    queryUserBookmarks,
     QueryEventById,
-    QueryUserBookmark,
   },
   Mutation: {
     createUser,

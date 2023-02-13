@@ -61,7 +61,6 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
 
   useEffect(() => {
     if (data) {
-      console.log(data.isBookmarked.bookmarked);
       setIsBookmarked(data.isBookmarked.bookmarked);
     }
   }, [data]);

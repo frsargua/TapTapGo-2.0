@@ -11,7 +11,7 @@ interface ModalContextProps {
   getModalState: () => Boolean;
   getBookmarksModalState: () => Boolean;
   closeModal: (event: ChangeEvent<any>) => void;
-  closeBookmarkModal: (event: ChangeEvent<HTMLInputElement>) => void;
+  closeBookmarkModal: (event: ChangeEvent<any>) => void;
   openSignModal: () => void;
   openBookmarkModal: () => void;
 }
@@ -56,11 +56,12 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     });
   };
 
-  const closeBookmarkModal = (event: ChangeEvent<HTMLInputElement>) => {
-    const isCloseBox = event.target.getAttribute("value");
-    setBookmarksModalState((prev) => {
-      return isCloseBox === "CloseBox" ? !prev : prev;
-    });
+  const closeBookmarkModal = (event: ChangeEvent<any>) => {
+    if (event.currentTarget == event.target) {
+      setBookmarksModalState((prev) => {
+        return !prev;
+      });
+    }
   };
 
   return (
