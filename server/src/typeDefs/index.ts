@@ -64,6 +64,7 @@ export const typeDefs = `
     description: String
     date: String
     price: Int
+    city: String!
     ageGroup: String!
     host: User
     categories: [Category]

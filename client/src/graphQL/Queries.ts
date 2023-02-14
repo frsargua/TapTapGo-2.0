@@ -141,9 +141,17 @@ export const ISBOOKMARK_EVENT = gql`
 `;
 
 export const QUERY_USER_BOOKMARKS = gql`
-  query Query($input: BookmarkInput!) {
-    isBookmarked(input: $input) {
-      bookmarked
+  query QueryUserBookmarks {
+    queryUserBookmarks {
+      id
+      price
+      attendees
+      date
+      eventName
+      numberOfReviews
+      averageRating
+      ageGroup
+      city
     }
   }
 `;

@@ -14,19 +14,19 @@ export const queryUserBookmarks = async (
       const userId = context.user.id;
 
       const eventsFromDB = await sequelize.query(
-        `SELECT events.id  , events.event_name  as eventName, events.description, events.date, events.price, events.age_group as ageGroup, events.attendees, events.max_attendees  as maxAttendess, events.host_id as hostId, events.frequency_id as frequencyId ,  AVG(review.rating) AS averageRating, COUNT(review.rating) AS numberOfReviews  FROM bookmark 
+        `SELECT events.id  , events.event_name  as eventName, events.description, events.date, events.price, events.age_group as ageGroup, events.attendees, events.max_attendees  as maxAttendess, events.host_id as hostId, events.frequency_id as frequencyId ,  AVG(review.rating) AS averageRating, COUNT(review.rating) AS numberOfReviews, event_address.address_id, address.city  FROM bookmark 
 JOIN events ON events.id = bookmark.event_id 
 LEFT JOIN review ON review.post_id = events.id 
-WHERE user_id = 1
+LEFT JOIN event_address ON event_address.event_id = events.id 
+LEFT JOIN address ON event_address.address_id = address.id 
+WHERE user_id = :userId
 GROUP BY
-  events.id`,
+  events.id,event_address.address_id`,
         {
           replacements: { userId },
           type: QueryTypes.SELECT,
         }
       );
-
-      console.log(eventsFromDB);
 
       return eventsFromDB;
     }
