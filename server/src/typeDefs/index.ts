@@ -93,6 +93,7 @@ export const typeDefs = `
     QueryEventById(eventId:ID!):Event
     queryUserBookmarks:[EventForBookmark]
     QueryUserByID:User
+    QueryAllFrequencyTypes:[frequency]
   }
 
   type ResponseFromResolver {
@@ -137,6 +138,7 @@ export const typeDefs = `
     date: String!
     price: Int!
     ageGroup: String
+    frequency: String
     maxAttendees: Int!
   }
 

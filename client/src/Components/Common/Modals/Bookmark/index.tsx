@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 
 const style = {
   width: "100%",
-
   bgcolor: "background.paper",
 };
 

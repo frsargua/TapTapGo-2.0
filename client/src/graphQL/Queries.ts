@@ -155,3 +155,12 @@ export const QUERY_USER_BOOKMARKS = gql`
     }
   }
 `;
+
+export const QUERY_FREQUENCY_TYPES = gql`
+  query QueryAllFrequencyTypes {
+    QueryAllFrequencyTypes {
+      frequency
+      id
+    }
+  }
+`;

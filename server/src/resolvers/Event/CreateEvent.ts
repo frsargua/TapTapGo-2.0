@@ -9,6 +9,9 @@ export const createEvent = async (
   context: UserType
 ): Promise<any> => {
   try {
+    console.log(context.user);
+    console.log(input);
+
     if (context.user) {
       const { eventData, eventAddress, eventImages, eventCategories } = input;
 

@@ -9,6 +9,9 @@ const { QueryEventsByCity } = require("./Event/QueryEventsByCity");
 const { QueryEventById } = require("./Event/QueryEventById");
 const { bookmarkEvent } = require("./Bookmark/BookmarkEvent");
 const { unbookmarkEvent } = require("./Bookmark/UnbookmarkEvent");
+const {
+  QueryAllFrequencyTypes,
+} = require("./Frequency/QueryAllFrequencyTypes");
 const { isBookmarked } = require("./Bookmark/IsBookmarked");
 const { queryUserBookmarks } = require("./Bookmark/QueryUserBookmarks");
 const { createReview } = require("./Review/CreateReview");
@@ -24,6 +27,7 @@ export const resolvers = {
     QueryUserByID,
     queryUserBookmarks,
     QueryEventById,
+    QueryAllFrequencyTypes,
   },
   Mutation: {
     createUser,

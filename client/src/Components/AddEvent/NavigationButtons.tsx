@@ -21,8 +21,20 @@ export const NavigationButtons: FunctionComponent<NavigationButtonsProps> = (
           onClick={handleNextForm}
           fullWidth
           variant="contained"
+          sx={{ my: "0.2rem" }}
         >
           Next
+        </Button>
+      )}
+      {formNumber === 3 && (
+        <Button
+          color="warning"
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ my: "0.2rem" }}
+        >
+          Submit
         </Button>
       )}
       {(formNumber == 2 || formNumber == 3) && (
@@ -31,13 +43,9 @@ export const NavigationButtons: FunctionComponent<NavigationButtonsProps> = (
           variant="contained"
           fullWidth
           onClick={handlePreviousForm}
+          sx={{ my: "0.2rem" }}
         >
           Previous
-        </Button>
-      )}
-      {formNumber === 3 && (
-        <Button color="info" type="submit" fullWidth variant="contained">
-          Submit
         </Button>
       )}
     </>

@@ -30,6 +30,7 @@ export const FormTwo: FunctionComponent<FormTwoProps> = (props) => {
                 margin="dense"
                 name="postcode"
                 label="Postcode"
+                required
               />
               <TextField
                 onChange={handleAddressChange}
@@ -38,6 +39,7 @@ export const FormTwo: FunctionComponent<FormTwoProps> = (props) => {
                 margin="dense"
                 name="firstLine"
                 label="First Line"
+                required
               />
               <TextField
                 onChange={handleAddressChange}
@@ -56,6 +58,7 @@ export const FormTwo: FunctionComponent<FormTwoProps> = (props) => {
                 type="text"
                 name="city"
                 label="City"
+                required
               />
             </CardContent>
           </Card>

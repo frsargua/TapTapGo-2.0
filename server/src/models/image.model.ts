@@ -25,7 +25,7 @@ ImageUrl.init(
       unique: true,
     },
     imageLink: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(400),
       allowNull: false,
       validate: {
         isUrl: true,
