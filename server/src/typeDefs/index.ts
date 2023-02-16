@@ -17,6 +17,7 @@ export const typeDefs = `
     parties:[Event]
     password: String
     reviews:[Review]
+    bookmarked:[Event]
   }
 
   type Image {
@@ -138,8 +139,12 @@ export const typeDefs = `
     date: String!
     price: Int!
     ageGroup: String
-    frequency: String
+    frequency: FrequencyInput
     maxAttendees: Int!
+  }
+  input FrequencyInput {
+    frequency: String!
+    id: ID!
   }
 
   input ReviewInput {

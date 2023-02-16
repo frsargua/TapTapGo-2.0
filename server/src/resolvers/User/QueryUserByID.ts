@@ -18,8 +18,16 @@ export const QueryUserByID = async (_: any, __: any, context: UserType) => {
             },
           ],
         },
+        {
+          model: Events,
+          as: "bookmarked",
+          through: "bookmark",
+          include: [{ model: Review, as: "review" }, ImageUrl],
+        },
       ],
     });
+
+    console.log(userFromDatabase.bookmarked);
 
     return userFromDatabase;
   } catch (err) {

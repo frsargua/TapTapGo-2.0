@@ -30,6 +30,7 @@ export type EventType = {
       ageGroup: string;
       attendees?: number;
       maxAttendees: number;
+      frequency: { frequency: string; id: string };
     };
     eventImages: [{ imageLink: string }];
     eventAddress: {

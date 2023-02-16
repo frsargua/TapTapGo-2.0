@@ -9,14 +9,11 @@ export const createEvent = async (
   context: UserType
 ): Promise<any> => {
   try {
-    console.log(context.user);
-    console.log(input);
-
     if (context.user) {
       const { eventData, eventAddress, eventImages, eventCategories } = input;
-
+      let finalInput = { ...eventData, frequency: eventData.frequency.id };
       const createdEvent = await Events.create({
-        ...eventData,
+        ...finalInput,
         host_id: context.user.id,
       });
 
@@ -81,8 +78,6 @@ export const createEvent = async (
           },
         ],
       });
-
-      console.log(eventFromDB);
 
       return eventFromDB;
     } else {

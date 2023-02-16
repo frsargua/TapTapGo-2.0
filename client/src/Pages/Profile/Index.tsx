@@ -30,10 +30,6 @@ export const ProfileDashBoard: FunctionComponent<
   }
 
   useEffect(() => {
-    console.log(postBoardOption);
-  }, [postBoardOption]);
-
-  useEffect(() => {
     if (data?.QueryUserByID) {
       console.log(data.QueryUserByID);
       SetUserDetails(data.QueryUserByID);
@@ -45,7 +41,7 @@ export const ProfileDashBoard: FunctionComponent<
       case "bookmarks":
         return (
           <Grid container spacing={2}>
-            {userDetails.bookmarks.map((review, i) => {
+            {userDetails.bookmarked.map((review, i) => {
               return (
                 <Grid key={i} item xs={11} sm={10} md={4} lg={3}>
                   <SingleEventCard {...review} key={i} />

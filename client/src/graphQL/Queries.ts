@@ -26,6 +26,22 @@ export const GET_PROFILEDATA = gql`
         }
         attendees
       }
+      bookmarked {
+        id
+        eventName
+        price
+        attendees
+        maxAttendees
+        review {
+          rating
+          username
+          title
+          reviewText
+        }
+        image_urls {
+          imageLink
+        }
+      }
       username
       email
       number
