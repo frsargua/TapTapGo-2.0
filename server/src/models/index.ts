@@ -124,6 +124,7 @@ module.exports = {
   Events,
   Category,
   ImageUrl,
+  Payment,
   Purchase,
   Frequency,
 };
