@@ -9,6 +9,7 @@ const { QueryEventsByCity } = require("./Event/QueryEventsByCity");
 const { QueryEventById } = require("./Event/QueryEventById");
 const { bookmarkEvent } = require("./Bookmark/BookmarkEvent");
 const { unbookmarkEvent } = require("./Bookmark/UnbookmarkEvent");
+const { makeTransaction } = require("./Payments/makePayment");
 const {
   QueryAllFrequencyTypes,
 } = require("./Frequency/QueryAllFrequencyTypes");
@@ -38,5 +39,6 @@ export const resolvers = {
     createNewCategory,
     bookmarkEvent,
     unbookmarkEvent,
+    makeTransaction,
   },
 };

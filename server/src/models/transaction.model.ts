@@ -6,12 +6,12 @@ import {
   Model,
 } from "sequelize";
 
-class Payment extends Model<
-  InferAttributes<Payment>,
-  InferCreationAttributes<Payment>
+class Transaction extends Model<
+  InferAttributes<Transaction>,
+  InferCreationAttributes<Transaction>
 > {}
 
-Payment.init(
+Transaction.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -44,8 +44,8 @@ Payment.init(
     timestamps: true,
     freezeTableName: true,
     underscored: true,
-    modelName: "payment",
+    modelName: "transaction",
   }
 );
 
-module.exports = Payment;
+module.exports = Transaction;

@@ -4,14 +4,13 @@ const Review = require("./review.model");
 const Events = require("./events.model");
 const Category = require("./category.model");
 const ImageUrl = require("./image.model");
-const Purchase = require("./purchase.model");
-const Payment = require("./payment.model");
-const Receipt = require("./receipt.model");
-const EventTicket = require("./eventTicket.model");
+const Transaction = require("./transaction.model");
+const TransactionTicket = require("./transactionTicket.model");
+const Ticket = require("./ticket.model");
 const Frequency = require("./frequency.mode");
 
 // Events can have multiple address, as they can be changed
-// An address can be used by multiple events.
+// An address can be used by multiple eveEventTicketnts.
 Events.belongsToMany(Address, {
   through: "event_address",
   as: "addresses",
@@ -33,20 +32,31 @@ Events.belongsTo(User, { as: "host", foreignKey: "host_id" });
 User.hasMany(Review, { as: "reviews", foreignKey: "creator_id" });
 Review.belongsTo(User, { as: "creator", foreignKey: "creator_id" });
 
+//
+//
+//
+//
+//
+//
+
 // User can have many payments
-// A payment belongs to a single User
-User.hasMany(Payment, { as: "payment", foreignKey: "user_id" });
-Payment.belongsTo(User, { as: "payer", foreignKey: "user_id" });
+// A transaction belongs to a single User
+User.hasMany(Transaction, { as: "transaction", foreignKey: "user_id" });
+Transaction.belongsTo(User, { as: "payer", foreignKey: "user_id" });
 
-// A payment has only one receipt
-// A receipt belongs to a single payment
-Payment.hasOne(Receipt, { as: "receipt", foreignKey: "payment_id" });
-Receipt.belongsTo(Payment, { as: "payment", foreignKey: "payment_id" });
+Transaction.belongsTo(User);
+Transaction.hasMany(TransactionTicket);
+TransactionTicket.belongsTo(Ticket);
+TransactionTicket.belongsTo(Transaction);
+Ticket.belongsTo(Events);
+TransactionTicket.belongsTo(User);
 
-// A receipt can have many eventTickets
-// A payment belongs to a single User
-Receipt.hasMany(EventTicket, { as: "receipt", foreignKey: "receipt_id" });
-EventTicket.belongsTo(Receipt, { as: "eventTicket", foreignKey: "receipt_id" });
+//
+//
+//
+//
+//
+//
 
 // Events can have many reviews
 // Reviews belong to a single event
@@ -89,20 +99,6 @@ Category.belongsToMany(Events, {
   foreignKey: "category_id",
 });
 
-// Users can buy multiple tickets
-//
-User.belongsToMany(Events, {
-  through: "purchase",
-  as: "events",
-  foreignKey: "user_id",
-});
-
-Events.belongsToMany(User, {
-  through: "purchase",
-  as: "user",
-  foreignKey: "event_id",
-});
-
 // User can bookmark many events, but only once each.
 // One event can be bookmarked by several users.
 User.belongsToMany(Events, {
@@ -124,7 +120,7 @@ module.exports = {
   Events,
   Category,
   ImageUrl,
-  Payment,
-  Purchase,
+  Transaction,
+  TransactionTicket,
   Frequency,
 };

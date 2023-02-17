@@ -6,12 +6,12 @@ import {
   Model,
 } from "sequelize";
 
-class EventTicket extends Model<
-  InferAttributes<EventTicket>,
-  InferCreationAttributes<EventTicket>
+class Ticket extends Model<
+  InferAttributes<Ticket>,
+  InferCreationAttributes<Ticket>
 > {}
 
-EventTicket.init(
+Ticket.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -36,8 +36,8 @@ EventTicket.init(
     timestamps: true,
     freezeTableName: true,
     underscored: true,
-    modelName: "eventTicket",
+    modelName: "ticket",
   }
 );
 
-module.exports = EventTicket;
+module.exports = Ticket;

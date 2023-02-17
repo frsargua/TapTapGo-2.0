@@ -45,6 +45,7 @@ const init = async (): Promise<void> => {
     await new Promise<void>((resolve) =>
       httpServer.listen({ port: PORT }, resolve)
     );
+
     // initialise();
 
     console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);

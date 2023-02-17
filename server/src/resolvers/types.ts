@@ -20,6 +20,10 @@ export type CreateCategory = {
   input: { category: string };
 };
 
+export type MakePaymentType = {
+  input: { category: string };
+};
+
 export type EventType = {
   input: {
     eventData: {

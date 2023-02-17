@@ -175,6 +175,13 @@ export const typeDefs = `
     eventImages:[InputImage]
     eventCategories:[CreateCategory]
   }
+
+  input TransactionInput {
+    status:String!
+    amount:Int!
+    transactionId:String!
+    paymentMethod:String!
+  }
   
   type Mutation {
     createUser(input: CreateUserInput!): Auth
@@ -185,5 +192,6 @@ export const typeDefs = `
     unbookmarkEvent(input:BookmarkInput!):ResponseFromResolver
     createReview(input:ReviewInput!):Review
     removeReview(input:removeReviewInput!):Review
+    makeTransaction(input:TransactionInput!):Boolean
   }
 `;
