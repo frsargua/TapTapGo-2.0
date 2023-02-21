@@ -37,6 +37,12 @@ export const MAKE_PAYMENT = gql`
   }
 `;
 
+export const MAKE_TICKETS = gql`
+  mutation CreateTicket($input: CreateTicketInput!) {
+    createTicket(input: $input)
+  }
+`;
+
 export const CREATE_REVIEW = gql`
   mutation Mutation($input: ReviewInput!) {
     createReview(input: $input) {

@@ -177,10 +177,7 @@ export const typeDefs = `
   }
 
   input TransactionInput {
-    status:String!
     amount:Int!
-    transactionId:String!
-    paymentMethod:String!
     paymentId:String!
   }
 

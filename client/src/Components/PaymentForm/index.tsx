@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 import { async } from "@firebase/util";
 import { useMutation } from "@apollo/client";
-import { MAKE_PAYMENT } from "../../graphQL/Mutations";
+import { MAKE_PAYMENT, MAKE_TICKETS } from "../../graphQL/Mutations";
 
 interface PaymentFormProps {}
 
@@ -61,9 +61,20 @@ export const PaymentForm: FunctionComponent<PaymentFormProps> = () => {
         });
 
         if (data) {
-          console.log(data.makeTransaction);
-          console.log("sucessfull payment");
-          setSuccess(true);
+          const { data: ticketsCreated } = await makeTickets({
+            variables: {
+              input: {
+                numberTicketsPurchased: 4,
+                details: {
+                  event_id: "1",
+                },
+              },
+            },
+          });
+          if (ticketsCreated) {
+            console.log("sucessfull payment");
+            setSuccess(true);
+          }
         }
       } catch (error) {
         console.log("Error", error);
