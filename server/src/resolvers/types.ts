@@ -21,7 +21,13 @@ export type CreateCategory = {
 };
 
 export type MakePaymentType = {
-  input: { category: string };
+  input: { amount: number; paymentId: string };
+};
+export type CreateTicketType = {
+  input: {
+    details: { reference: string; qrCode: string; event_id: string };
+    numberTicketsPurchased: number;
+  };
 };
 
 export type EventType = {

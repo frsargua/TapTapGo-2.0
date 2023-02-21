@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 import { async } from "@firebase/util";
 import { useMutation } from "@apollo/client";
-import { ADD_EVENT } from "../../graphQL/Mutations";
+import { MAKE_PAYMENT } from "../../graphQL/Mutations";
 
 interface PaymentFormProps {}
 
@@ -37,10 +37,11 @@ export const PaymentForm: FunctionComponent<PaymentFormProps> = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [createEvent] = useMutation(ADD_EVENT);
+  const [makePayment] = useMutation(MAKE_PAYMENT);
+  const [makeTickets] = useMutation(MAKE_TICKETS);
 
   const handleSubmit = async (e) => {
-    e.preventDefaults();
+    e.preventDefault();
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: elements?.getElement(CardElement),
@@ -49,11 +50,18 @@ export const PaymentForm: FunctionComponent<PaymentFormProps> = () => {
     if (!error) {
       try {
         const { id } = paymentMethod;
-        const response = await axios.post("http://localhost:4000/payment", {
-          amount: 1000,
+
+        const { data } = await makePayment({
+          variables: {
+            input: {
+              amount: 52,
+              paymentId: id,
+            },
+          },
         });
 
-        if (response.data.success) {
+        if (data) {
+          console.log(data.makeTransaction);
           console.log("sucessfull payment");
           setSuccess(true);
         }

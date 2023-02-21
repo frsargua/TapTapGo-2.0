@@ -31,6 +31,12 @@ export const ADD_EVENT = gql`
   }
 `;
 
+export const MAKE_PAYMENT = gql`
+  mutation Mutation($input: TransactionInput!) {
+    makeTransaction(input: $input)
+  }
+`;
+
 export const CREATE_REVIEW = gql`
   mutation Mutation($input: ReviewInput!) {
     createReview(input: $input) {
