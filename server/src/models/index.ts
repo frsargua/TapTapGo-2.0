@@ -123,4 +123,5 @@ module.exports = {
   Transaction,
   TransactionTicket,
   Frequency,
+  Ticket,
 };

@@ -6,7 +6,7 @@ import { PaymentForm } from "../PaymentForm";
 interface StripeCintainerProps {}
 
 const PUBLIC_KEY =
-  "pk_live_51LJyctCiZXURSSBe4gkWf4pHwbykF9LN73BO5a3P4OfoPbhGkMPBBb7XBiHSY6tdvYNFpy8ypThp8zyVaikCO9Vu00gNgUELZ6";
+  "pk_test_51LJyctCiZXURSSBeQXYLyFKbJN7D1RtAJZ8I6qwwLW5WTTvJSe2FBngxYlESPC2cU7hjgfosWlQr4iNUHP1BR9CU00riMXLVbL";
 
 const stripeTestPromise = loadStripe(PUBLIC_KEY);
 

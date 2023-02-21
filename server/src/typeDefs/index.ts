@@ -181,7 +181,19 @@ export const typeDefs = `
     amount:Int!
     transactionId:String!
     paymentMethod:String!
+    paymentId:String!
   }
+
+  input CreateTicketInput {
+    details:TicketDetailsInput
+    numberTicketsPurchased: Int!
+  }
+
+  input TicketDetailsInput {
+     event_id: String!
+  }
+
+
   
   type Mutation {
     createUser(input: CreateUserInput!): Auth
@@ -193,5 +205,6 @@ export const typeDefs = `
     createReview(input:ReviewInput!):Review
     removeReview(input:removeReviewInput!):Review
     makeTransaction(input:TransactionInput!):Boolean
+    createTicket(input:CreateTicketInput!):Boolean
   }
 `;
