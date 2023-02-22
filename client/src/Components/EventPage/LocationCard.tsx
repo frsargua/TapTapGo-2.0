@@ -6,8 +6,9 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext } from "react";
 import Auth from "../../utils/auth";
+import { ModalContext } from "../../contexts/ModalContext";
 
 interface LocationCardProps {
   eventData: {
@@ -23,14 +24,13 @@ interface LocationCardProps {
   };
   handlePurchase: () => void;
   isAttending: boolean;
-  openModal: () => void;
   updateAttendance: () => void;
 }
 
 export const LocationCard: FunctionComponent<LocationCardProps> = (props) => {
   let logged = Auth.loggedIn();
-  let { eventData, handlePurchase, isAttending, openModal, updateAttendance } =
-    props;
+  const { openSignModal, openTicketModalState } = useContext(ModalContext);
+  let { eventData, handlePurchase, isAttending, updateAttendance } = props;
 
   function renderActionButton() {
     const isAttendingRender = isAttending ? (
@@ -50,7 +50,7 @@ export const LocationCard: FunctionComponent<LocationCardProps> = (props) => {
       </Button>
     ) : (
       <Button
-        onClick={handlePurchase}
+        onClick={openTicketModalState}
         sx={{
           display: { xs: "none", md: "block" },
           marginTop: "3rem",

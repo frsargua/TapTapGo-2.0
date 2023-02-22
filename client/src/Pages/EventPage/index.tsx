@@ -28,7 +28,8 @@ interface EventPageProps {
 }
 
 export const EventPage: FunctionComponent<EventPageProps> = () => {
-  const { openSignModal } = useContext(ModalContext);
+  const { openSignModal, openTicketModalState, closeBookmarkModal } =
+    useContext(ModalContext);
   const { eventId: eventParam } = useParams<URLParamsTypes>();
 
   const [isAttendingState, setIsAttendingState] = useState<boolean>(false);
@@ -93,7 +94,6 @@ export const EventPage: FunctionComponent<EventPageProps> = () => {
               eventData={eventData}
               handlePurchase={handlePurchase}
               isAttending={isAttendingState}
-              openModal={openSignModal}
               updateAttendance={updateAttendance}
             />
             <EventMapComponent location={eventData.addresses[0]} />

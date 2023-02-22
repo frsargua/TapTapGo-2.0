@@ -10,10 +10,13 @@ import React, {
 interface ModalContextProps {
   getModalState: () => Boolean;
   getBookmarksModalState: () => Boolean;
+  getTicketModalState: () => Boolean;
   closeModal: (event: ChangeEvent<any>) => void;
   closeBookmarkModal: (event: ChangeEvent<any>) => void;
+  closeTicketModalState: (event: ChangeEvent<any>) => void;
   openSignModal: () => void;
   openBookmarkModal: () => void;
+  openTicketModalState: () => void;
 }
 
 export const ModalContext = createContext({} as ModalContextProps);
@@ -25,6 +28,7 @@ type ModalProviderProps = {
 export const ModalProvider = ({ children }: ModalProviderProps) => {
   const [modalState, setModalState] = useState(false);
   const [bookmarksModalState, setBookmarksModalState] = useState(false);
+  const [ticketModalState, setTicketModalStateModalState] = useState(false);
 
   const getModalState = (): Boolean => {
     return modalState;
@@ -34,6 +38,10 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     return bookmarksModalState;
   };
 
+  const getTicketModalState = (): Boolean => {
+    return ticketModalState;
+  };
+
   const closeModal = (event: ChangeEvent<any>) => {
     if (event.currentTarget == event.target) {
       setModalState((prev) => {
@@ -41,7 +49,21 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
       });
     }
   };
+  const closeBookmarkModal = (event: ChangeEvent<any>) => {
+    if (event.currentTarget == event.target) {
+      setBookmarksModalState((prev) => {
+        return !prev;
+      });
+    }
+  };
 
+  const closeTicketModalState = (event: ChangeEvent<any>) => {
+    if (event.currentTarget == event.target) {
+      setTicketModalStateModalState((prev) => {
+        return !prev;
+      });
+    }
+  };
   const openSignModal = () => {
     console.log("inside Modal");
     setModalState((prev) => {
@@ -56,12 +78,11 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     });
   };
 
-  const closeBookmarkModal = (event: ChangeEvent<any>) => {
-    if (event.currentTarget == event.target) {
-      setBookmarksModalState((prev) => {
-        return !prev;
-      });
-    }
+  const openTicketModalState = () => {
+    console.log("inside bookmark");
+    setTicketModalStateModalState((prev) => {
+      return !prev;
+    });
   };
 
   return (
@@ -69,10 +90,13 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
       value={{
         getModalState,
         getBookmarksModalState,
-        closeModal,
+        getTicketModalState,
         openSignModal,
         openBookmarkModal,
+        openTicketModalState,
+        closeModal,
         closeBookmarkModal,
+        closeTicketModalState,
       }}
     >
       {children}
