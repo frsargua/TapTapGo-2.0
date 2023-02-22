@@ -8,7 +8,11 @@ import {
 import axios from "axios";
 import { async } from "@firebase/util";
 import { useMutation } from "@apollo/client";
-import { MAKE_PAYMENT, MAKE_TICKETS } from "../../graphQL/Mutations";
+import {
+  MAKE_PAYMENT,
+  MAKE_TICKETS,
+  LINK_TICKETS_USERS,
+} from "../../graphQL/Mutations";
 
 interface PaymentFormProps {}
 
@@ -39,9 +43,11 @@ export const PaymentForm: FunctionComponent<PaymentFormProps> = () => {
 
   const [makePayment] = useMutation(MAKE_PAYMENT);
   const [makeTickets] = useMutation(MAKE_TICKETS);
+  const [linkTicketsUsers] = useMutation(LINK_TICKETS_USERS);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let numberOfTickets = 4;
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: elements?.getElement(CardElement),
@@ -61,19 +67,49 @@ export const PaymentForm: FunctionComponent<PaymentFormProps> = () => {
         });
 
         if (data) {
+          // console.log(data.makeTransaction.transactionId);
+
           const { data: ticketsCreated } = await makeTickets({
             variables: {
               input: {
-                numberTicketsPurchased: 4,
+                numberTicketsPurchased: numberOfTickets,
                 details: {
                   event_id: "1",
                 },
               },
             },
           });
+
           if (ticketsCreated) {
-            console.log("sucessfull payment");
-            setSuccess(true);
+            console.log(ticketsCreated.createTicket.tickets);
+
+            console.log(
+              ticketsCreated.createTicket.tickets.map((el: any) => {
+                return {
+                  id: el.id,
+                };
+              })
+            );
+
+            const { data: relationshipCreated } = await linkTicketsUsers({
+              variables: {
+                input: {
+                  quantity: numberOfTickets,
+                  tickets: ticketsCreated.createTicket.tickets.map(
+                    (el: any) => {
+                      return {
+                        id: el.id,
+                      };
+                    }
+                  ),
+                  transactionId: data.makeTransaction.transactionId,
+                },
+              },
+            });
+            if (relationshipCreated) {
+              console.log("sucessfull payment");
+              // setSuccess(true);
+            }
           }
         }
       } catch (error) {

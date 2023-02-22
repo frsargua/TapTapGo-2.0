@@ -30,8 +30,8 @@ export const makeTransaction = async (
 
       const transation = await Transaction.create(transationInput);
 
-      if (transation) return true;
-      return false;
+      if (transation) return { completed: true, transactionId: transation.id };
+      return { completed: false, transactionId: "" };
     }
   } catch (err: any) {
     console.log(err);

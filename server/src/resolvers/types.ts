@@ -30,6 +30,14 @@ export type CreateTicketType = {
   };
 };
 
+export type CreateTicketUserRelationship = {
+  input: {
+    tickets: { id: string }[];
+    quantity: number;
+    transactionId: string;
+  };
+};
+
 export type EventType = {
   input: {
     eventData: {

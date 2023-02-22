@@ -85,6 +85,11 @@ export const typeDefs = `
     postcode: String!
 
   }
+ 
+  type Ticket {
+    id:ID!
+    reference: String
+  }
 
   type Query {
     users: [User]
@@ -99,6 +104,15 @@ export const typeDefs = `
 
   type ResponseFromResolver {
     bookmarked: Boolean
+  }
+
+  type ResponseTransaction {
+    completed: Boolean
+    transactionId: String   
+  }
+
+  type ResponseTickets {
+    tickets:[Ticket] 
   }
 
   type Auth {
@@ -180,6 +194,10 @@ export const typeDefs = `
     amount:Int!
     paymentId:String!
   }
+  input TransactionInput {
+    amount:Int!
+    paymentId:String!
+  }
 
   input CreateTicketInput {
     details:TicketDetailsInput
@@ -190,8 +208,16 @@ export const typeDefs = `
      event_id: String!
   }
 
+  input TicketUserRelationshipInput {
+    tickets: [TicketsArrayInput]
+    quantity: Int!
+    transactionId: String!  
+  }
+ 
+  input TicketsArrayInput {
+    id: ID!
+  }
 
-  
   type Mutation {
     createUser(input: CreateUserInput!): Auth
     createEvent(input: newEventInput!): Event
@@ -201,7 +227,8 @@ export const typeDefs = `
     unbookmarkEvent(input:BookmarkInput!):ResponseFromResolver
     createReview(input:ReviewInput!):Review
     removeReview(input:removeReviewInput!):Review
-    makeTransaction(input:TransactionInput!):Boolean
-    createTicket(input:CreateTicketInput!):Boolean
+    makeTransaction(input:TransactionInput!):ResponseTransaction
+    linkTicketsUsers(input:TicketUserRelationshipInput!):Boolean
+    createTicket(input:CreateTicketInput!):ResponseTickets
   }
 `;

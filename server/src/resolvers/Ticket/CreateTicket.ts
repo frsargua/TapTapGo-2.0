@@ -9,8 +9,6 @@ export const createTicket = async (
   context: UserType
 ) => {
   try {
-    console.log(input);
-
     if (context.user) {
       let tickets = [];
       for (let i = 0; i < input.numberTicketsPurchased; i++) {
@@ -20,10 +18,15 @@ export const createTicket = async (
           reference: uuidv4(),
         };
         let ticketCreated = await Ticket.create(newTicketDetails);
+
         tickets.push(ticketCreated);
       }
-      if (tickets.length > 0) return true;
-      return false;
+
+      if (tickets.length > 0) {
+        return { tickets: tickets };
+      }
+      console.log("asd");
+      return { tickets: [] };
     }
   } catch (err: any) {
     console.log(err);

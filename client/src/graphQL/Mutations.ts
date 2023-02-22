@@ -32,14 +32,27 @@ export const ADD_EVENT = gql`
 `;
 
 export const MAKE_PAYMENT = gql`
-  mutation Mutation($input: TransactionInput!) {
-    makeTransaction(input: $input)
+  mutation MakeTransaction($input: TransactionInput!) {
+    makeTransaction(input: $input) {
+      completed
+      transactionId
+    }
   }
 `;
 
 export const MAKE_TICKETS = gql`
   mutation CreateTicket($input: CreateTicketInput!) {
-    createTicket(input: $input)
+    createTicket(input: $input) {
+      tickets {
+        id
+      }
+    }
+  }
+`;
+
+export const LINK_TICKETS_USERS = gql`
+  mutation LinkTicketsUsers($input: TicketUserRelationshipInput!) {
+    linkTicketsUsers(input: $input)
   }
 `;
 
