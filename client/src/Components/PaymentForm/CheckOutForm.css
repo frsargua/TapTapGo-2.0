@@ -18,7 +18,7 @@ form#payment-form {
 }
 
 /* Buttons and links */
-button {
+button#submit {
   background: #5469d4;
   font-family: Arial, sans-serif;
   color: #ffffff;

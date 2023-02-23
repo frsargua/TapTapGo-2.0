@@ -23,6 +23,7 @@ interface GetTIcketModalProps {}
 
 export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
   const { closeTicketModalState } = useContext(ModalContext);
+  const [readyToCheckout, setReadyToCheckout] = useState<boolean>(false);
 
   const fakeData = [
     {
@@ -51,7 +52,7 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
 
   const updateTicketNumbers = (
     quantity: number,
-    id: string,
+    id: number,
     price: number,
     ticketName: string
   ) => {
@@ -88,6 +89,14 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
     }
   };
 
+  const checkout = () => {
+    setReadyToCheckout(true);
+  };
+
+  const goBackToTicketOptions = () => {
+    setReadyToCheckout(false);
+  };
+
   const renderOrderSummary = () => {
     const transformedData = Object.entries(numberOfTickets).map(
       ([key, value]) => (
@@ -101,7 +110,6 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
         </Box>
       )
     );
-
     return transformedData;
   };
   useEffect(() => {
@@ -144,7 +152,7 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
                   Date
                 </Typography>
                 <Divider sx={{ marginBottom: "1.5rem" }} />
-                {true && (
+                {!readyToCheckout && (
                   <>
                     <TextField
                       placeholder="Promo Code"
@@ -162,7 +170,7 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
                     ))}
                   </>
                 )}
-                {false && <StripeContainer></StripeContainer>}
+                {readyToCheckout && <StripeContainer totalAmount={total} />}
               </Container>
             </Grid>
             <Grid
@@ -233,9 +241,25 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
               <CardContent
                 sx={{ position: "absolute", bottom: "0", width: "100%" }}
               >
-                <Button variant="contained" fullWidth color="secondary" sx={{}}>
-                  Pay
-                </Button>
+                {!readyToCheckout ? (
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    color="secondary"
+                    onClick={checkout}
+                  >
+                    Checkout
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    color="secondary"
+                    onClick={goBackToTicketOptions}
+                  >
+                    Go Back
+                  </Button>
+                )}
               </CardContent>
             </Grid>
           </Grid>

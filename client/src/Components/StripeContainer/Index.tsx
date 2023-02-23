@@ -7,15 +7,21 @@ import CheckoutForm from "../PaymentForm/CheckoutForm";
 import { useMutation } from "@apollo/client";
 import { MAKE_PAYMENT_INTENT } from "../../graphQL/Mutations";
 import { func } from "prop-types";
-interface StripeContainerProps {}
+interface StripeContainerProps {
+  totalAmount: number;
+}
 
 const PUBLIC_KEY =
   "pk_test_51LJyctCiZXURSSBeQXYLyFKbJN7D1RtAJZ8I6qwwLW5WTTvJSe2FBngxYlESPC2cU7hjgfosWlQr4iNUHP1BR9CU00riMXLVbL";
 
 const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
-export const StripeContainer: FunctionComponent<StripeContainerProps> = () => {
+export const StripeContainer: FunctionComponent<StripeContainerProps> = (
+  props
+) => {
   const [clientSecret, setClientSecret] = useState<string>("");
+
+  const { totalAmount } = props;
 
   const [makePayment] = useMutation(MAKE_PAYMENT_INTENT);
 
@@ -23,7 +29,7 @@ export const StripeContainer: FunctionComponent<StripeContainerProps> = () => {
     const { data } = await makePayment({
       variables: {
         input: {
-          amount: 52,
+          amount: totalAmount,
         },
       },
     });

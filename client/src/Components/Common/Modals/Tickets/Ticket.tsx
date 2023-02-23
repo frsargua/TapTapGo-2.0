@@ -11,13 +11,13 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 
 interface TicketProps {
-  ticketTypeId: string;
+  ticketTypeId: number;
   price: number;
   description: string;
   ticketName: string;
   updateTicketNumbers: (
     quantity: number,
-    id: string,
+    id: number,
     price: number,
     ticketName: string
   ) => void;
