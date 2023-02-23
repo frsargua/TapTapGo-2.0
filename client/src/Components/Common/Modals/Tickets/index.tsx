@@ -10,34 +10,103 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { ModalContext } from "../../../../contexts/ModalContext";
 import { Container } from "@mui/system";
 import { func } from "prop-types";
+import { StripeContainer } from "../../../StripeContainer/Index";
+import Ticket from "./Ticket";
+import { Description } from "@mui/icons-material";
 
 interface GetTIcketModalProps {}
 
 export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
   const { closeTicketModalState } = useContext(ModalContext);
 
-  const [numberOfTickets, setNumberOfTickets] = useState<number>(0);
+  const fakeData = [
+    {
+      ticketTypeId: 1,
+      price: 12,
+      description: "none",
+      ticketName: "standard",
+    },
+    {
+      ticketTypeId: 2,
+      price: 22,
+      description: "This is a description",
+      ticketName: "premium",
+    },
+  ];
 
-  const increaseTicketNumber = () => {
-    setNumberOfTickets((prev) => prev + 1);
+  const [total, setTotal] = useState<number>(0);
+  const [numberOfTickets, setNumberOfTickets] = useState<{
+    [key: string]: {
+      ticketTypeId: string;
+      quantity: number;
+      price: number;
+      ticketName: string;
+    };
+  }>({});
+
+  const updateTicketNumbers = (
+    quantity: number,
+    id: string,
+    price: number,
+    ticketName: string
+  ) => {
+    setNumberOfTickets((prev) => {
+      console.log(quantity);
+      if (quantity <= 0) {
+        delete prev[id];
+        return { ...prev };
+      } else {
+        return {
+          ...prev,
+          [id]: {
+            ticketTypeId: id,
+            quantity: quantity,
+            price: price,
+            ticketName: ticketName,
+          },
+        };
+      }
+    });
   };
-  const decreaseTicketNumber = () => {
-    if (numberOfTickets > 0) {
-      setNumberOfTickets((prev) => prev - 1);
+
+  const calculateTotal = () => {
+    console.log(numberOfTickets);
+
+    if (numberOfTickets) {
+      const sum = Object.keys(numberOfTickets).reduce(
+        (acc, key) =>
+          acc + numberOfTickets[key].quantity * numberOfTickets[key].price,
+        0
+      );
+
+      setTotal((prev) => sum);
     }
   };
 
-  const calculateTotal = (): number => {
-    let total = numberOfTickets * 15;
+  const renderOrderSummary = () => {
+    const transformedData = Object.entries(numberOfTickets).map(
+      ([key, value]) => (
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="body1">
+            {value.quantity} x {value.ticketName}
+          </Typography>
+          <Typography variant="body1" sx={{ mx: "1rem" }}>
+            £{value.quantity * value.price}
+          </Typography>
+        </Box>
+      )
+    );
 
-    return total;
+    return transformedData;
   };
+  useEffect(() => {
+    calculateTotal();
+  }, [numberOfTickets]);
 
   return (
     <>
@@ -75,59 +144,25 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
                   Date
                 </Typography>
                 <Divider sx={{ marginBottom: "1.5rem" }} />
-                <TextField
-                  placeholder="Promo Code"
-                  fullWidth
-                  sx={{ marginY: "0.5rem" }}
-                />
-                <Card sx={{ marginY: "1.2rem" }}>
-                  <CardContent>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        mb: "1rem",
-                      }}
-                    >
-                      <Typography variant="h6">Standard Pass</Typography>
-
-                      <Box
-                        sx={{
-                          display: "flex",
-
-                          alignItems: "center",
-                        }}
-                      >
-                        <IconButton onClick={decreaseTicketNumber}>
-                          <RemoveIcon />
-                        </IconButton>
-                        <Typography
-                          variant="h5"
-                          textAlign="center"
-                          sx={{ mx: "0.5rem" }}
-                        >
-                          {numberOfTickets}
-                        </Typography>
-                        <IconButton
-                          color="primary"
-                          onClick={increaseTicketNumber}
-                        >
-                          <AddIcon />
-                        </IconButton>
-                      </Box>
-                    </Box>
-                    <Divider />
-
-                    <Typography variant="h6">Price</Typography>
-                    <Typography variant="caption" gutterBottom>
-                      Date
-                    </Typography>
-
-                    <Typography variant="body2" marginTop="1rem">
-                      This will be a description
-                    </Typography>
-                  </CardContent>
-                </Card>
+                {true && (
+                  <>
+                    <TextField
+                      placeholder="Promo Code"
+                      fullWidth
+                      sx={{ marginY: "0.5rem" }}
+                    />
+                    {fakeData.map((el) => (
+                      <Ticket
+                        ticketTypeId={el.ticketTypeId}
+                        price={el.price}
+                        description={el.description}
+                        ticketName={el.ticketName}
+                        updateTicketNumbers={updateTicketNumbers}
+                      />
+                    ))}
+                  </>
+                )}
+                {false && <StripeContainer></StripeContainer>}
               </Container>
             </Grid>
             <Grid
@@ -158,17 +193,10 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
                 </Typography>
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
                     my: "1rem",
                   }}
                 >
-                  <Typography variant="body1">
-                    {numberOfTickets} x Standard Pass
-                  </Typography>
-                  <Typography variant="body1" sx={{ mx: "1rem" }}>
-                    £ {calculateTotal()}
-                  </Typography>
+                  {renderOrderSummary()}
                 </Box>
                 <Divider />
 
@@ -183,7 +211,7 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
                     Subtotal
                   </Typography>
                   <Typography variant="body1" sx={{ mx: "1rem" }}>
-                    £ {calculateTotal()}
+                    {total}
                   </Typography>
                 </Box>
                 <Divider />
@@ -198,7 +226,7 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
                     Total
                   </Typography>
                   <Typography variant="body1" sx={{ my: "1rem", mx: "1rem" }}>
-                    £ {calculateTotal()}
+                    {total}
                   </Typography>
                 </Box>
               </CardContent>

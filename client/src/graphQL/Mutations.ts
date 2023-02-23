@@ -39,6 +39,13 @@ export const MAKE_PAYMENT = gql`
     }
   }
 `;
+export const MAKE_PAYMENT_INTENT = gql`
+  mutation CreatePaymentIntent($input: PaymentIntentInput!) {
+    createPaymentIntent(input: $input) {
+      clientSecret
+    }
+  }
+`;
 
 export const MAKE_TICKETS = gql`
   mutation CreateTicket($input: CreateTicketInput!) {

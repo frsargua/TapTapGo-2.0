@@ -10,6 +10,7 @@ const { QueryEventById } = require("./Event/QueryEventById");
 const { bookmarkEvent } = require("./Bookmark/BookmarkEvent");
 const { unbookmarkEvent } = require("./Bookmark/UnbookmarkEvent");
 const { makeTransaction } = require("./Payments/makePayment");
+const { createPaymentIntent } = require("./Payments/createPaymentIntent");
 const { linkTicketsUsers } = require("./Ticket/TransactionTickets");
 const { createTicket } = require("./Ticket/CreateTicket");
 const {
@@ -44,5 +45,6 @@ export const resolvers = {
     makeTransaction,
     createTicket,
     linkTicketsUsers,
+    createPaymentIntent,
   },
 };

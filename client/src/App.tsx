@@ -19,7 +19,6 @@ import { Landing } from "./Pages/Landing/Index";
 import { Map } from "./Pages/MapPage/index";
 import { ProfileDashBoard } from "./Pages/Profile/Index";
 import Search from "./Pages/Search/Index";
-import { StripeCintainer } from "./Components/StripeContainer/Index";
 
 const httpLink = createHttpLink({
   // uri: `${window.location.origin}/graphql`,
@@ -69,7 +68,6 @@ function App() {
               <Route path="/createEvent" element={<AddEvent />} />
               <Route path="/user/:userId" element={<ProfileDashBoard />} />
               <Route path="/event/:eventId" element={<EventPage />} />
-              <Route path="/payment" element={<StripeCintainer />} />
               <Route path="/sample" element={<TextEditor />} />
             </Routes>
           </Router>

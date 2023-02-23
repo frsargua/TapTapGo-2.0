@@ -115,6 +115,10 @@ export const typeDefs = `
     tickets:[Ticket] 
   }
 
+  type ResponsePaymentIntent {
+    clientSecret:String! 
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -194,6 +198,11 @@ export const typeDefs = `
     amount:Int!
     paymentId:String!
   }
+ 
+  input PaymentIntentInput {
+    amount:Int!
+  }
+
   input TransactionInput {
     amount:Int!
     paymentId:String!
@@ -228,6 +237,7 @@ export const typeDefs = `
     createReview(input:ReviewInput!):Review
     removeReview(input:removeReviewInput!):Review
     makeTransaction(input:TransactionInput!):ResponseTransaction
+    createPaymentIntent(input:PaymentIntentInput!):ResponsePaymentIntent
     linkTicketsUsers(input:TicketUserRelationshipInput!):Boolean
     createTicket(input:CreateTicketInput!):ResponseTickets
   }

@@ -1,21 +1,56 @@
 import { Container } from "@mui/material";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { FunctionComponent, useEffect, useState } from "react";
 import { PaymentForm } from "../PaymentForm";
-
-interface StripeCintainerProps {}
+import CheckoutForm from "../PaymentForm/CheckoutForm";
+import { useMutation } from "@apollo/client";
+import { MAKE_PAYMENT_INTENT } from "../../graphQL/Mutations";
+import { func } from "prop-types";
+interface StripeContainerProps {}
 
 const PUBLIC_KEY =
   "pk_test_51LJyctCiZXURSSBeQXYLyFKbJN7D1RtAJZ8I6qwwLW5WTTvJSe2FBngxYlESPC2cU7hjgfosWlQr4iNUHP1BR9CU00riMXLVbL";
 
 const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
-export const StripeCintainer: FunctionComponent<StripeCintainerProps> = () => {
+export const StripeContainer: FunctionComponent<StripeContainerProps> = () => {
+  const [clientSecret, setClientSecret] = useState<string>("");
+
+  const [makePayment] = useMutation(MAKE_PAYMENT_INTENT);
+
+  const paymentIntent = async () => {
+    const { data } = await makePayment({
+      variables: {
+        input: {
+          amount: 52,
+        },
+      },
+    });
+    setClientSecret(data.createPaymentIntent.clientSecret);
+  };
+
+  useEffect(() => {
+    paymentIntent();
+  }, []);
+
+  const appearance = {
+    theme: "stripe",
+  };
+  const options = {
+    clientSecret,
+    appearance,
+  };
+
   return (
-    <Elements stripe={stripeTestPromise}>
-      <Container maxWidth="xl">
-        <PaymentForm />
-      </Container>
-    </Elements>
+    <>
+      {clientSecret && (
+        <Elements options={options} stripe={stripeTestPromise}>
+          <Container maxWidth="xl">
+            <CheckoutForm />
+          </Container>
+        </Elements>
+      )}
+    </>
   );
 };
