@@ -11,49 +11,26 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs, { Dayjs } from "dayjs";
 
-interface FormTwoProps {}
+interface FormTwoProps {
+  optionSelectedByUser: any[];
+  setOptionSelectedByUser: (value: any) => void;
+}
 
-export const FormTwo: FunctionComponent<FormTwoProps> = () => {
+export const FormTwo: FunctionComponent<FormTwoProps> = (props) => {
+  const { optionSelectedByUser, setOptionSelectedByUser } = props;
   const [optionsAvailable, setOptionsAvailable] = useState<any>([
     { name: "standard", selected: false },
     { name: "premiun", selected: false },
     { name: "delux", selected: false },
-  ]);
-  const [optionSelectedByUser, setOptionSelectedByUser] = useState<any>([
-    {
-      id: "1",
-      show: false,
-      name: "",
-      price: "",
-      date: dayjs().format("YYYY-MM-DD"),
-      label: "option 1",
-    },
-    {
-      id: "2",
-      show: false,
-      name: "",
-      price: "",
-      date: dayjs().format("YYYY-MM-DD"),
-      label: "option 2",
-    },
-    {
-      id: "3",
-      show: false,
-      name: "",
-      price: "",
-      date: dayjs().format("YYYY-MM-DD"),
-      label: "option 3",
-    },
   ]);
 
   const toggleCheckbox = (nameInput: string) => {
     setOptionSelectedByUser((prev: any) => {
       return prev.map((el: any) => {
         if (el.label == nameInput) {
-          console.log(el);
-          console.log(el.show);
           if (el.show) {
             el.price = "";
+            el.description = "";
             el.date = dayjs().format("YYYY-MM-DD");
           }
           el.show = !el.show;
@@ -108,6 +85,19 @@ export const FormTwo: FunctionComponent<FormTwoProps> = () => {
     });
   };
 
+  const handleDescriptionChange = (event: any) => {
+    let { name: fieldIdentifier, value: newDescription } = event.target;
+
+    setOptionSelectedByUser((prev: any) => {
+      return prev.map((el: any) => {
+        if (el.id == fieldIdentifier) {
+          el.handleDescriptionChange = newDescription;
+        }
+        return el;
+      });
+    });
+  };
+
   const handleExpirationDateChange = (
     input: Dayjs | null,
     fieldIdentifier: number
@@ -122,9 +112,7 @@ export const FormTwo: FunctionComponent<FormTwoProps> = () => {
     });
   };
 
-  useEffect(() => {
-    // console.log(optionSelectedByUser);
-  }, [optionSelectedByUser]);
+  useEffect(() => {}, [optionSelectedByUser]);
 
   return (
     <>
@@ -138,6 +126,8 @@ export const FormTwo: FunctionComponent<FormTwoProps> = () => {
             sx={{
               display: "flex",
               justifyContent: "center",
+              alignItems: "center",
+              my: "1rem",
             }}
           >
             <Box
@@ -158,6 +148,7 @@ export const FormTwo: FunctionComponent<FormTwoProps> = () => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="Age"
+                    required
                     aria-label="name"
                     value={el.name}
                     name={el.id}
@@ -177,9 +168,9 @@ export const FormTwo: FunctionComponent<FormTwoProps> = () => {
                   name={el.id}
                   value={el.price}
                   label="price"
-                  aria-label="price"
                   onChange={handlePriceChange}
                 />
+
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     aria-label="date"
@@ -190,16 +181,17 @@ export const FormTwo: FunctionComponent<FormTwoProps> = () => {
                     }
                     value={el.date}
                     renderInput={(params) => (
-                      <TextField
-                        required
-                        name={el.id}
-                        margin="dense"
-                        sx={{ width: "50%" }}
-                        {...params}
-                      />
+                      <TextField required name={el.id} {...params} />
                     )}
                   />
                 </LocalizationProvider>
+                <TextField
+                  name={el.id}
+                  value={el.description}
+                  label="description"
+                  fullWidth
+                  onChange={handleDescriptionChange}
+                />
               </>
             )}
           </Box>

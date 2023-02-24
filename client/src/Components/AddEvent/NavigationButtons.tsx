@@ -15,7 +15,7 @@ export const NavigationButtons: FunctionComponent<NavigationButtonsProps> = (
 
   return (
     <>
-      {(formNumber == 1 || formNumber == 2) && (
+      {formNumber < 4 && (
         <Button
           color="primary"
           onClick={handleNextForm}
@@ -26,7 +26,7 @@ export const NavigationButtons: FunctionComponent<NavigationButtonsProps> = (
           Next
         </Button>
       )}
-      {formNumber === 3 && (
+      {formNumber >= 4 && (
         <Button
           color="warning"
           type="submit"
@@ -37,7 +37,7 @@ export const NavigationButtons: FunctionComponent<NavigationButtonsProps> = (
           Submit
         </Button>
       )}
-      {(formNumber == 2 || formNumber == 3) && (
+      {formNumber >= 2 && formNumber <= 4 && (
         <Button
           color="secondary"
           variant="contained"

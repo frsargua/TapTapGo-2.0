@@ -73,17 +73,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                   label="Event Name"
                   required
                 />
-                <TextField
-                  onChange={(value) => changeNewEvent(value)}
-                  value={newEvent.maxAttendees}
-                  fullWidth
-                  margin="dense"
-                  type="number"
-                  inputProps={{ min: 4, max: 10 }}
-                  name="maxAttendees"
-                  label="Max attendees"
-                  required
-                />
+
                 <Box
                   sx={{
                     display: "flex",
@@ -107,19 +97,15 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                     />
                   </LocalizationProvider>
                   <TextField
-                    name="price"
-                    sx={{ width: "50%" }}
-                    id="firstName"
-                    label="Price"
-                    type="number"
-                    margin="dense"
-                    value={newEvent.price}
-                    inputProps={{
-                      max: 100,
-                      min: 0,
-                    }}
-                    autoFocus
                     onChange={(value) => changeNewEvent(value)}
+                    value={newEvent.maxAttendees}
+                    fullWidth
+                    margin="dense"
+                    type="number"
+                    inputProps={{ min: 4, max: 10 }}
+                    name="maxAttendees"
+                    label="Max attendees"
+                    sx={{ width: "50%" }}
                     required
                   />
                 </Box>

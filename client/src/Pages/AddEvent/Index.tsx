@@ -91,6 +91,36 @@ export const AddEvent: FunctionComponent<AddEventProps> = () => {
     latitude: "",
     longitude: "",
   });
+  const [optionSelectedByUser, setOptionSelectedByUser] = useState<any>([
+    {
+      id: "1",
+      show: false,
+      name: "",
+      price: "",
+      description: "",
+      date: dayjs().format("YYYY-MM-DD"),
+      label: "option 1",
+    },
+    {
+      id: "2",
+      show: false,
+      name: "",
+      price: "",
+      description: "",
+
+      date: dayjs().format("YYYY-MM-DD"),
+      label: "option 2",
+    },
+    {
+      id: "3",
+      show: false,
+      name: "",
+      price: "",
+      description: "",
+      date: dayjs().format("YYYY-MM-DD"),
+      label: "option 3",
+    },
+  ]);
 
   const [imageUpload, setImageUpload] = useState<ImageUploadProps[]>([]);
   const [formNumber, setFormNumber] = useState<number>(1);
@@ -193,6 +223,7 @@ export const AddEvent: FunctionComponent<AddEventProps> = () => {
             eventCategories: tags.tags,
             eventImages: images,
             eventAddress: eventAddress,
+            optionSelectedByUser: optionSelectedByUser,
           };
         })
         .then(async () => {
@@ -256,7 +287,12 @@ export const AddEvent: FunctionComponent<AddEventProps> = () => {
               updateImage={handleImagesUploaded}
             />
           )}
-          {formNumber == 2 && <FormTwo />}
+          {formNumber == 2 && (
+            <FormTwo
+              optionSelectedByUser={optionSelectedByUser}
+              setOptionSelectedByUser={setOptionSelectedByUser}
+            />
+          )}
           {formNumber == 3 && (
             <FormThree
               eventAddress={eventAddress}
