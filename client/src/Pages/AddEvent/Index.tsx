@@ -11,6 +11,7 @@ import { Container, SelectChangeEvent, Typography } from "@mui/material";
 import { FormOne } from "../../Components/AddEvent/FormOne";
 import { FormTwo } from "../../Components/AddEvent/FormTwo";
 import { FormThree } from "../../Components/AddEvent/FormThree";
+import { FormFour } from "../../Components/AddEvent/FormFour";
 import { useQuery, useMutation } from "@apollo/client";
 import { ADD_EVENT } from "../../graphQL/Mutations";
 import { QUERY_TAGS, QUERY_FREQUENCY_TYPES } from "../../graphQL/Queries";
@@ -255,14 +256,15 @@ export const AddEvent: FunctionComponent<AddEventProps> = () => {
               updateImage={handleImagesUploaded}
             />
           )}
-          {formNumber == 2 && (
-            <FormTwo
+          {formNumber == 2 && <FormTwo />}
+          {formNumber == 3 && (
+            <FormThree
               eventAddress={eventAddress}
               handleAddressChange={handleAddressChange}
             />
           )}
-          {formNumber >= 3 && (
-            <FormThree
+          {formNumber >= 4 && (
+            <FormFour
               changeNewEventDescription={changeNewEventDescription}
               newEvent={newEvent}
             />
