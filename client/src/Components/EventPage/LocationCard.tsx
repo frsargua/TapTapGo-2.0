@@ -69,7 +69,7 @@ export const LocationCard: FunctionComponent<LocationCardProps> = (props) => {
       isAttendingRender
     ) : (
       <Button
-        onClick={openModal}
+        onClick={openSignModal}
         sx={{
           display: { xs: "none", md: "block" },
           marginTop: "3rem",

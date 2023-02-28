@@ -133,7 +133,9 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
           alignItems: "center",
         }}
       >
-        <Card sx={{ width: "70%", height: "700px", mx: "auto" }}>
+        <Card
+          sx={{ width: "70%", maxWidth: "1300px", height: "700px", mx: "auto" }}
+        >
           <Grid
             container
             columnSpacing={0}

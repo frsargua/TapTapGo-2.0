@@ -82,6 +82,7 @@ export const QUERY_EVENTBYID = gql`
       categories {
         category
         eventsPerCategory {
+          id
           eventName
           image_urls {
             imageLink
