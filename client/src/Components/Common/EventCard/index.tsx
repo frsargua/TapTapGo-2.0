@@ -34,10 +34,12 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
   let { eventName, price, rating, review, image_urls, id } = props;
 
   const [isBookmarked, setIsBookmarked] = useState(false);
+  let isLogged = Auth.loggedIn;
   let { tokenUserId, isOwner } = Auth.isOwner(props);
 
   const { data } = useQuery(ISBOOKMARK_EVENT, {
     variables: { input: { eventId: id } },
+    skip: !isLogged,
   });
   const [bookmarkEvent] = useMutation(BOOKMARK_EVENT, {});
   const [unBookmarkEvent] = useMutation(UNBOOKMARK_EVENT, {});
@@ -60,7 +62,7 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
   };
 
   useEffect(() => {
-    if (data) {
+    if (data?.isBookmarked) {
       setIsBookmarked(data.isBookmarked.bookmarked);
     }
   }, [data]);
@@ -121,7 +123,7 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
                 <PersonIcon sx={{ fontSize: "1.2rem" }} />
               </Typography>
 
-              {!isOwner || (
+              {(!isOwner && isLogged) || (
                 <RenderBookmarkIcon
                   isBookmarked={isBookmarked}
                   toggleHeart={toggleHeart}

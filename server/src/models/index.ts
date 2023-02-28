@@ -7,6 +7,7 @@ const ImageUrl = require("./image.model");
 const Transaction = require("./transaction.model");
 const TransactionTicket = require("./transactionTicket.model");
 const Ticket = require("./ticket.model");
+const TicketType = require("./ticketType.model copy");
 const Frequency = require("./frequency.mode");
 
 // Events can have multiple address, as they can be changed
@@ -72,6 +73,11 @@ ImageUrl.belongsTo(Events, { foreignKey: "event_id" });
 // Images belong to an single event
 Frequency.hasMany(Events, { foreignKey: "frequency_id" });
 Events.belongsTo(Frequency, { foreignKey: "frequency_id" });
+
+// Events can have many ticket types
+// A ticket type belongs to a single event
+Events.hasMany(TicketType, { foreignKey: "event_id" });
+TicketType.belongsTo(Events, { foreignKey: "event_id" });
 
 // Users can have multiple address, as they can be changed
 // An address can be used by multiple users.
