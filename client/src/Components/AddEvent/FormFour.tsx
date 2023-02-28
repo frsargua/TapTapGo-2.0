@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import {
   EditorState,
@@ -12,24 +12,14 @@ import { Card, CardContent, Grid } from "@mui/material";
 import { FunctionComponent } from "react";
 import draftToHtml from "draftjs-to-html";
 import { Dayjs } from "dayjs";
+import { CreateEventContext } from "../../contexts/CreateEventContext";
 
-interface FormFourProps {
-  changeNewEventDescription: (value: any) => void;
+interface FormFourProps {}
 
-  newEvent: {
-    eventName: string;
-    date: Dayjs;
-    price: string;
-    ageGroup: string;
-    description: string;
-    maxAttendees: string;
-  };
-}
+export const FormFour: FunctionComponent<FormFourProps> = () => {
+  let { formFour, changeNewEventDescription } = useContext(CreateEventContext);
 
-export const FormFour: FunctionComponent<FormFourProps> = (props) => {
-  let { changeNewEventDescription, newEvent } = props;
-
-  const blocksFromHTML = convertFromHTML(newEvent.description);
+  const blocksFromHTML = convertFromHTML(formFour.description);
   const contentState = ContentState.createFromBlockArray(
     blocksFromHTML.contentBlocks,
     blocksFromHTML.entityMap
@@ -62,7 +52,6 @@ export const FormFour: FunctionComponent<FormFourProps> = (props) => {
               />
             </CardContent>
           </Card>
-          <div>{parse(newEvent.description)}</div>
         </Grid>
       </Grid>
     </>

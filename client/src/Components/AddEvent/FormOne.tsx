@@ -11,51 +11,51 @@ import DropZone from "../Common/DropZone/index";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { ChangeEvent, FunctionComponent, useEffect } from "react";
+import {
+  ChangeEvent,
+  FunctionComponent,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import SideAnimation from "./FirstSideAnimation";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import { useQuery } from "@apollo/client";
+import { QUERY_TAGS, QUERY_FREQUENCY_TYPES } from "../../graphQL/Queries";
+import { CreateEventContext } from "../../contexts/CreateEventContext";
 
-interface FormOneProps {
-  changeNewEvent: (event: ChangeEvent<any> | SelectChangeEvent<string>) => void;
-  handleKeywordsSelected: (event: SelectChangeEvent<string[]>) => void;
-  handleFrequencySelected: (
-    value: ChangeEvent<any> | SelectChangeEvent<string>
-  ) => void;
-  updateImage: (arrayImgs: any[]) => void;
-  updateDate: (input: Dayjs | null) => void;
-  tags: { tags: number[]; keywords: string[] };
-  keywords: { category: string; id: string }[];
-  frequencies: { frequency: string; id: string }[];
-  imageUpload: any[];
-  newEvent: {
-    eventName: string;
-    date: Dayjs;
-    price: string;
-    ageGroup: string;
-    description: string;
-    maxAttendees: string;
-    frequency: { frequency: string; id: string };
-  };
-}
+interface FormOneProps {}
 
 export const FormOne: FunctionComponent<FormOneProps> = (props) => {
   let {
-    changeNewEvent,
-    tags,
+    eventDetails,
+    setKeywords,
     keywords,
-    handleKeywordsSelected,
-    handleFrequencySelected,
-    updateImage,
-    updateDate,
-    imageUpload,
-    newEvent,
+    setFrequencies,
     frequencies,
-  } = props;
+    imageUpload,
+    updateDate,
+    changeNewEvent,
+    changeFrequency,
+    updateTagsSelected,
+    updateImageState,
+    tags,
+  } = useContext(CreateEventContext);
+
+  const { data } = useQuery(QUERY_TAGS);
+  const { data: frequenciesFromDB } = useQuery(QUERY_FREQUENCY_TYPES);
 
   useEffect(() => {
-    console.log(newEvent);
-    console.log(props.newEvent.frequency.frequency);
-  }, [newEvent]);
+    if (data?.QueryAllCategories?.length) {
+      setKeywords(data.QueryAllCategories);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (frequenciesFromDB?.QueryAllFrequencyTypes) {
+      setFrequencies(frequenciesFromDB.QueryAllFrequencyTypes);
+    }
+  }, [frequenciesFromDB]);
 
   return (
     <>
@@ -66,7 +66,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
               <form>
                 <TextField
                   onChange={(value) => changeNewEvent(value)}
-                  value={newEvent.eventName}
+                  value={eventDetails.eventName}
                   fullWidth
                   margin="dense"
                   name="eventName"
@@ -84,7 +84,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                     <DatePicker
                       label="Start date"
                       disablePast
-                      value={newEvent.date}
+                      value={eventDetails.date}
                       onChange={updateDate}
                       renderInput={(params) => (
                         <TextField
@@ -98,7 +98,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                   </LocalizationProvider>
                   <TextField
                     onChange={(value) => changeNewEvent(value)}
-                    value={newEvent.maxAttendees}
+                    value={eventDetails.maxAttendees}
                     fullWidth
                     margin="dense"
                     type="number"
@@ -121,7 +121,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                     <InputLabel id="ageGroup">Age</InputLabel>
                     <Select
                       labelId="ageGroup"
-                      value={newEvent.ageGroup}
+                      value={eventDetails.ageGroup}
                       label="Age"
                       name="ageGroup"
                       onChange={changeNewEvent}
@@ -136,10 +136,10 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                     <InputLabel id="frequency">frequency</InputLabel>
                     <Select
                       labelId="frequency"
-                      value={newEvent.frequency.frequency}
+                      value={eventDetails.frequency.frequency}
                       label="frequency"
                       name="frequency"
-                      onChange={handleFrequencySelected}
+                      onChange={changeFrequency}
                       required
                     >
                       {frequencies.map((keyword, index) => (
@@ -157,7 +157,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                     multiple
                     label="Keywords"
                     value={tags.keywords}
-                    onChange={handleKeywordsSelected}
+                    onChange={updateTagsSelected}
                     input={<OutlinedInput id="tags" label="tags" />}
                     renderValue={(selected: string[]) => (
                       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -175,7 +175,7 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
                     ))}
                   </Select>
                 </FormControl>
-                <DropZone updateImage={updateImage} files={imageUpload} />
+                <DropZone updateImage={updateImageState} files={imageUpload} />
               </form>
             </CardContent>
           </Card>

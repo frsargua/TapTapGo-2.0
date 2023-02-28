@@ -4,17 +4,23 @@ import {
   InferAttributes,
   InferCreationAttributes,
   Model,
-  CreationOptional,
 } from "sequelize";
 
-class Events extends Model<
-  InferAttributes<Events>,
-  InferCreationAttributes<Events>
+class TicketType extends Model<
+  InferAttributes<TicketType>,
+  InferCreationAttributes<TicketType>
 > {}
 
-Events.init(
+TicketType.init(
   {
-    eventName: {
+    id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+      unique: true,
+    },
+    ticketType: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -22,20 +28,8 @@ Events.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    date: {
+    expirationDate: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
-    ageGroup: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    attendees: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-    },
-    maxAttendees: {
-      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
@@ -44,8 +38,8 @@ Events.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "events",
+    modelName: "ticketType",
   }
 );
 
-module.exports = Events;
+module.exports = TicketType;

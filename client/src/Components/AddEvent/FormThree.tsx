@@ -1,22 +1,13 @@
 import TextField from "@mui/material/TextField";
 import { Card, CardContent, Grid, Toolbar } from "@mui/material";
-import { ChangeEvent, FunctionComponent } from "react";
+import { ChangeEvent, FunctionComponent, useContext, useState } from "react";
 import SecondSideAnimation from "./SecondSideAnimation";
+import { CreateEventContext } from "../../contexts/CreateEventContext";
 
-interface FormThreeProps {
-  handleAddressChange: (event: ChangeEvent) => void;
-  eventAddress: {
-    postcode: string;
-    firstLine: string;
-    secondLine: string;
-    city: string;
-    latitude: string;
-    longitude: string;
-  };
-}
+interface FormThreeProps {}
 
-export const FormThree: FunctionComponent<FormThreeProps> = (props) => {
-  let { handleAddressChange, eventAddress } = props;
+export const FormThree: FunctionComponent<FormThreeProps> = () => {
+  let { eventAddress, handleAddressChange } = useContext(CreateEventContext);
   return (
     <>
       <Grid container rowSpacing={2} columnSpacing={2}>

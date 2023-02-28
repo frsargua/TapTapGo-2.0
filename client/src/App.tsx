@@ -19,6 +19,7 @@ import { Landing } from "./Pages/Landing/Index";
 import { Map } from "./Pages/MapPage/index";
 import { ProfileDashBoard } from "./Pages/Profile/Index";
 import Search from "./Pages/Search/Index";
+import { CreateEventProvider } from "./contexts/CreateEventContext";
 
 const httpLink = createHttpLink({
   // uri: `${window.location.origin}/graphql`,
@@ -57,21 +58,23 @@ function App() {
   return (
     <>
       <ApolloProvider client={client}>
-        <ModalProvider>
-          <Router>
-            <Modals />
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/search/:city" element={<Search />} />
-              <Route path="/map/:cityName" element={<Map />} />
-              <Route path="/createEvent" element={<AddEvent />} />
-              <Route path="/user/:userId" element={<ProfileDashBoard />} />
-              <Route path="/event/:eventId" element={<EventPage />} />
-              <Route path="/sample" element={<TextEditor />} />
-            </Routes>
-          </Router>
-        </ModalProvider>
+        <CreateEventProvider>
+          <ModalProvider>
+            <Router>
+              <Modals />
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/search/:city" element={<Search />} />
+                <Route path="/map/:cityName" element={<Map />} />
+                <Route path="/createEvent" element={<AddEvent />} />
+                <Route path="/user/:userId" element={<ProfileDashBoard />} />
+                <Route path="/event/:eventId" element={<EventPage />} />
+                <Route path="/sample" element={<TextEditor />} />
+              </Routes>
+            </Router>
+          </ModalProvider>
+        </CreateEventProvider>
       </ApolloProvider>
     </>
   );
