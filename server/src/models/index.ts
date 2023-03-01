@@ -50,7 +50,7 @@ Transaction.hasMany(TransactionTicket);
 TransactionTicket.belongsTo(Ticket);
 TransactionTicket.belongsTo(Transaction);
 Ticket.belongsTo(Events);
-TransactionTicket.belongsTo(User);
+// TransactionTicket.belongsTo(User);
 
 //
 //
@@ -78,6 +78,11 @@ Events.belongsTo(Frequency, { foreignKey: "frequency_id" });
 // A ticket type belongs to a single event
 Events.hasMany(TicketType, { foreignKey: "event_id" });
 TicketType.belongsTo(Events, { foreignKey: "event_id" });
+
+// TicketType can have many tickets
+// A ticket type belongs to a single TicketType
+TicketType.hasMany(Ticket, { foreignKey: "ticket_type_id" });
+Ticket.belongsTo(TicketType, { foreignKey: "ticket_type_id" });
 
 // Users can have multiple address, as they can be changed
 // An address can be used by multiple users.
@@ -130,4 +135,5 @@ module.exports = {
   TransactionTicket,
   Frequency,
   Ticket,
+  TicketType,
 };

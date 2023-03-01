@@ -60,5 +60,6 @@ export type EventType = {
       postcode: string;
     };
     eventCategories: [{ id: number; category: string }];
+    ticketOptions: [any];
   };
 };

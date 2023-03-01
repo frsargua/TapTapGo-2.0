@@ -65,12 +65,11 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
   // States Form Two
   const [optionSelectedByUser, setOptionSelectedByUser] = useState([
     {
-      id: "1",
-      name: "",
+      id: uuidv1(),
+      ticketName: "",
       price: "",
       description: "",
-      date: dayjs().format("YYYY-MM-DD"),
-      label: "option 1",
+      expirationDate: dayjs().format("YYYY-MM-DD"),
     },
   ]);
   const [optionsAvailable, setOptionsAvailable] = useState<any>([
@@ -167,11 +166,10 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
       setOptionSelectedByUser((prev: any[]) => {
         prev.push({
           id: uuidv1(),
-          name: "",
-          price: "",
+          ticketName: "",
+          price: 0,
           description: "",
-          date: dayjs().format("YYYY-MM-DD"),
-          label: "option 1",
+          expirationDate: dayjs().format("YYYY-MM-DD"),
         });
 
         return [...prev];
@@ -222,7 +220,7 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
     setOptionSelectedByUser((prev: any) => {
       return prev.map((el: any) => {
         if (el.id == fieldIdentifier) {
-          el.name = value;
+          el.ticketName = value;
         }
         return el;
       });
@@ -235,7 +233,7 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
     setOptionSelectedByUser((prev: any) => {
       return prev.map((el: any) => {
         if (el.id == fieldIdentifier) {
-          el.price = newPrice;
+          el.price = +newPrice;
         }
         return el;
       });
@@ -262,7 +260,7 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
     setOptionSelectedByUser((prev: any) => {
       return prev.map((el: any) => {
         if (el.id == fieldIdentifier) {
-          el.date = input?.format("YYYY-MM-DD");
+          el.expirationDate = input?.format("YYYY-MM-DD");
         }
         return el;
       });

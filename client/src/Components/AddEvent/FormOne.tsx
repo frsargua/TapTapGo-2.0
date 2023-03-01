@@ -63,120 +63,118 @@ export const FormOne: FunctionComponent<FormOneProps> = (props) => {
         <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
-              <form>
+              <TextField
+                onChange={(value) => changeNewEvent(value)}
+                value={eventDetails.eventName}
+                fullWidth
+                margin="dense"
+                name="eventName"
+                label="Event Name"
+                required
+              />
+
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Start date"
+                    disablePast
+                    value={eventDetails.date}
+                    onChange={updateDate}
+                    renderInput={(params) => (
+                      <TextField
+                        required
+                        margin="dense"
+                        sx={{ width: "50%" }}
+                        {...params}
+                      />
+                    )}
+                  />
+                </LocalizationProvider>
                 <TextField
                   onChange={(value) => changeNewEvent(value)}
-                  value={eventDetails.eventName}
+                  value={eventDetails.maxAttendees}
                   fullWidth
                   margin="dense"
-                  name="eventName"
-                  label="Event Name"
+                  type="number"
+                  inputProps={{ min: 4, max: 10 }}
+                  name="maxAttendees"
+                  label="Max attendees"
+                  sx={{ width: "50%" }}
                   required
                 />
+              </Box>
 
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Start date"
-                      disablePast
-                      value={eventDetails.date}
-                      onChange={updateDate}
-                      renderInput={(params) => (
-                        <TextField
-                          required
-                          margin="dense"
-                          sx={{ width: "50%" }}
-                          {...params}
-                        />
-                      )}
-                    />
-                  </LocalizationProvider>
-                  <TextField
-                    onChange={(value) => changeNewEvent(value)}
-                    value={eventDetails.maxAttendees}
-                    fullWidth
-                    margin="dense"
-                    type="number"
-                    inputProps={{ min: 4, max: 10 }}
-                    name="maxAttendees"
-                    label="Max attendees"
-                    sx={{ width: "50%" }}
-                    required
-                  />
-                </Box>
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    my: "0.4rem",
-                  }}
-                >
-                  <FormControl sx={{ width: "100%" }}>
-                    <InputLabel id="ageGroup">Age</InputLabel>
-                    <Select
-                      labelId="ageGroup"
-                      value={eventDetails.ageGroup}
-                      label="Age"
-                      name="ageGroup"
-                      onChange={changeNewEvent}
-                      required
-                    >
-                      <MenuItem value={"Teenagers"}>Teenagers</MenuItem>
-                      <MenuItem value={"Adult"}>Adult</MenuItem>
-                      <MenuItem value={"Senior"}>Senior</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <FormControl fullWidth>
-                    <InputLabel id="frequency">frequency</InputLabel>
-                    <Select
-                      labelId="frequency"
-                      value={eventDetails.frequency.frequency}
-                      label="frequency"
-                      name="frequency"
-                      onChange={changeFrequency}
-                      required
-                    >
-                      {frequencies.map((keyword, index) => (
-                        <MenuItem key={index} value={keyword.frequency}>
-                          {keyword.frequency}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Box>
-                <FormControl fullWidth>
-                  <InputLabel id="tags">Keywords</InputLabel>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  my: "0.4rem",
+                }}
+              >
+                <FormControl sx={{ width: "100%" }}>
+                  <InputLabel id="ageGroup">Age</InputLabel>
                   <Select
-                    labelId="tags"
-                    multiple
-                    label="Keywords"
-                    value={tags.keywords}
-                    onChange={updateTagsSelected}
-                    input={<OutlinedInput id="tags" label="tags" />}
-                    renderValue={(selected: string[]) => (
-                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                        {selected.map((value, i) => {
-                          return <Chip key={i} label={value} />;
-                        })}
-                      </Box>
-                    )}
+                    labelId="ageGroup"
+                    value={eventDetails.ageGroup}
+                    label="Age"
+                    name="ageGroup"
+                    onChange={changeNewEvent}
                     required
                   >
-                    {keywords.map((keyword, index) => (
-                      <MenuItem key={index} value={keyword.category}>
-                        {keyword.category}
+                    <MenuItem value={"Teenagers"}>Teenagers</MenuItem>
+                    <MenuItem value={"Adult"}>Adult</MenuItem>
+                    <MenuItem value={"Senior"}>Senior</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel id="frequency">frequency</InputLabel>
+                  <Select
+                    labelId="frequency"
+                    value={eventDetails.frequency.frequency}
+                    label="frequency"
+                    name="frequency"
+                    onChange={changeFrequency}
+                    required
+                  >
+                    {frequencies.map((keyword, index) => (
+                      <MenuItem key={index} value={keyword.frequency}>
+                        {keyword.frequency}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
-                <DropZone updateImage={updateImageState} files={imageUpload} />
-              </form>
+              </Box>
+              <FormControl fullWidth>
+                <InputLabel id="tags">Keywords</InputLabel>
+                <Select
+                  labelId="tags"
+                  multiple
+                  label="Keywords"
+                  value={tags.keywords}
+                  onChange={updateTagsSelected}
+                  input={<OutlinedInput id="tags" label="tags" />}
+                  renderValue={(selected: string[]) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value, i) => {
+                        return <Chip key={i} label={value} />;
+                      })}
+                    </Box>
+                  )}
+                  required
+                >
+                  {keywords.map((keyword, index) => (
+                    <MenuItem key={index} value={keyword.category}>
+                      {keyword.category}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <DropZone updateImage={updateImageState} files={imageUpload} />
             </CardContent>
           </Card>
         </Grid>

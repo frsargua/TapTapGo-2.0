@@ -1,7 +1,13 @@
 import e from "express";
 import { GraphQLError } from "graphql";
 import { EventType, UserType } from "../types";
-const { Events, Address, ImageUrl, Category } = require("../../models/index");
+const {
+  Events,
+  Address,
+  ImageUrl,
+  Category,
+  TicketType,
+} = require("../../models/index");
 
 export const createEvent = async (
   _: any,
@@ -10,12 +16,30 @@ export const createEvent = async (
 ): Promise<any> => {
   try {
     if (context.user) {
-      const { eventData, eventAddress, eventImages, eventCategories } = input;
+      const {
+        eventData,
+        eventAddress,
+        eventImages,
+        eventCategories,
+        ticketOptions,
+      } = input;
       let finalInput = { ...eventData, frequency: eventData.frequency.id };
       const createdEvent = await Events.create({
         ...finalInput,
         host_id: context.user.id,
       });
+
+      await Promise.all(
+        ticketOptions.map(async (ticketData) => {
+          return await TicketType.create({
+            ticketType: ticketData.ticketName,
+            price: ticketData.price,
+            description: ticketData.description,
+            expirationDate: ticketData.expirationDate,
+            event_id: createdEvent.id,
+          });
+        })
+      );
 
       await Promise.all(
         eventImages.map(async (image) => {

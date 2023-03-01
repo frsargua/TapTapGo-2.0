@@ -1,4 +1,10 @@
-import { FunctionComponent, useContext, useRef, useState } from "react";
+import {
+  FunctionComponent,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
 import { Container, Typography } from "@mui/material";
@@ -6,10 +12,11 @@ import { FormOne } from "../../Components/AddEvent/FormOne";
 import { FormTwo } from "../../Components/AddEvent/FormTwo";
 import { FormThree } from "../../Components/AddEvent/FormThree";
 import { FormFour } from "../../Components/AddEvent/FormFour";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { NavigationButtons } from "../../Components/AddEvent/NavigationButtons";
 import { CreateEventContext } from "../../contexts/CreateEventContext";
 import { ADD_EVENT } from "../../graphQL/Mutations";
+import { QUERY_FREQUENCY_TYPES, QUERY_TAGS } from "../../graphQL/Queries";
 import { uploadImage } from "../../utils/index";
 
 type AddEventProps = {};
@@ -21,7 +28,10 @@ export const AddEvent: FunctionComponent<AddEventProps> = () => {
     imageUpload,
     eventAddress,
     tags,
+    formFour,
     optionSelectedByUser,
+    setKeywords,
+    setFrequencies,
   } = useContext(CreateEventContext);
 
   const completeEventInformation: any = useRef();
@@ -36,6 +46,8 @@ export const AddEvent: FunctionComponent<AddEventProps> = () => {
     setFormNumber((prev) => prev - 1);
   };
   const [createEvent] = useMutation(ADD_EVENT);
+  const { data: arrayOfFrequencyOptions } = useQuery(QUERY_FREQUENCY_TYPES);
+  const { data: arrayOfCategoriesOptions } = useQuery(QUERY_TAGS);
 
   const handleFormSubmit = async (event: any) => {
     event.preventDefault();
@@ -49,7 +61,7 @@ export const AddEvent: FunctionComponent<AddEventProps> = () => {
       )
         .then((images) => {
           completeEventInformation.current = {
-            eventData: eventDetails,
+            eventData: { ...eventDetails, description: formFour.description },
             eventCategories: tags.tags,
             eventImages: images,
             eventAddress: eventAddress,
@@ -57,6 +69,7 @@ export const AddEvent: FunctionComponent<AddEventProps> = () => {
           };
         })
         .then(async () => {
+          console.log(completeEventInformation.current);
           const { data: eventData } = await createEvent({
             variables: { input: { ...completeEventInformation.current } },
           });
@@ -69,6 +82,23 @@ export const AddEvent: FunctionComponent<AddEventProps> = () => {
       console.error(e);
     }
   };
+
+  useEffect(() => {
+    console.log(arrayOfFrequencyOptions);
+    if (arrayOfFrequencyOptions) {
+      if (arrayOfFrequencyOptions?.QueryAllFrequencyTypes?.length) {
+        setFrequencies(arrayOfFrequencyOptions?.QueryAllFrequencyTypes);
+      }
+    }
+  }, [arrayOfFrequencyOptions]);
+
+  useEffect(() => {
+    if (arrayOfCategoriesOptions) {
+      if (arrayOfCategoriesOptions?.QueryAllCategories?.length) {
+        setKeywords(arrayOfCategoriesOptions?.QueryAllCategories);
+      }
+    }
+  }, [arrayOfCategoriesOptions]);
 
   return (
     <Container

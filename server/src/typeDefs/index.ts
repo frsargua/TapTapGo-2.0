@@ -155,7 +155,6 @@ export const typeDefs = `
     eventName: String!
     description: String
     date: String!
-    price: Int!
     ageGroup: String
     frequency: FrequencyInput
     maxAttendees: Int!
@@ -179,6 +178,15 @@ export const typeDefs = `
   input CreateCategory {
     id: ID!
   }
+
+  input CreateTicketOption {
+    description: String!
+    expirationDate: String!
+    id: String!
+    price: Int!
+    ticketName: String!
+  }
+
   input CreateNewCategory {
     category: String!
   }
@@ -192,6 +200,7 @@ export const typeDefs = `
     eventAddress:EventAddress
     eventImages:[InputImage]
     eventCategories:[CreateCategory]
+    ticketOptions:[CreateTicketOption]
   }
 
   input TransactionInput {

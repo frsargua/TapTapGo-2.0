@@ -49,7 +49,7 @@ export const FormTwo: FunctionComponent<FormTwoProps> = () => {
             <Select
               required
               aria-label="name"
-              value={data.name}
+              value={data.ticketName}
               name={data.id}
               onChange={handleChange}
             >
@@ -71,6 +71,7 @@ export const FormTwo: FunctionComponent<FormTwoProps> = () => {
             name={data.id}
             value={data.price}
             label="price"
+            type="number"
             onChange={handlePriceChange}
           />
 
@@ -79,7 +80,7 @@ export const FormTwo: FunctionComponent<FormTwoProps> = () => {
               label="Expiration date"
               disablePast
               onChange={(input) => handleExpirationDateChange(input, data.id)}
-              value={data.date}
+              value={data.expirationDate}
               renderInput={(params) => (
                 <TextField required name={data.id} {...params} />
               )}
