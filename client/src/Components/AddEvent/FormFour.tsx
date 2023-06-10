@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import {
   EditorState,
@@ -9,15 +9,15 @@ import {
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import parse from "html-react-parser";
 import { Card, CardContent, Grid } from "@mui/material";
-import { FunctionComponent } from "react";
 import draftToHtml from "draftjs-to-html";
 import { Dayjs } from "dayjs";
 import { CreateEventContext } from "../../contexts/CreateEventContext";
 
 interface FormFourProps {}
 
-export const FormFour: FunctionComponent<FormFourProps> = () => {
-  let { formFour, changeNewEventDescription } = useContext(CreateEventContext);
+const FormFour: React.FunctionComponent<FormFourProps> = () => {
+  const { formFour, changeNewEventDescription } =
+    useContext(CreateEventContext);
 
   const blocksFromHTML = convertFromHTML(formFour.description);
   const contentState = ContentState.createFromBlockArray(
@@ -43,7 +43,7 @@ export const FormFour: FunctionComponent<FormFourProps> = () => {
           <Card>
             <CardContent>
               <Editor
-                editorStyle={{ height: "300px", width: "100%" }}
+                editorStyle={{ height: "100%", width: "100%" }}
                 editorState={editorState}
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
@@ -57,3 +57,5 @@ export const FormFour: FunctionComponent<FormFourProps> = () => {
     </>
   );
 };
+
+export default FormFour;

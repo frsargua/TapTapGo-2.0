@@ -1,22 +1,29 @@
-import { TextField, Typography, IconButton, Button } from "@mui/material";
-import { Box } from "@mui/system";
+import { useState, useContext } from "react";
+import {
+  TextField,
+  Typography,
+  IconButton,
+  Button,
+  Container,
+  Box,
+  Grid,
+} from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
-import { FunctionComponent, useContext, useEffect, useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import dayjs, { Dayjs } from "dayjs";
+
+import dayjs from "dayjs";
 import { v1 as uuidv1 } from "uuid";
 import { CreateEventContext } from "../../contexts/CreateEventContext";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 interface FormTwoProps {}
 
-export const FormTwo: FunctionComponent<FormTwoProps> = () => {
-  let {
+const FormTwo: React.FC<FormTwoProps> = () => {
+  const {
     optionSelectedByUser,
     optionsAvailable,
     addOption,
@@ -28,73 +35,97 @@ export const FormTwo: FunctionComponent<FormTwoProps> = () => {
   } = useContext(CreateEventContext);
 
   return (
-    <>
-      <Typography variant="h3" textAlign="center">
-        Create Tickets Types
+    <Container maxWidth="lg">
+      <Typography variant="h4" align="center" gutterBottom>
+        Create Ticket Types
       </Typography>
-      <Button onClick={addOption}>Add</Button>
-      <Button onClick={removeOption}>Less</Button>
+      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+        <Button variant="contained" onClick={addOption}>
+          Add
+        </Button>
+        <Button variant="contained" onClick={removeOption}>
+          Less
+        </Button>
+      </Box>
       {optionSelectedByUser.map((data, index) => (
         <Box
           key={index}
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            my: "1rem",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            p: 2,
+            mb: 2,
           }}
         >
-          <FormControl sx={{ width: "300px" }}>
-            <InputLabel id="demo-simple-select-label">Ticket Type</InputLabel>
-            <Select
-              required
-              aria-label="name"
-              value={data.ticketName}
-              name={data.id}
-              onChange={handleChange}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {optionsAvailable.map((el, index) => (
-                <MenuItem
-                  key={index}
-                  value={`${el.name}`}
-                  disabled={el.selected}
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Ticket Type
+                </InputLabel>
+                <Select
+                  required
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={data.ticketName}
+                  name={data.id}
+                  onChange={handleChange}
                 >
-                  {el.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <TextField
-            name={data.id}
-            value={data.price}
-            label="price"
-            type="number"
-            onChange={handlePriceChange}
-          />
-
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Expiration date"
-              disablePast
-              onChange={(input) => handleExpirationDateChange(input, data.id)}
-              value={data.expirationDate}
-              renderInput={(params) => (
-                <TextField required name={data.id} {...params} />
-              )}
-            />
-          </LocalizationProvider>
-          <TextField
-            name={data.id}
-            value={data.description}
-            label="description"
-            fullWidth
-            onChange={handleDescriptionChange}
-          />
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {optionsAvailable.map((el, index) => (
+                    <MenuItem
+                      key={index}
+                      value={el.name}
+                      disabled={el.selected}
+                    >
+                      {el.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name={data.id}
+                value={data.price}
+                label="Price"
+                type="number"
+                onChange={handlePriceChange}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                locale={dayjs.locale("en")}
+              >
+                <DatePicker
+                  label="Expiration Date"
+                  disablePast
+                  value={data.expirationDate}
+                  onChange={(date) => handleExpirationDateChange(date, data.id)}
+                  renderInput={(params) => (
+                    <TextField required name={data.id} {...params} />
+                  )}
+                />
+              </LocalizationProvider>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name={data.id}
+                value={data.description}
+                label="Description"
+                fullWidth
+                onChange={handleDescriptionChange}
+              />
+            </Grid>
+          </Grid>
         </Box>
       ))}
-    </>
+    </Container>
   );
 };
+
+export default FormTwo;

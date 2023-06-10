@@ -15,6 +15,7 @@ interface TicketProps {
   price: number;
   description: string;
   ticketName: string;
+  expirationDate: string;
   updateTicketNumbers: (
     quantity: number,
     id: number,
@@ -24,8 +25,15 @@ interface TicketProps {
 }
 
 const Ticket: FunctionComponent<TicketProps> = (props) => {
-  const { ticketTypeId, price, description, ticketName, updateTicketNumbers } =
-    props;
+  const {
+    ticketTypeId,
+    price,
+    description,
+    ticketName,
+    expirationDate,
+    updateTicketNumbers,
+  } = props;
+
   const [numberOfTickets, setNumberOfTickets] = useState<number>(0);
 
   const increaseTicketNumber = () => {
@@ -74,7 +82,7 @@ const Ticket: FunctionComponent<TicketProps> = (props) => {
 
           <Typography variant="h6">£ {price}</Typography>
           <Typography variant="caption" gutterBottom>
-            Date
+            {expirationDate}
           </Typography>
 
           <Typography variant="body2" marginTop="1rem">

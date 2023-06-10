@@ -79,6 +79,13 @@ export const QUERY_EVENTBYID = gql`
       eventName
       description
       date
+      ticketTypes {
+        description
+        expirationDate
+        id
+        price
+        ticketType
+      }
       categories {
         category
         eventsPerCategory {
@@ -99,7 +106,7 @@ export const QUERY_EVENTBYID = gql`
       image_urls {
         imageLink
       }
-      price
+
       addresses {
         city
         firstLine
@@ -122,6 +129,23 @@ export const QUERY_EVENTBYID = gql`
         username
       }
       id
+    }
+  }
+`;
+
+export const QUERY_EVENT_TICKET_OPTIONS = gql`
+  query Query($eventId: ID!) {
+    QueryEventById(eventId: $eventId) {
+      ticketTypes {
+        description
+        expirationDate
+        id
+        price
+        ticketType
+      }
+      image_urls {
+        imageLink
+      }
     }
   }
 `;

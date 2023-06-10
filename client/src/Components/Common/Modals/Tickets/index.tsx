@@ -18,12 +18,18 @@ import { func } from "prop-types";
 import { StripeContainer } from "../../../StripeContainer/Index";
 import Ticket from "./Ticket";
 import { Description } from "@mui/icons-material";
+import { QUERY_EVENT_TICKET_OPTIONS } from "../../../../graphQL/Queries";
+import { useQuery } from "@apollo/client";
+import { useParams } from "react-router-dom";
+import { URLParamsTypes } from "../../../../utils/types";
 
 interface GetTIcketModalProps {}
 
 export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
   const { closeTicketModalState } = useContext(ModalContext);
+  const { eventId: eventParam } = useParams<URLParamsTypes>();
   const [readyToCheckout, setReadyToCheckout] = useState<boolean>(false);
+  const [ticketOptions, setTicketOptions] = useState([]);
 
   const fakeData = [
     {
@@ -57,7 +63,6 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
     ticketName: string
   ) => {
     setNumberOfTickets((prev) => {
-      console.log(quantity);
       if (quantity <= 0) {
         delete prev[id];
         return { ...prev };
@@ -76,8 +81,6 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
   };
 
   const calculateTotal = () => {
-    console.log(numberOfTickets);
-
     if (numberOfTickets) {
       const sum = Object.keys(numberOfTickets).reduce(
         (acc, key) =>
@@ -112,6 +115,18 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
     );
     return transformedData;
   };
+
+  const { data } = useQuery(QUERY_EVENT_TICKET_OPTIONS, {
+    variables: { eventId: eventParam },
+  });
+
+  useEffect(() => {
+    if (data) {
+      console.log(data.QueryEventById);
+      setTicketOptions(data.QueryEventById.ticketTypes);
+    }
+  }, [data]);
+
   useEffect(() => {
     calculateTotal();
   }, [numberOfTickets]);
@@ -161,12 +176,13 @@ export const GetTicketModal: FunctionComponent<GetTIcketModalProps> = () => {
                       fullWidth
                       sx={{ marginY: "0.5rem" }}
                     />
-                    {fakeData.map((el) => (
+                    {ticketOptions.map((el) => (
                       <Ticket
-                        ticketTypeId={el.ticketTypeId}
+                        ticketTypeId={el.id}
                         price={el.price}
                         description={el.description}
-                        ticketName={el.ticketName}
+                        ticketName={el.ticketType}
+                        expirationDate={el.expirationDate}
                         updateTicketNumbers={updateTicketNumbers}
                       />
                     ))}

@@ -1,6 +1,5 @@
-import { Box } from "@mui/system";
-import { FunctionComponent } from "react";
-import { Button } from "@mui/material";
+import React, { FunctionComponent } from "react";
+import { Button, Grid } from "@mui/material";
 
 interface NavigationButtonsProps {
   formNumber: number;
@@ -11,43 +10,62 @@ interface NavigationButtonsProps {
 export const NavigationButtons: FunctionComponent<NavigationButtonsProps> = (
   props
 ) => {
-  let { formNumber, handlePreviousForm, handleNextForm } = props;
+  const { formNumber, handlePreviousForm, handleNextForm } = props;
 
   return (
-    <>
+    <Grid container spacing={2} justifyContent="flex-end">
+      {formNumber >= 2 && formNumber <= 4 && (
+        <Grid item>
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={handlePreviousForm}
+            sx={{
+              textTransform: "none",
+              fontWeight: 600,
+              borderColor: "#999",
+            }}
+          >
+            Previous
+          </Button>
+        </Grid>
+      )}
       {formNumber < 4 && (
-        <Button
-          color="primary"
-          onClick={handleNextForm}
-          fullWidth
-          variant="contained"
-          sx={{ my: "0.2rem" }}
-        >
-          Next
-        </Button>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleNextForm}
+            fullWidth
+            sx={{
+              textTransform: "none",
+              fontWeight: 600,
+              bgcolor: "#4caf50",
+              "&:hover": { bgcolor: "#45a249" },
+            }}
+          >
+            Next
+          </Button>
+        </Grid>
       )}
       {formNumber >= 4 && (
-        <Button
-          color="warning"
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ my: "0.2rem" }}
-        >
-          Submit
-        </Button>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="secondary"
+            type="submit"
+            fullWidth
+            sx={{
+              textTransform: "none",
+              fontWeight: 600,
+              bgcolor: "#f44336",
+              "&:hover": { bgcolor: "#e53935" },
+            }}
+          >
+            Submit
+          </Button>
+        </Grid>
       )}
-      {formNumber >= 2 && formNumber <= 4 && (
-        <Button
-          color="secondary"
-          variant="contained"
-          fullWidth
-          onClick={handlePreviousForm}
-          sx={{ my: "0.2rem" }}
-        >
-          Previous
-        </Button>
-      )}
-    </>
+    </Grid>
   );
 };

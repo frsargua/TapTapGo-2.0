@@ -23,6 +23,14 @@ export const typeDefs = `
   type Image {
     imageLink: String!
   }
+
+  type ticketType {
+    description: String!
+    expirationDate: String!
+    id: String!
+    price: Int!
+    ticketType: String!  
+  }
  
   type Review {
     username: String!
@@ -58,6 +66,7 @@ export const typeDefs = `
     attendees: Int!
     frequency: frequency
     maxAttendees: Int!
+    ticketTypes:[ticketType]
   }
   type EventForBookmark {
     id: ID!

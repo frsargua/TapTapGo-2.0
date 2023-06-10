@@ -5,6 +5,7 @@ const {
   Review,
   Address,
   User,
+  TicketType,
 } = require("../../models/index");
 import { GraphQLError } from "graphql";
 import { CreateCategory } from "../types";
@@ -14,6 +15,7 @@ export const QueryEventById = async (_: any, { eventId }: any) => {
     const eventsFromDB = await Events.findByPk(eventId, {
       include: [
         ImageUrl,
+        TicketType,
         {
           model: Review,
           as: "review",

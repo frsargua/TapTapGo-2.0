@@ -301,6 +301,7 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
         handleAddressChange,
         formFour,
         changeNewEventDescription,
+        setAddress,
       }}
     >
       {children}
