@@ -31,7 +31,7 @@ interface SingleEventCardProps {
 export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
   props
 ) => {
-  let { eventName, price, rating, review, image_urls, id } = props;
+  let { eventName, price, rating, reviews, images, id } = props;
 
   const [isBookmarked, setIsBookmarked] = useState(false);
   let isLogged = Auth.loggedIn;
@@ -75,7 +75,7 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
             <CardMedia
               component="img"
               height="170"
-              image={selectRandomImage(image_urls)}
+              image={selectRandomImage(images)}
               alt={eventName}
             />
           </Link>
@@ -102,7 +102,7 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
                 precision={0.5}
                 readOnly
               />
-              <Typography variant="caption">{review.length}</Typography>
+              <Typography variant="caption">{reviews.length}</Typography>
             </Box>
             <Box
               sx={{

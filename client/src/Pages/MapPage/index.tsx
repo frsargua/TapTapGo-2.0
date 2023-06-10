@@ -7,6 +7,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Paper,
   Slider,
   TextField,
   Toolbar,
@@ -49,34 +50,49 @@ export const Map: FunctionComponent<MapProps> = () => {
         columnSpacing={2}
         sx={{ width: "100vw", height: "calc(100vh - 150px)" }}
       >
-        <Grid
-          item
-          xs={12}
-          md={12}
-          lg={12}
+        <Paper
+          elevation={1}
           sx={{
-            mb: "1rem",
-            display: { xs: "none", md: "flex" },
-            justifyContent: "center",
+            pb: 3,
+            borderRadius: 2,
+            backgroundColor: "background.paper",
+            m: "auto",
           }}
         >
-          <Box
+          <Grid
+            item
+            xs={12}
+            md={12}
+            lg={12}
             sx={{
-              display: "inline-flex",
+              display: { xs: "none", md: "flex" },
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: (theme) => theme.spacing(2),
             }}
           >
-            <Box width="220px">
-              <TextField fullWidth />
-            </Box>
-            <Box width="220px">
-              <Select
-                labelId="ageGroup"
-                value={3}
-                label="Distance"
+            <Box sx={{ width: "220px" }}>
+              <TextField
                 variant="outlined"
+                size="small"
                 fullWidth
-                name="ageGroup"
-                // onChange={(value) => ChangeNewEvent(value)}
+                placeholder="Enter here"
+                InputProps={{
+                  style: { height: "40px" },
+                }}
+              />
+            </Box>
+            <Box sx={{ width: "220px" }}>
+              <Select
+                variant="outlined"
+                labelId="distanceGroup"
+                value={3}
+                name="distanceGroup"
+                fullWidth
+                size="small"
+                InputProps={{
+                  style: { height: "40px" },
+                }}
               >
                 <MenuItem value={0.5}>0.5km</MenuItem>
                 <MenuItem value={1}>1km</MenuItem>
@@ -85,20 +101,18 @@ export const Map: FunctionComponent<MapProps> = () => {
                 <MenuItem value={10}>10km</MenuItem>
               </Select>
             </Box>
-            <Box width="220px">
+            <Box sx={{ width: "220px" }}>
               <Button
                 fullWidth
-                sx={{ height: "100%" }}
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
-                color="inherit"
                 variant="outlined"
+                sx={{ height: "40px" }}
               >
                 <MonetizationOnIcon />
               </Button>
-
               <Menu
                 anchorEl={anchorEl}
                 anchorOrigin={{
@@ -113,33 +127,51 @@ export const Map: FunctionComponent<MapProps> = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <Box sx={{ width: "250px", mx: "2rem", mt: "2rem" }}>
+                <Box
+                  sx={{
+                    width: "250px",
+                    mx: (theme) => theme.spacing(3),
+                    mt: (theme) => theme.spacing(3),
+                  }}
+                >
                   <SliderProton value={15} />
                 </Box>
               </Menu>
             </Box>
-            <Box width="220px">
+            <Box sx={{ width: "220px" }}>
               <Select
                 fullWidth
-                labelId="ageGroup"
+                variant="outlined"
+                labelId="categoryGroup"
                 value={"Bachata"}
-                label="Category"
-                name="ageGroup"
-                // onChange={(value) => ChangeNewEvent(value)}
+                name="categoryGroup"
+                size="small"
+                InputProps={{
+                  style: { height: "40px" },
+                }}
               >
                 <MenuItem value={"Bachata"}>Bachata</MenuItem>
                 <MenuItem value={"Kizomba"}>Kizomba</MenuItem>
                 <MenuItem value={"Salsa"}>Salsa</MenuItem>
               </Select>
             </Box>
-            <Button color="warning" sx={{ width: "150px" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ width: "150px", height: "40px" }}
+            >
               Search
             </Button>
-          </Box>
-        </Grid>
-        <Grid item xs={12} md={8} lg={9}>
+          </Grid>
+        </Paper>
+
+        <Grid item xs={12} md={8} lg={12}>
           <Box sx={{ position: "relative" }}>
-            <MapPage setSelected={setSelected} inputEl={inputEl} />
+            <MapPage
+              setSelected={setSelected}
+              inputEl={inputEl}
+              dataList={dataList}
+            />
             <Button
               variant="contained"
               sx={{
@@ -158,7 +190,7 @@ export const Map: FunctionComponent<MapProps> = () => {
             </Button>
           </Box>
         </Grid>
-        <Grid
+        {/* <Grid
           item
           xs={12}
           md={4}
@@ -181,6 +213,7 @@ export const Map: FunctionComponent<MapProps> = () => {
                   }
                 : {};
 
+            console.log(el);
             return (
               <>
                 <Box
@@ -196,7 +229,7 @@ export const Map: FunctionComponent<MapProps> = () => {
               </>
             );
           })}
-        </Grid>
+        </Grid> */}
         <Grid
           item
           xs={12}
@@ -231,7 +264,7 @@ export const Map: FunctionComponent<MapProps> = () => {
                     margin: "20px",
                   }}
                 >
-                  <SingleEventCard {...el} />
+                  {/* <SingleEventCard {...el} /> */}
                 </Box>
               </>
             );

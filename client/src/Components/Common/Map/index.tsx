@@ -9,9 +9,20 @@ import {
   DirectionsRenderer,
   Circle,
   MarkerClusterer,
+  MarkerF,
+  OverlayView,
 } from "@react-google-maps/api";
 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
+import {
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+} from "@mui/material";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
@@ -29,6 +40,11 @@ export default function Map(props: SearchProps) {
     lat: 51.509865,
     lng: -0.118092,
   });
+  const [selectedMarker, setSelectedMarker] = useState<{
+    id: string;
+    position: LatLngLiteral;
+  } | null>(null);
+
   const [office, setOffice] = useState<LatLngLiteral>();
   const [directions, setDirections] = useState<DirectionsResult>();
   const mapRef = useRef<GoogleMap>();
@@ -63,8 +79,9 @@ export default function Map(props: SearchProps) {
   );
   const onLoad = useCallback((map: any) => (mapRef.current = map), []);
 
-  const fetchDirections = (house: LatLngLiteral) => {
+  const fetchDirections = (house: LatLngLiteral, houseId: any) => {
     if (!office) return;
+    console.log(house);
 
     const service = new google.maps.DirectionsService();
     service.route(
@@ -74,8 +91,10 @@ export default function Map(props: SearchProps) {
         travelMode: google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
+        console.log(house);
         if (status === "OK" && result) {
           setDirections(result);
+          setSelectedMarker({ spotData: houseId, position: house }); // Set the selected marker ID and position
         }
       }
     );
@@ -91,48 +110,73 @@ export default function Map(props: SearchProps) {
           options={options}
           onLoad={onLoad}
         >
-          {directions && (
-            <DirectionsRenderer
-              directions={directions}
-              options={{
-                polylineOptions: {
-                  zIndex: 50,
-                  strokeColor: "#1976D2",
-                  strokeWeight: 5,
-                },
-              }}
-            />
-          )}
-
           {office && (
             <>
-              <Marker
-                position={office}
-                icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-              />
-
-              <MarkerClusterer>
-                {(clusterer) => (
-                  <div>
-                    {markerData.map((house) => (
-                      <Marker
-                        key={house._id}
-                        position={house.coordinates}
-                        clusterer={clusterer}
-                        onClick={() => {
-                          fetchDirections(house);
-                          setSelected(house._id);
-                          inputEl?.current?.focus();
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
-              </MarkerClusterer>
-
-              <Circle center={office} radius={5000} options={closeOptions} />
+              {" "}
+              {markerData.map((spot, index) => {
+                return (
+                  <>
+                    <Marker
+                      key={index}
+                      position={{
+                        lat: spot.coordinates.lat,
+                        lng: spot.coordinates.lng,
+                      }}
+                      onClick={() => {
+                        fetchDirections(
+                          {
+                            lat: spot.coordinates.lat,
+                            lng: spot.coordinates.lng,
+                          },
+                          spot
+                        );
+                        setSelected(spot._id);
+                        inputEl?.current?.focus();
+                      }}
+                    />
+                  </>
+                );
+              })}
             </>
           )}
+          {selectedMarker && (
+            <OverlayView
+              position={selectedMarker.position}
+              mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+            >
+              <Link
+                to={`/event/${selectedMarker.spotData._id}`}
+                target="_blank"
+              >
+                <Card sx={{ maxWidth: 300, maxHeight: "200" }}>
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={
+                      "https://firebasestorage.googleapis.com/v0/b/taptapgo2.appspot.com/o/Stock%20Images%2F4014896a9e708a567e6b05936a0ce434784c8cd71c794c1148ac426168129bc2-rimg-w960-h507-gmir.jpg?alt=media&token=52014dff-f067-49ca-9c1c-5d8a8b7a38f9"
+                    }
+                    alt={selectedMarker.spotData.eventName}
+                  />
+                  <CardContent>
+                    <Typography variant="h5" gutterBottom>
+                      {selectedMarker.spotData.eventName}
+                    </Typography>
+
+                    <Typography variant="body1" gutterBottom>
+                      Price: ${selectedMarker.spotData.price}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      Frequency: {selectedMarker.spotData.frequency}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      Rating: {selectedMarker.spotData.rating}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Link>
+            </OverlayView>
+          )}
+          <Circle center={office} radius={5000} options={closeOptions} />;
         </GoogleMap>
       </div>
     </div>
