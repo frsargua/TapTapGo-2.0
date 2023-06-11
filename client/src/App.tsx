@@ -10,15 +10,14 @@ import {
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Modals } from "./Components/Common/Modals";
-import { TextEditor } from "./Components/Common/TextEditor";
-import { Navbar } from "./Components/Common/Navbar/Index";
+import { Navbar } from "./Components/Navbar/Index";
 import { ModalProvider } from "./contexts/ModalContext";
-import AddEvent from "./Pages/AddEvent/Index";
-import { EventPage } from "./Pages/EventPage";
-import { Landing } from "./Pages/Landing/Index";
-import { Map } from "./Pages/MapPage/index";
-import { ProfileDashBoard } from "./Pages/Profile/Index";
-import Search from "./Pages/Search/Index";
+import CreateEventPage from "./Pages/CreateEventPage/Index";
+import SingleEventPage from "./Pages/SingleEventPage/Index";
+import MainLandingPage from "./Pages/MainLandingPage/Index";
+import SearchResultsMapPage from "./Pages/SearchResultsMapPage/Index";
+import UserProfilePage from "./Pages/UserProfilePage/Index";
+import SearchResultsPage from "./Pages/SearchResultsPage/Index";
 import { CreateEventProvider } from "./contexts/CreateEventContext";
 
 const httpLink = createHttpLink({
@@ -64,13 +63,12 @@ function App() {
               <Modals />
               <Navbar />
               <Routes>
-                <Route path="/" element={<Landing />} />
-                <Route path="/search/:city" element={<Search />} />
-                <Route path="/map/:cityName" element={<Map />} />
-                <Route path="/createEvent" element={<AddEvent />} />
-                <Route path="/user/:userId" element={<ProfileDashBoard />} />
-                <Route path="/event/:eventId" element={<EventPage />} />
-                <Route path="/sample" element={<TextEditor />} />
+                <Route path="/" element={<MainLandingPage />} />
+                <Route path="/search/:city" element={<SearchResultsPage />} />
+                <Route path="/map/:city" element={<SearchResultsMapPage />} />
+                <Route path="/createEvent" element={<CreateEventPage />} />
+                <Route path="/user/:userId" element={<UserProfilePage />} />
+                <Route path="/event/:eventId" element={<SingleEventPage />} />
               </Routes>
             </Router>
           </ModalProvider>

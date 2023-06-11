@@ -2,23 +2,19 @@ import React, { createContext, useState, ChangeEvent } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { v1 as uuidv1 } from "uuid";
 
-// interface CreateEventContextProps {
-//   eventDetails: any[];
-// }
-
 type CreateEventProps = {
   children: React.ReactNode;
 };
 
-type newEventProps = {
+type NewEventProps = {
   eventName: string;
-  date: dayjs;
+  date: dayjs.Dayjs;
   ageGroup: string;
   frequency: { frequency: string; id: string };
   maxAttendees: string;
 };
 
-type tagsProps = {
+type TagsProps = {
   tags: number[];
   keywords: string[];
 };
@@ -27,7 +23,7 @@ type ImageUploadProps = {
   imageLink: string;
 };
 
-type frequencyProps = {
+type FrequencyProps = {
   frequency: string;
   id: string;
 };
@@ -41,28 +37,24 @@ type EventAddressProps = {
   postcode: string;
 };
 
-// Types for form 2
-
-export const CreateEventContext = createContext({} as any);
+export const CreateEventContext = createContext<any>({});
 
 export const CreateEventProvider = ({ children }: CreateEventProps) => {
-  // State Form One
-  const [keywords, setKeywords] = useState<keywordsProps[]>([]);
-  const [frequencies, setFrequencies] = useState<frequencyProps[]>([]);
+  // State
+  const [keywords, setKeywords] = useState<string[]>([]);
+  const [frequencies, setFrequencies] = useState<FrequencyProps[]>([]);
   const [imageUpload, setImageUpload] = useState<ImageUploadProps[]>([]);
-  const [eventDetails, setNewEvent] = useState<newEventProps>({
+  const [eventDetails, setNewEvent] = useState<NewEventProps>({
     ageGroup: "",
     frequency: { frequency: "", id: "" },
     date: dayjs().format("YYYY-MM-DD"),
     eventName: "",
     maxAttendees: "",
   });
-  const [tags, setTags] = useState<tagsProps>({
+  const [tags, setTags] = useState<TagsProps>({
     tags: [],
     keywords: [],
   });
-
-  // States Form Two
   const [optionSelectedByUser, setOptionSelectedByUser] = useState([
     {
       id: uuidv1(),
@@ -77,8 +69,6 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
     { name: "premiun", selected: false },
     { name: "delux", selected: false },
   ]);
-
-  // States Form Three
   const [eventAddress, setAddress] = useState<EventAddressProps>({
     postcode: "",
     firstLine: "",
@@ -87,26 +77,19 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
     latitude: "",
     longitude: "",
   });
-
-  // States Form Three
-
-  const handleAddressChange = (event: ChangeEvent<any>) => {
-    const { value, name } = event.target;
-
-    setAddress((prev) => {
-      return { ...prev, [name]: value };
-    });
-  };
-
-  // State for form four
   const [formFour, setFormFour] = useState<any>({ description: "" });
 
-  // Functions for form one
+  // Event Handlers
+  const handleAddressChange = (event: ChangeEvent<any>) => {
+    const { value, name } = event.target;
+    setAddress((prev) => ({ ...prev, [name]: value }));
+  };
+
   const updateImageState = (arrayImgs: ImageUploadProps[]) => {
     setImageUpload(arrayImgs);
   };
 
-  const updateTagsSelected = (event: SelectChangeEvent<string[]>) => {
+  const updateTagsSelected = (event: React.ChangeEvent<{ value: unknown }>) => {
     const tagNameArray = event.target.value as string[];
 
     let tagId = tagNameArray.map((key) => {
@@ -117,13 +100,11 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
     setTags({ keywords: tagNameArray, tags: tagId });
   };
 
-  const changeFrequency = (
-    event: ChangeEvent<any> | SelectChangeEvent<string>
-  ) => {
+  const changeFrequency = (event: React.ChangeEvent<{ value: unknown }>) => {
     const { value } = event.target;
 
     let frequencyObject = frequencies.find(
-      (keyword) => keyword.frequency == String(value)
+      (keyword) => keyword.frequency === String(value)
     );
 
     setNewEvent((prev) => {
@@ -132,37 +113,27 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
         frequency: frequencyObject?.frequency ? frequencyObject?.frequency : "",
       };
 
-      console.log(value, freqInput);
-
       return { ...prev, frequency: freqInput };
     });
   };
 
-  function updateDate(input: Dayjs | null) {
+  const updateDate = (input: Dayjs | null) => {
     if (input !== null) {
-      setNewEvent((prev) => {
-        return { ...prev, date: input.format("YYYY-MM-DD") };
-      });
+      setNewEvent((prev) => ({ ...prev, date: input.format("YYYY-MM-DD") }));
     }
-  }
+  };
 
-  const changeNewEvent = (
-    event: ChangeEvent<any> | SelectChangeEvent<string>
-  ) => {
+  const changeNewEvent = (event: ChangeEvent<any>) => {
     const { value, name } = event.target;
     let valueX = value;
     if (name === "price" || name === "maxAttendees") {
       valueX = parseInt(value);
     }
-    setNewEvent((prev) => {
-      return { ...prev, [name]: valueX };
-    });
+    setNewEvent((prev) => ({ ...prev, [name]: valueX }));
   };
 
-  //   Functions for form two
-
-  function addOption() {
-    if (optionSelectedByUser.length < 3)
+  const addOption = () => {
+    if (optionSelectedByUser.length < 3) {
       setOptionSelectedByUser((prev: any[]) => {
         prev.push({
           id: uuidv1(),
@@ -174,8 +145,10 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
 
         return [...prev];
       });
-  }
-  function removeOption() {
+    }
+  };
+
+  const removeOption = () => {
     if (optionSelectedByUser.length > 1) {
       let lastTicketOptionName =
         optionSelectedByUser[optionSelectedByUser.length - 1].name;
@@ -187,29 +160,29 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
 
       setOptionsAvailable((prev: any) => {
         return prev.map((options: any) => {
-          if (options.name == lastTicketOptionName) {
+          if (options.name === lastTicketOptionName) {
             options.selected = false;
           }
           return options;
         });
       });
     }
-  }
+  };
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let { name: fieldIdentifier, value } = event.target;
 
     setOptionsAvailable((prev: any) => {
       return prev.map((el: any) => {
         optionSelectedByUser.forEach((element: any) => {
-          if (element.id == fieldIdentifier && element.name !== "") {
-            if (el.name == element.name) {
+          if (element.id === fieldIdentifier && element.name !== "") {
+            if (el.name === element.name) {
               el.selected = !el.selected;
             }
           }
         });
 
-        if (el.name == value) {
+        if (el.name === value) {
           el.selected = !el.selected;
         }
 
@@ -219,7 +192,7 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
 
     setOptionSelectedByUser((prev: any) => {
       return prev.map((el: any) => {
-        if (el.id == fieldIdentifier) {
+        if (el.id === fieldIdentifier) {
           el.ticketName = value;
         }
         return el;
@@ -227,12 +200,12 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
     });
   };
 
-  const handlePriceChange = (event: any) => {
+  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let { name: fieldIdentifier, value: newPrice } = event.target;
 
     setOptionSelectedByUser((prev: any) => {
       return prev.map((el: any) => {
-        if (el.id == fieldIdentifier) {
+        if (el.id === fieldIdentifier) {
           el.price = +newPrice;
         }
         return el;
@@ -240,12 +213,14 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
     });
   };
 
-  const handleDescriptionChange = (event: any) => {
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     let { name: fieldIdentifier, value: newDescription } = event.target;
 
     setOptionSelectedByUser((prev: any) => {
       return prev.map((el: any) => {
-        if (el.id == fieldIdentifier) {
+        if (el.id === fieldIdentifier) {
           el.description = newDescription;
         }
         return el;
@@ -259,19 +234,16 @@ export const CreateEventProvider = ({ children }: CreateEventProps) => {
   ) => {
     setOptionSelectedByUser((prev: any) => {
       return prev.map((el: any) => {
-        if (el.id == fieldIdentifier) {
+        if (el.id === fieldIdentifier) {
           el.expirationDate = input?.format("YYYY-MM-DD");
         }
         return el;
       });
     });
   };
-  // Functions for form four
 
   const changeNewEventDescription = (value: string) => {
-    setFormFour((prev) => {
-      return { ...prev, description: value };
-    });
+    setFormFour((prev: any) => ({ ...prev, description: value }));
   };
 
   return (

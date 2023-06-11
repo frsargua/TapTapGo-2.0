@@ -169,6 +169,14 @@ export const SEARCH_EVENTS_CITY = gql`
       frequency {
         frequency
       }
+      addresses {
+        city
+        firstLine
+        latitude
+        longitude
+        postcode
+        secondLine
+      }
     }
   }
 `;

@@ -1,11 +1,4 @@
-import { ButtonBaseProps } from "@mui/material";
-import React, {
-  createContext,
-  useState,
-  useContext,
-  ChangeEvent,
-  MouseEventHandler,
-} from "react";
+import React, { createContext, useState, ChangeEvent } from "react";
 
 interface ModalContextProps {
   getModalState: () => Boolean;
@@ -43,14 +36,15 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   };
 
   const closeModal = (event: ChangeEvent<any>) => {
-    if (event.currentTarget == event.target) {
+    if (event.currentTarget === event.target) {
       setModalState((prev) => {
         return !prev;
       });
     }
   };
+
   const closeBookmarkModal = (event: ChangeEvent<any>) => {
-    if (event.currentTarget == event.target) {
+    if (event.currentTarget === event.target) {
       setBookmarksModalState((prev) => {
         return !prev;
       });
@@ -58,28 +52,26 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   };
 
   const closeTicketModalState = (event: ChangeEvent<any>) => {
-    if (event.currentTarget == event.target) {
+    if (event.currentTarget === event.target) {
       setTicketModalStateModalState((prev) => {
         return !prev;
       });
     }
   };
+
   const openSignModal = () => {
-    console.log("inside Modal");
     setModalState((prev) => {
       return !prev;
     });
   };
 
   const openBookmarkModal = () => {
-    console.log("inside bookmark");
     setBookmarksModalState((prev) => {
       return !prev;
     });
   };
 
   const openTicketModalState = () => {
-    console.log("inside bookmark");
     setTicketModalStateModalState((prev) => {
       return !prev;
     });
