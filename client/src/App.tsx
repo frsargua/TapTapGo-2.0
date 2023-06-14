@@ -19,6 +19,7 @@ import SearchResultsMapPage from "./Pages/SearchResultsMapPage/Index";
 import UserProfilePage from "./Pages/UserProfilePage/Index";
 import SearchResultsPage from "./Pages/SearchResultsPage/Index";
 import { CreateEventProvider } from "./contexts/CreateEventContext";
+import Footer from "./Components/Footer/Index";
 
 const httpLink = createHttpLink({
   // uri: `${window.location.origin}/graphql`,
@@ -71,6 +72,7 @@ function App() {
                 <Route path="/event/:eventId" element={<SingleEventPage />} />
               </Routes>
             </Router>
+            <Footer />
           </ModalProvider>
         </CreateEventProvider>
       </ApolloProvider>

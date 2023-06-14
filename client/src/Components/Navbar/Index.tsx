@@ -65,7 +65,7 @@ export const Navbar: FunctionComponent<NavbarProps> = () => {
 
   return (
     <Container maxWidth="xl">
-      <Toolbar disableGutters sx={{ mb: "0.5rem" }}>
+      <Toolbar disableGutters sx={{ mb: "1rem" }}>
         {/* For mobile */}
         <RenderMobileMenu
           openNavMenu={openNavMenu}

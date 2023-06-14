@@ -72,30 +72,68 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
 
   return (
     <>
-      <Card sx={{ maxWidth: "100%", minWidth: "250px" }}>
+      <Card
+        elevation={0}
+        sx={{
+          width: "100%",
+          minWidth: "200px",
+          maxWidth: "270px",
+          height: "370px",
+        }}
+      >
         <CardActionArea>
-          <Link to={`/event/${id}`}>
-            <CardMedia
-              component="img"
-              height="170"
-              image={selectRandomImage(image_urls)}
-              alt={eventName}
-            />
-          </Link>
+          <Box
+            sx={{
+              transition: "0.3s",
+              "&:hover": {
+                filter: "brightness(1.1)",
+              },
+            }}
+          >
+            <Link to={`/event/${id}`}>
+              <CardMedia
+                component="img"
+                height="120"
+                image={selectRandomImage(image_urls)}
+                alt={eventName}
+              />
+            </Link>
+            <CardContent>
+              <Typography
+                gutterBottom
+                variant="body2"
+                component="div"
+                textAlign="left"
+              >
+                {eventName}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                textAlign="left"
+                mt={2}
+                sx={{ display: "flex" }}
+              >
+                Address
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                textAlign="left"
+                mt={2}
+                sx={{ display: "flex" }}
+              >
+                Date
+              </Typography>
+            </CardContent>
+          </Box>
           <CardContent>
-            <Typography
-              gutterBottom
-              variant="body2"
-              component="div"
-              textAlign="left"
-            >
-              {eventName}
-            </Typography>
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "left",
+                position: "relative",
               }}
             >
               <Rating
@@ -106,25 +144,6 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
                 readOnly
               />
               <Typography variant="caption">{review.length}</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "left",
-                position: "relative",
-              }}
-            >
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                textAlign="left"
-                mt={2}
-                sx={{ display: "flex" }}
-              >
-                £ {price} /
-                <PersonIcon sx={{ fontSize: "1.2rem" }} />
-              </Typography>
 
               {(!isOwner && isLogged) || (
                 <RenderBookmarkIcon
@@ -133,6 +152,16 @@ export const SingleEventCard: FunctionComponent<SingleEventCardProps> = (
                 />
               )}
             </Box>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              textAlign="left"
+              mt={2}
+              sx={{ display: "flex" }}
+            >
+              Starting from £{price} /
+              <PersonIcon sx={{ fontSize: "1.2rem" }} />
+            </Typography>
           </CardContent>
         </CardActionArea>
       </Card>

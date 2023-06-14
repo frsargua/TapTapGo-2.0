@@ -10,7 +10,7 @@ const initialise = async () => {
     await seedUsers();
     await seedCategories();
     await seedFrequency();
-    await seedEvents();
+    // await seedEvents();
 
     console.log(
       `[INFO]: All data successfully seeded to the ${process.env.MONGODB_NAME} database.`
